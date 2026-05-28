@@ -8,9 +8,11 @@ import addWithin5 from './skills/add-within-5.json';
 import addWithin10 from './skills/add-within-10.json';
 import subWithin5 from './skills/subtract-within-5.json';
 import subWithin10 from './skills/subtract-within-10.json';
+import addWithin20 from './skills/add-within-20.json';
+import subWithin20 from './skills/subtract-within-20.json';
 import type { SkillContent, Question } from '@/types/skill';
 
-const PHASE_1_2_SKILLS: SkillContent[] = [
+const PHASE_1_2_3_SKILLS: SkillContent[] = [
     countTo10 as SkillContent,
     countTo20 as SkillContent,
     recognize as SkillContent,
@@ -19,6 +21,8 @@ const PHASE_1_2_SKILLS: SkillContent[] = [
     addWithin10 as SkillContent,
     subWithin5 as SkillContent,
     subWithin10 as SkillContent,
+    addWithin20 as SkillContent,
+    subWithin20 as SkillContent,
 ];
 
 const validateQuestion = (q: Question, label: string): void => {
@@ -51,8 +55,13 @@ const validateQuestion = (q: Question, label: string): void => {
             expect(num, `${label}: number matches target count`).toBe(tgt?.count);
         });
     } else if (q.type === 'number-line') {
+        expect(q.min, `${label}: min < max`).toBeLessThan(q.max);
+        expect(q.step, `${label}: step positive`).toBeGreaterThan(0);
         expect(q.answer, `${label}: answer ≥ min`).toBeGreaterThanOrEqual(q.min);
         expect(q.answer, `${label}: answer ≤ max`).toBeLessThanOrEqual(q.max);
+        // Answer must be on a tick (reachable by snapping)
+        const offset = (q.answer - q.min) / q.step;
+        expect(Math.abs(offset - Math.round(offset)) < 1e-9, `${label}: answer aligns with step`).toBe(true);
     }
 };
 
@@ -85,8 +94,8 @@ describe('skill registry', () => {
     });
 });
 
-describe('Phase 1+2 skill content', () => {
-    PHASE_1_2_SKILLS.forEach((skill) => {
+describe('Phase 1+2+3 skill content', () => {
+    PHASE_1_2_3_SKILLS.forEach((skill) => {
         describe(skill.id, () => {
             it('has ≥30 questions', () => {
                 expect(skill.questions.length).toBeGreaterThanOrEqual(30);

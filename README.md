@@ -28,9 +28,18 @@ A 1st-grade math practice web app for a 5-6 year-old, built with [animal-island-
 - **DragToMatchQ** component (@dnd-kit/core + PointerSensor + TouchSensor for iPad)
 - Draggable number tiles → drop on countable target groups; hover/filled visual feedback
 - Validator covers drag-to-match (pairs ↔ counts agreement, indices in range)
-- **47 tests passing**
 
-**Next sprints:** audio MP3 assets, NumberLineQ + Phase 3 skills (add/subtract within 20), responsive QA on iPad Safari, deploy to Vercel.
+**Phase 3 — Add/Subtract within 20 + Number-line** ✅
+
+- 2 new skills (`add-within-20`, `subtract-within-20`) with 30 questions each
+- **NumberLineQ** component (PointerEvents, snap-to-step, value bubble, keyboard arrows)
+- Major-tick highlighting at multiples of 5 for readability
+- Retroactive enhancement: 6 number-line questions added to `compare-numbers`
+- All 4 quiz types live: multiple-choice, tap-to-count, drag-to-match, number-line
+- Validator enforces number-line answer aligns with step
+- **53 tests passing** across 10 skills (~290 questions total)
+
+**Next sprints:** Phase 4 (skills 11-12: number-patterns, place-value), audio MP3 assets, responsive QA on iPad Safari, deploy to Vercel.
 
 ## Run
 

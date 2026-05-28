@@ -116,7 +116,9 @@ export function SkillSession() {
                     ? question.answer
                     : question?.type === 'tap-to-count'
                       ? question.count
-                      : undefined;
+                      : question?.type === 'number-line'
+                        ? question.answer
+                        : undefined;
             setLastCorrectAnswer(expected);
             setFeedback(correct ? 'correct' : 'wrong');
             const nextFlags = [...correctFlags, correct];

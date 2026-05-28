@@ -236,6 +236,99 @@
     justify-content: center;
 }
 
+/* Number line */
+.numberLineWrap {
+    width: 100%;
+    max-width: 720px;
+    margin: 24px auto;
+    padding: 0 8px;
+}
+
+.numberLineTrack {
+    position: relative;
+    width: 100%;
+    background: rgba(255, 252, 244, 0.7);
+    border: 2.5px dashed #c4b89e;
+    border-radius: 28px;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.numberLineTrack:active {
+    cursor: grabbing;
+}
+
+.numberLineRail {
+    position: absolute;
+    top: 50%;
+    height: 8px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #d4c9b4, #c4b89e, #d4c9b4);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.numberLineTick {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 36px;
+    transform: translateX(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tickMark {
+    width: 3px;
+    height: 14px;
+    background: #9f927d;
+    border-radius: 2px;
+    margin-top: -2px;
+}
+
+.tickMajor .tickMark {
+    height: 20px;
+    width: 4px;
+    background: #725d42;
+}
+
+.tickLabel {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #725d42;
+    pointer-events: none;
+}
+
+.numberLineThumb {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: linear-gradient(180deg, #ffdd55 0%, #ffcc00 60%, #e0b800 100%);
+    border: 3px solid #fff;
+    box-shadow: 0 5px 0 0 #c49d00, 0 6px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.thumbValue {
+    font-size: 22px;
+    font-weight: 900;
+    color: #725d42;
+    letter-spacing: 0.02em;
+}
+
 /* Progress bar */
 .progress {
     display: flex;

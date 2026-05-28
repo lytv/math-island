@@ -2,6 +2,7 @@ import type { Question } from '@/types/skill';
 import { MultipleChoiceQ } from './MultipleChoiceQ';
 import { TapToCountQ } from './TapToCountQ';
 import { DragToMatchQ } from './DragToMatchQ';
+import { NumberLineQ } from './NumberLineQ';
 
 interface Props {
     question: Question;
@@ -37,11 +38,14 @@ export function QuestionRenderer({ question, locked, onAnswer }: Props) {
             />
         );
     }
-    // number-line coming in Phase 3
-    return (
-        <div style={{ padding: 40, textAlign: 'center', color: '#8a7b66' }}>
-            <p>This question type is coming soon!</p>
-            <p style={{ fontSize: 12, opacity: 0.6 }}>type: {question.type}</p>
-        </div>
-    );
+    if (question.type === 'number-line') {
+        return (
+            <NumberLineQ
+                question={question}
+                locked={locked}
+                onAnswer={onAnswer}
+            />
+        );
+    }
+    return null;
 }

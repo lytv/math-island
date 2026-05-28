@@ -30,6 +30,12 @@
         { "type": "multiple-choice", "prompt": "Which is bigger: 19 or 17?", "options": [17, 18, 19, 20], "answer": 19 },
         { "type": "multiple-choice", "prompt": "Which is smaller: 4 or 4?", "options": [4, 3, 5, 6], "answer": 4 },
         { "type": "multiple-choice", "prompt": "Which is bigger: 13 or 10?", "options": [10, 11, 12, 13], "answer": 13 },
-        { "type": "multiple-choice", "prompt": "Which is smaller: 20 or 15?", "options": [15, 16, 17, 20], "answer": 15 }
+        { "type": "multiple-choice", "prompt": "Which is smaller: 20 or 15?", "options": [15, 16, 17, 20], "answer": 15 },
+        { "type": "number-line", "prompt": "Where is 5 on the number line?", "min": 0, "max": 20, "step": 1, "answer": 5 },
+        { "type": "number-line", "prompt": "Where is 8?", "min": 0, "max": 20, "step": 1, "answer": 8 },
+        { "type": "number-line", "prompt": "Where is 12?", "min": 0, "max": 20, "step": 1, "answer": 12 },
+        { "type": "number-line", "prompt": "Where is 17?", "min": 0, "max": 20, "step": 1, "answer": 17 },
+        { "type": "number-line", "prompt": "Which number is right after 9?", "min": 0, "max": 20, "step": 1, "answer": 10 },
+        { "type": "number-line", "prompt": "Which number is just before 14?", "min": 0, "max": 20, "step": 1, "answer": 13 }
     ]
 }
