@@ -82,19 +82,59 @@
     z-index: 2;
 }
 
+/* The whole tile (button) is the hit target — large, centered, never moves
+   on press. Press feedback comes from background ring + checkmark pop-in,
+   NEVER from transform changes (which conflict with translate(-50%,-50%)
+   and make the item appear to "slide" when tapped). */
 .tapItem {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
-    border: none;
+    background: rgba(255, 255, 255, 0);
+    border: 3px solid transparent;
+    border-radius: 50%;
     cursor: pointer;
     padding: 0;
-    transition: opacity 0.2s ease;
-    transform: translate(-50%, -50%);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        opacity 0.25s ease;
+}
+
+.tapItem:hover:not(:disabled):not(.tapItemCounted) {
+    background: rgba(25, 200, 185, 0.12);
+    border-color: rgba(25, 200, 185, 0.35);
+}
+
+.tapItem:focus-visible {
+    outline: 3px solid #ffcc00;
+    outline-offset: 2px;
+}
+
+.tapItemPressed {
+    background: rgba(25, 200, 185, 0.25) !important;
+    border-color: #19c8b9 !important;
+    box-shadow: 0 0 0 6px rgba(25, 200, 185, 0.18);
+}
+
+.tapItemEmoji {
+    line-height: 1;
+    pointer-events: none;
+    display: block;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
+}
+
+.tapItemCounted {
+    opacity: 0.55;
+    cursor: default;
+    background: rgba(111, 186, 44, 0.12);
+    border-color: rgba(111, 186, 44, 0.4);
 }
 
 .tapItem:disabled {
@@ -103,19 +143,35 @@
 
 .checkmark {
     position: absolute;
-    top: -4px;
-    right: -4px;
-    width: 26px;
-    height: 26px;
-    background: #19c8b9;
+    top: 4px;
+    right: 4px;
+    width: 30px;
+    height: 30px;
+    background: #6fba2c;
     color: #fff;
     border-radius: 50%;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 900;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+    animation: checkmark-pop 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes checkmark-pop {
+    0% {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .doneRow {

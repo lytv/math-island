@@ -17,6 +17,23 @@ import {
 const SESSION_SIZE = 10;
 const FEEDBACK_MS = 900;
 
+/**
+ * Eager-glob all skill JSON content at build time. Each entry is the
+ * default export of the JSON file. Keyed by full module path.
+ */
+const SKILL_CONTENT_MODULES = import.meta.glob<SkillContent>(
+    '@/content/skills/*.json',
+    { eager: true, import: 'default' },
+);
+
+const loadSkillContent = (skillId: string): SkillContent | null => {
+    // Match against suffix (path may be /src/content/skills/<id>.json)
+    const entry = Object.entries(SKILL_CONTENT_MODULES).find(([p]) =>
+        p.endsWith(`/${skillId}.json`),
+    );
+    return entry ? entry[1] : null;
+};
+
 type LoadState =
     | { kind: 'loading' }
     | { kind: 'ready'; questions: Question[] }
@@ -43,31 +60,19 @@ export function SkillSession() {
             setLoad({ kind: 'error', message: 'This skill is locked.' });
             return;
         }
-        let cancelled = false;
-        (async () => {
-            try {
-                const mod = (await import(
-                    /* @vite-ignore */ `@/content/skills/${skill.id}.json`
-                )) as { default: SkillContent };
-                if (cancelled) return;
-                const pool = mod.default.questions;
-                const session = buildSession(pool, SESSION_SIZE);
-                setLoad({ kind: 'ready', questions: session });
-                setCurrentIdx(0);
-                setCorrectFlags([]);
-                startedAt.current = Date.now();
-            } catch (err) {
-                if (cancelled) return;
-                setLoad({
-                    kind: 'error',
-                    message: `No content yet for "${skill.name}". Try another skill!`,
-                });
-                console.error('Skill content load failed:', err);
-            }
-        })();
-        return () => {
-            cancelled = true;
-        };
+        const content = loadSkillContent(skill.id);
+        if (!content) {
+            setLoad({
+                kind: 'error',
+                message: `No content yet for "${skill.name}". Try another skill!`,
+            });
+            return;
+        }
+        const session = buildSession(content.questions, SESSION_SIZE);
+        setLoad({ kind: 'ready', questions: session });
+        setCurrentIdx(0);
+        setCorrectFlags([]);
+        startedAt.current = Date.now();
     }, [skill, isUnlocked]);
 
     const finishSession = useCallback(
