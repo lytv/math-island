@@ -1,0 +1,222 @@
+.questionWrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    text-align: center;
+    color: #725d42;
+}
+
+.prompt {
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 700;
+    color: #725d42;
+    letter-spacing: 0.01em;
+    margin: 0 0 24px;
+    line-height: 1.3;
+}
+
+.expression {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    font-size: 64px;
+    font-weight: 900;
+    color: #8b7355;
+    margin: 24px 0 32px;
+}
+
+.op {
+    color: #19c8b9;
+}
+
+.unknown {
+    color: #ffcc00;
+    background: rgba(255, 204, 0, 0.15);
+    border: 3px dashed #ffcc00;
+    border-radius: 16px;
+    padding: 0 16px;
+    min-width: 80px;
+}
+
+.optionsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(110px, 1fr));
+    gap: 16px;
+    max-width: 440px;
+    margin: 32px auto 0;
+}
+
+.optionBtn {
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    min-height: 72px !important;
+    letter-spacing: 0.02em;
+}
+
+/* Tap-to-count board */
+.tapToCountBoard {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 4 / 3;
+    margin: 16px auto;
+    background: rgba(255, 252, 244, 0.7);
+    border: 2.5px dashed #c4b89e;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+.counter {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: #19c8b9;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 3px 0 0 #11a89b;
+    z-index: 2;
+}
+
+.tapItem {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s ease;
+    transform: translate(-50%, -50%);
+}
+
+.tapItem:disabled {
+    cursor: default;
+}
+
+.checkmark {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 26px;
+    height: 26px;
+    background: #19c8b9;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.doneRow {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Progress bar */
+.progress {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    padding: 12px;
+}
+
+.progressDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #d4c9b4;
+    transition: all 0.2s ease;
+}
+
+.dot-current {
+    background: #ffcc00;
+    box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.25);
+    width: 14px;
+    height: 14px;
+    animation: pulse-dot 1s ease-in-out infinite;
+}
+
+.dot-correct {
+    background: #6fba2c;
+}
+
+.dot-wrong {
+    background: #e05a5a;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* Feedback overlay */
+.feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 32px 56px;
+    border-radius: 32px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+.feedback-correct {
+    background: rgba(111, 186, 44, 0.95);
+    color: #fff;
+}
+
+.feedback-wrong {
+    background: rgba(224, 90, 90, 0.95);
+    color: #fff;
+}
+
+.feedbackIcon {
+    font-size: 96px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.correctAnswer {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+@media (max-width: 480px) {
+    .optionsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .optionBtn {
+        font-size: 26px !important;
+        min-height: 60px !important;
+    }
+    .expression {
+        font-size: 48px;
+        gap: 14px;
+    }
+    .feedback {
+        padding: 24px 36px;
+    }
+    .feedbackIcon {
+        font-size: 72px;
+    }
+}

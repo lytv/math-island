@@ -4,21 +4,25 @@ A 1st-grade math practice web app for a 5-6 year-old, built with [animal-island-
 
 ## Status
 
-**Phase 1 — Foundation scaffolded** ✅
+**Phase 1 MVP — playable end-to-end** ✅
 
-- Project + tooling (Vite + React 18 + TypeScript strict)
-- Zustand-persisted progress store with XP, streak, mastery
-- Type-safe quiz schema (multiple-choice / tap-to-count / drag-to-match / number-line)
-- Skill registry (12 Common Core skills with prereq graph)
-- Sample content: `count-to-10` skill with 32 questions
-- Audio + Web Speech helpers (SFX via Howler, TTS via SpeechSynthesis)
-- Stars calculator + question generator with unit tests
+- Vite + React 18 + TypeScript strict + path alias `@/`
+- Zustand-persisted progress store (XP, streak, mastery, settings)
+- Type-safe quiz schema with 4 question types
+- 12-skill Common Core registry with prereq graph
+- **5 skills with 30+ questions each** (count-to-10, count-to-20, recognize-0-20, compare-numbers, add-within-5)
+- Audio (Howler SFX) + Web Speech TTS with autoplay-prime gesture
 - App routes: `/` (island map), `/skill/:id`, `/result`, `/settings`
-- Placeholder geometric island map (SVG) with locked / unlocked / current / mastered states
-- Top bar with XP, streak, mute toggle, settings
-- 19 tests passing
+- Placeholder SVG island map: locked / unlocked / current (pulsing) / mastered (with star count)
+- Top bar: XP, streak, mute toggle, settings
+- **Quiz engine**: MultipleChoiceQ + TapToCountQ + QuestionRenderer dispatch
+- **ProgressBar** (10-dot tracker, color-coded), **FeedbackOverlay** (✓ green / ✗ red shake with reveal)
+- **SkillSession** orchestrates 10-question session, dynamic-imports skill JSON, records to store
+- **SessionResult**: animated 1-3 stars, accuracy/time/XP stats, canvas-confetti celebration, newly-unlocked-skill banner, Play again / Back CTAs
+- **Content validator tests** ensure every multiple-choice has answer ∈ options
+- **38 tests passing** (lib + store + content)
 
-**Next:** quiz engine (multiple-choice + tap-to-count components), result screen, audio assets.
+**Next sprints:** audio MP3 assets, responsive QA on iPad, deploy to Vercel.
 
 ## Run
 
