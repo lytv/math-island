@@ -1,6 +1,7 @@
 import type { Question } from '@/types/skill';
 import { MultipleChoiceQ } from './MultipleChoiceQ';
 import { TapToCountQ } from './TapToCountQ';
+import { DragToMatchQ } from './DragToMatchQ';
 
 interface Props {
     question: Question;
@@ -27,7 +28,16 @@ export function QuestionRenderer({ question, locked, onAnswer }: Props) {
             />
         );
     }
-    // Phase 2/3 types — show graceful placeholder
+    if (question.type === 'drag-to-match') {
+        return (
+            <DragToMatchQ
+                question={question}
+                locked={locked}
+                onAnswer={onAnswer}
+            />
+        );
+    }
+    // number-line coming in Phase 3
     return (
         <div style={{ padding: 40, textAlign: 'center', color: '#8a7b66' }}>
             <p>This question type is coming soon!</p>
