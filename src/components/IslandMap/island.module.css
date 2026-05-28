@@ -1,0 +1,23 @@
+.canvas {
+    width: 100%;
+    height: 100%;
+    min-height: calc(100vh - 56px);
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    background: linear-gradient(180deg, #b0e0ef 0%, #7dc395 100%);
+    padding: 0;
+    overflow: hidden;
+}
+
+.svg {
+    width: 100%;
+    height: 100%;
+    max-width: min(100vw, 900px);
+    max-height: calc(100vh - 56px);
+    display: block;
+}
+
+.nodeLabel {
+    font-family: Nunito, 'Noto Sans SC', -apple-system, sans-serif;
+}
