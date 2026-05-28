@@ -39,14 +39,17 @@ describe('progress store', () => {
     });
 
     it('streak starts at 1 after first session', () => {
-        useProgress.getState().recordSession('count-to-10', 0.9, 3, 9);
+        const r = useProgress.getState().recordSession('count-to-10', 0.9, 3, 9);
         expect(useProgress.getState().streak).toBe(1);
+        expect(r.streakIncremented).toBe(true);
+        expect(r.newStreak).toBe(1);
     });
 
     it('does not double-count streak on same-day sessions', () => {
         useProgress.getState().recordSession('count-to-10', 0.9, 3, 9);
-        useProgress.getState().recordSession('count-to-10', 0.9, 3, 9);
+        const r2 = useProgress.getState().recordSession('count-to-10', 0.9, 3, 9);
         expect(useProgress.getState().streak).toBe(1);
+        expect(r2.streakIncremented).toBe(false);
     });
 
     it('resetAll clears state', () => {

@@ -82,8 +82,12 @@ export function SkillSession() {
                 total,
                 durationMs,
             });
-            const wasUnlockedBefore = (id: string) => isUnlocked(id);
-            recordSession(skill.id, accuracy, stars, correctCount);
+            const { streakIncremented, newStreak } = recordSession(
+                skill.id,
+                accuracy,
+                stars,
+                correctCount,
+            );
             if (sfxOn && stars >= 2) playSfx('celebrate');
             navigate('/result', {
                 state: {
@@ -94,15 +98,12 @@ export function SkillSession() {
                     total,
                     stars,
                     durationMs,
-                    /* Snapshot of unlocks BEFORE this session — Result computes new unlocks */
-                    prevUnlocks: ['__sentinel__'].concat(
-                        // Will be overwritten in result page; we just persist skillId here
-                        wasUnlockedBefore(skill.id) ? [] : [],
-                    ),
+                    streakIncremented,
+                    newStreak,
                 },
             });
         },
-        [skill, recordSession, sfxOn, navigate, isUnlocked],
+        [skill, recordSession, sfxOn, navigate],
     );
 
     const handleAnswer = useCallback(

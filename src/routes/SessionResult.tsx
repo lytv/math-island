@@ -1,11 +1,12 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Button } from 'animal-island-ui';
 import { skillById, SKILLS } from '@/content/skills';
 import { useProgress } from '@/store/progress';
 import { playSfx } from '@/lib/audio';
+import { findReviewSkill } from '@/lib/reviewSuggestion';
 import type { StarCount } from '@/types/progress';
 
 interface ResultState {
@@ -16,6 +17,8 @@ interface ResultState {
     total: number;
     stars: StarCount;
     durationMs: number;
+    streakIncremented: boolean;
+    newStreak: number;
 }
 
 const isResultState = (s: unknown): s is ResultState =>
@@ -32,6 +35,7 @@ export function SessionResult() {
     const isUnlocked = useProgress((s) => s.isUnlocked);
     const skills = useProgress((s) => s.skills);
     const sfxOn = useProgress((s) => s.settings.sfxOn);
+    const [streakToastShown, setStreakToastShown] = useState(true);
 
     const result = isResultState(state) ? state : null;
     const skill = result ? skillById(result.skillId) : undefined;
@@ -48,6 +52,14 @@ export function SessionResult() {
         );
     }, [result, skills, isUnlocked]);
 
+    const review = useMemo(
+        () =>
+            result
+                ? findReviewSkill(SKILLS, skills, Date.now(), result.skillId)
+                : null,
+        [result, skills],
+    );
+
     useEffect(() => {
         if (!result) return;
         if (result.stars === 3 || newlyUnlocked.length > 0) {
@@ -59,6 +71,13 @@ export function SessionResult() {
             });
             if (sfxOn && newlyUnlocked.length > 0) playSfx('unlock');
         }
+        if (result.streakIncremented && result.newStreak > 1) {
+            // Hide toast after 3.5s
+            const t = setTimeout(() => setStreakToastShown(false), 3500);
+            return () => clearTimeout(t);
+        }
+        setStreakToastShown(false);
+        return undefined;
     }, [result, newlyUnlocked, sfxOn]);
 
     if (!result || !skill) {
@@ -91,8 +110,39 @@ export function SessionResult() {
                 padding: '32px 20px',
                 textAlign: 'center',
                 color: '#725d42',
+                position: 'relative',
             }}
         >
+            {/* Streak toast (top-of-page) */}
+            <AnimatePresence>
+                {streakToastShown && result.streakIncremented && result.newStreak > 1 && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                        transition={{ type: 'spring', stiffness: 250, damping: 18 }}
+                        style={{
+                            position: 'fixed',
+                            top: 72,
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            zIndex: 80,
+                            background: 'linear-gradient(135deg, #ff8a00, #e05a5a)',
+                            color: '#fff',
+                            padding: '12px 22px',
+                            borderRadius: 32,
+                            fontWeight: 800,
+                            fontSize: 16,
+                            boxShadow: '0 6px 18px rgba(224, 90, 90, 0.4)',
+                            letterSpacing: 0.5,
+                        }}
+                        role="status"
+                    >
+                        🔥 {result.newStreak}-day streak! Keep going!
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <motion.h1
                 initial={{ scale: 0.6, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -196,6 +246,40 @@ export function SessionResult() {
                 </motion.div>
             )}
 
+            {review && (
+                <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    style={{
+                        marginTop: 16,
+                        background: '#f0e8d8',
+                        border: '2px dashed #c4b89e',
+                        borderRadius: 18,
+                        padding: '14px 16px',
+                        fontSize: 14,
+                        color: '#725d42',
+                        textAlign: 'left',
+                    }}
+                >
+                    <div style={{ fontWeight: 700, marginBottom: 6 }}>
+                        💡 Time for a review?
+                    </div>
+                    <div style={{ opacity: 0.85, marginBottom: 10 }}>
+                        {review.reason === 'stale'
+                            ? `You haven't practiced "${review.skill.name}" in a while.`
+                            : `"${review.skill.name}" could use another go.`}
+                    </div>
+                    <Button
+                        size="small"
+                        type="primary"
+                        onClick={() => navigate(`/skill/${review.skillId}`)}
+                    >
+                        Review {review.skill.name}
+                    </Button>
+                </motion.div>
+            )}
+
             <div
                 style={{
                     marginTop: 36,
@@ -226,7 +310,15 @@ function Stat({ label, value }: { label: string; value: string }) {
             <div style={{ fontSize: 22, fontWeight: 800, color: '#725d42' }}>
                 {value}
             </div>
-            <div style={{ fontSize: 12, fontWeight: 600, color: '#9f927d', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+            <div
+                style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: '#9f927d',
+                    textTransform: 'uppercase',
+                    letterSpacing: 0.5,
+                }}
+            >
                 {label}
             </div>
         </div>

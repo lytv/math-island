@@ -10,9 +10,11 @@ import subWithin5 from './skills/subtract-within-5.json';
 import subWithin10 from './skills/subtract-within-10.json';
 import addWithin20 from './skills/add-within-20.json';
 import subWithin20 from './skills/subtract-within-20.json';
+import numberPatterns from './skills/number-patterns.json';
+import placeValue from './skills/place-value.json';
 import type { SkillContent, Question } from '@/types/skill';
 
-const PHASE_1_2_3_SKILLS: SkillContent[] = [
+const ALL_SKILLS: SkillContent[] = [
     countTo10 as SkillContent,
     countTo20 as SkillContent,
     recognize as SkillContent,
@@ -23,6 +25,8 @@ const PHASE_1_2_3_SKILLS: SkillContent[] = [
     subWithin10 as SkillContent,
     addWithin20 as SkillContent,
     subWithin20 as SkillContent,
+    numberPatterns as SkillContent,
+    placeValue as SkillContent,
 ];
 
 const validateQuestion = (q: Question, label: string): void => {
@@ -94,8 +98,8 @@ describe('skill registry', () => {
     });
 });
 
-describe('Phase 1+2+3 skill content', () => {
-    PHASE_1_2_3_SKILLS.forEach((skill) => {
+describe('all 12 skill content files', () => {
+    ALL_SKILLS.forEach((skill) => {
         describe(skill.id, () => {
             it('has ≥30 questions', () => {
                 expect(skill.questions.length).toBeGreaterThanOrEqual(30);

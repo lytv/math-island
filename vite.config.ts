@@ -10,6 +10,19 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src'),
         },
     },
+    build: {
+        chunkSizeWarningLimit: 1200,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+                    'motion': ['framer-motion'],
+                    'dnd': ['@dnd-kit/core', '@dnd-kit/modifiers'],
+                    'audio': ['howler', 'canvas-confetti'],
+                },
+            },
+        },
+    },
     // @ts-expect-error vitest extends UserConfig at runtime; types added via triple-slash above
     test: {
         environment: 'jsdom',

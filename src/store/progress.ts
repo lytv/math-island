@@ -25,7 +25,7 @@ interface ProgressState {
         accuracy: number,
         stars: StarCount,
         correctCount: number,
-    ) => void;
+    ) => { streakIncremented: boolean; newStreak: number };
     isUnlocked: (skillId: string) => boolean;
     setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
     resetAll: () => void;
@@ -76,38 +76,35 @@ export const useProgress = create<ProgressState>()(
             settings: defaultSettings,
 
             recordSession: (skillId, accuracy, stars, correctCount) => {
-                set((state) => {
-                    const prev = state.skills[skillId] ?? blankSkill();
-                    const next: SkillProgress = {
-                        attempts: prev.attempts + 1,
-                        bestAccuracy: Math.max(prev.bestAccuracy, accuracy),
-                        mastered:
-                            prev.mastered || accuracy >= MASTERY_THRESHOLD,
-                        starsEarned: (Math.max(
-                            prev.starsEarned,
-                            stars,
-                        ) as StarCount),
-                        lastPlayedAt: Date.now(),
-                    };
+                const state = get();
+                const prev = state.skills[skillId] ?? blankSkill();
+                const next: SkillProgress = {
+                    attempts: prev.attempts + 1,
+                    bestAccuracy: Math.max(prev.bestAccuracy, accuracy),
+                    mastered: prev.mastered || accuracy >= MASTERY_THRESHOLD,
+                    starsEarned: Math.max(prev.starsEarned, stars) as StarCount,
+                    lastPlayedAt: Date.now(),
+                };
 
-                    const today = todayIso();
-                    let streak = state.streak;
-                    if (state.lastStreakDate !== today) {
-                        streak = isYesterday(state.lastStreakDate)
-                            ? streak + 1
-                            : 1;
-                    }
+                const today = todayIso();
+                let streak = state.streak;
+                let streakIncremented = false;
+                if (state.lastStreakDate !== today) {
+                    streak = isYesterday(state.lastStreakDate) ? streak + 1 : 1;
+                    streakIncremented = true;
+                }
 
-                    const xpDelta =
-                        correctCount * XP_PER_CORRECT + stars * XP_PER_STAR;
+                const xpDelta =
+                    correctCount * XP_PER_CORRECT + stars * XP_PER_STAR;
 
-                    return {
-                        skills: { ...state.skills, [skillId]: next },
-                        xp: state.xp + xpDelta,
-                        streak,
-                        lastStreakDate: today,
-                    };
+                set({
+                    skills: { ...state.skills, [skillId]: next },
+                    xp: state.xp + xpDelta,
+                    streak,
+                    lastStreakDate: today,
                 });
+
+                return { streakIncremented, newStreak: streak };
             },
 
             isUnlocked: (skillId) => {
