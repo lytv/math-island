@@ -17,6 +17,7 @@ import { CountableSet } from '@/components/shared/CountableSet';
 import { speak } from '@/lib/speech';
 import { playSfx } from '@/lib/audio';
 import { useProgress } from '@/store/progress';
+import { PromptTitle } from './PromptTitle';
 import styles from './quiz.module.css';
 
 interface Props {
@@ -82,7 +83,7 @@ export function DragToMatchQ({ question, locked, onAnswer }: Props) {
 
     return (
         <div className={styles.questionWrap}>
-            <h2 className={styles.prompt}>{question.prompt}</h2>
+            <PromptTitle text={question.prompt} />
 
             <DndContext
                 sensors={sensors}

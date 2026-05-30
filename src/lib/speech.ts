@@ -49,8 +49,11 @@ export const setVoice = (_name: string | null): void => {
     // Voice is baked into the pre-recorded files — no-op for compatibility
 };
 
-export const speak = (text: string): void => {
-    if (!enabled) return;
+// Hard cap so we never wait forever if `end` never fires (e.g. autoplay block).
+const SPEAK_SAFETY_MS = 4000;
+
+export const speak = (text: string): Promise<void> => {
+    if (!enabled) return Promise.resolve();
 
     const filename = getFilename(text);
     if (!filename) {
@@ -66,17 +69,41 @@ export const speak = (text: string): void => {
             if (picked) u.voice = picked;
             u.rate = 0.95;
             u.pitch = 1.1;
-            window.speechSynthesis.speak(u);
+            return new Promise((resolve) => {
+                let done = false;
+                const finish = () => {
+                    if (done) return;
+                    done = true;
+                    resolve();
+                };
+                u.onend = finish;
+                u.onerror = finish;
+                window.speechSynthesis.speak(u);
+                window.setTimeout(finish, SPEAK_SAFETY_MS);
+            });
         }
-        return;
+        return Promise.resolve();
     }
 
     // Stop any currently playing speech before starting a new one
     cache.forEach((howl) => howl.stop());
 
-    try {
-        loadHowl(filename).play();
-    } catch {
-        /* silent — autoplay block */
-    }
+    return new Promise((resolve) => {
+        let done = false;
+        const finish = () => {
+            if (done) return;
+            done = true;
+            resolve();
+        };
+        try {
+            const howl = loadHowl(filename);
+            howl.once('end', finish);
+            howl.once('loaderror', finish);
+            howl.once('playerror', finish);
+            howl.play();
+            window.setTimeout(finish, SPEAK_SAFETY_MS);
+        } catch {
+            finish();
+        }
+    });
 };

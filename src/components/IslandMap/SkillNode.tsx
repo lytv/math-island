@@ -8,6 +8,7 @@ interface Props {
     skill: SkillMeta;
     state: NodeState;
     stars: 0 | 1 | 2 | 3;
+    inProgress?: boolean;
     onTap: () => void;
 }
 
@@ -35,7 +36,7 @@ const COLORS: Record<NodeState, { fill: string; border: string; shadow: string }
 
 const RADIUS = 38;
 
-export function SkillNode({ skill, state, stars, onTap }: Props) {
+export function SkillNode({ skill, state, stars, inProgress, onTap }: Props) {
     const cx = skill.position.x * 8;
     const cy = skill.position.y * 11;
     const c = COLORS[state];
@@ -117,6 +118,33 @@ export function SkillNode({ skill, state, stars, onTap }: Props) {
                 >
                     {'⭐'.repeat(stars)}
                 </text>
+            )}
+            {/* in-progress badge — pinned to top-right of the disc */}
+            {interactive && inProgress && (
+                <g
+                    style={{ pointerEvents: 'none' }}
+                    aria-label="In progress — tap to resume"
+                >
+                    <circle
+                        cx={cx + RADIUS - 6}
+                        cy={cy - RADIUS + 6}
+                        r={13}
+                        fill="#ff8c42"
+                        stroke="#fff"
+                        strokeWidth={2.5}
+                    />
+                    <text
+                        x={cx + RADIUS - 6}
+                        y={cy - RADIUS + 11}
+                        textAnchor="middle"
+                        fontSize={14}
+                        fontWeight={900}
+                        fill="#fff"
+                        aria-hidden
+                    >
+                        ▶
+                    </text>
+                </g>
             )}
         </motion.g>
     );

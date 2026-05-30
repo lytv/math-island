@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Button } from 'animal-island-ui';
 import type { MultipleChoiceQuestion } from '@/types/skill';
 import { CountableSet } from '@/components/shared/CountableSet';
 import { speak } from '@/lib/speech';
 import { useProgress } from '@/store/progress';
+import { PromptTitle } from './PromptTitle';
 import styles from './quiz.module.css';
 
 interface Props {
@@ -22,14 +22,7 @@ export function MultipleChoiceQ({ question, locked, onAnswer }: Props) {
 
     return (
         <div className={styles.questionWrap}>
-            <motion.h2
-                className={styles.prompt}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.25 }}
-            >
-                {question.prompt}
-            </motion.h2>
+            <PromptTitle text={question.prompt} animate />
 
             {question.visual?.kind === 'countable' && (
                 <CountableSet

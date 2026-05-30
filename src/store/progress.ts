@@ -1,13 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type {
+    ActiveSession,
     SkillProgress,
     Settings,
     StarCount,
 } from '@/types/progress';
 import { SKILLS } from '@/content/skills';
 
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 3;
 const MASTERY_THRESHOLD = 0.8;
 const XP_PER_CORRECT = 10;
 const XP_PER_STAR = 25;
@@ -18,6 +19,7 @@ interface ProgressState {
     streak: number;
     lastStreakDate: string | null;
     skills: Record<string, SkillProgress>;
+    activeSessions: Record<string, ActiveSession>;
     settings: Settings;
 
     recordSession: (
@@ -27,6 +29,8 @@ interface ProgressState {
         correctCount: number,
     ) => { streakIncremented: boolean; newStreak: number };
     isUnlocked: (skillId: string) => boolean;
+    saveActiveSession: (session: ActiveSession) => void;
+    clearActiveSession: (skillId: string) => void;
     setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
     resetAll: () => void;
 }
@@ -73,6 +77,7 @@ export const useProgress = create<ProgressState>()(
             streak: 0,
             lastStreakDate: null,
             skills: {},
+            activeSessions: {},
             settings: defaultSettings,
 
             recordSession: (skillId, accuracy, stars, correctCount) => {
@@ -97,14 +102,36 @@ export const useProgress = create<ProgressState>()(
                 const xpDelta =
                     correctCount * XP_PER_CORRECT + stars * XP_PER_STAR;
 
+                const { [skillId]: _drop, ...remainingSessions } =
+                    state.activeSessions;
+                void _drop;
+
                 set({
                     skills: { ...state.skills, [skillId]: next },
                     xp: state.xp + xpDelta,
                     streak,
                     lastStreakDate: today,
+                    activeSessions: remainingSessions,
                 });
 
                 return { streakIncremented, newStreak: streak };
+            },
+
+            saveActiveSession: (session) => {
+                set((state) => ({
+                    activeSessions: {
+                        ...state.activeSessions,
+                        [session.skillId]: session,
+                    },
+                }));
+            },
+
+            clearActiveSession: (skillId) => {
+                set((state) => {
+                    const { [skillId]: _drop, ...rest } = state.activeSessions;
+                    void _drop;
+                    return { activeSessions: rest };
+                });
             },
 
             isUnlocked: (skillId) => {
@@ -127,6 +154,7 @@ export const useProgress = create<ProgressState>()(
                     streak: 0,
                     lastStreakDate: null,
                     skills: {},
+                    activeSessions: {},
                     settings: defaultSettings,
                 });
             },
@@ -134,6 +162,18 @@ export const useProgress = create<ProgressState>()(
         {
             name: 'math-island-progress',
             version: SCHEMA_VERSION,
+            migrate: (persisted, _version) => {
+                const p = (persisted ?? {}) as Partial<ProgressState>;
+                if (!p.activeSessions) p.activeSessions = {};
+                // v2 → v3: backfill userAnswers on any saved sessions
+                for (const key of Object.keys(p.activeSessions)) {
+                    const s = p.activeSessions[key];
+                    if (s && !Array.isArray(s.userAnswers)) {
+                        s.userAnswers = s.correctFlags.map(() => undefined);
+                    }
+                }
+                return p as ProgressState;
+            },
         },
     ),
 );

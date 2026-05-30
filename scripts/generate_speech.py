@@ -41,6 +41,15 @@ def prompt_to_filename(prompt):
     safe = "".join(c for c in safe if c.isalnum() or c == "-").strip("-")
     return f"{safe}-{h}.mp3"
 
+PRAISE_LINES = [
+    "Great job!",
+    "Way to go!",
+    "Awesome!",
+    "You're a star!",
+    "Fantastic!",
+    "Nicely done!",
+]
+
 async def main():
     # Collect all unique prompts
     all_prompts = set()
@@ -49,7 +58,10 @@ async def main():
             data = json.load(f)
         for q in data["questions"]:
             all_prompts.add(q["prompt"])
-    
+
+    # Include spoken praise lines so they get pre-rendered too.
+    all_prompts.update(PRAISE_LINES)
+
     prompts = sorted(all_prompts)
     print(f"Total unique prompts: {len(prompts)}")
     

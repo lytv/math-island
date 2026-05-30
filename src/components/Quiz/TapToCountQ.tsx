@@ -5,6 +5,8 @@ import { ITEM_EMOJI } from '@/components/shared/CountableSet';
 import { speak } from '@/lib/speech';
 import { useProgress } from '@/store/progress';
 import { playSfx } from '@/lib/audio';
+import { PromptTitle } from './PromptTitle';
+import { scatter } from './scatter';
 import styles from './quiz.module.css';
 
 interface Props {
@@ -12,42 +14,6 @@ interface Props {
     locked: boolean;
     onAnswer: (count: number) => void;
 }
-
-interface Pos {
-    x: number;
-    y: number;
-}
-
-const seedRandom = (seed: number) => {
-    let s = seed;
-    return () => {
-        s = (s * 9301 + 49297) % 233280;
-        return s / 233280;
-    };
-};
-
-/**
- * Scatter `count` items into a grid-snapped layout so each gets a generous,
- * non-overlapping hitbox. Cell minimum 22% of board width/height ensures
- * tiles never crowd each other and the entire cell is a click target.
- */
-const scatter = (count: number, seed: number): Pos[] => {
-    const rand = seedRandom(seed);
-    const positions: Pos[] = [];
-    const minDistance = count <= 5 ? 32 : count <= 10 ? 24 : 18;
-    let attempts = 0;
-    const inset = count <= 5 ? 18 : count <= 10 ? 14 : 10;
-    while (positions.length < count && attempts < 400) {
-        const x = inset + rand() * (100 - 2 * inset);
-        const y = inset + rand() * (100 - 2 * inset);
-        const tooClose = positions.some(
-            (p) => Math.hypot(p.x - x, p.y - y) < minDistance,
-        );
-        if (!tooClose) positions.push({ x, y });
-        attempts++;
-    }
-    return positions;
-};
 
 export function TapToCountQ({ question, locked, onAnswer }: Props) {
     const ttsOn = useProgress((s) => s.settings.ttsOn);
@@ -81,7 +47,7 @@ export function TapToCountQ({ question, locked, onAnswer }: Props) {
 
     return (
         <div className={styles.questionWrap}>
-            <h2 className={styles.prompt}>{question.prompt}</h2>
+            <PromptTitle text={question.prompt} />
 
             <div className={styles.tapToCountBoard} aria-label="Tap each item">
                 <div className={styles.counter}>

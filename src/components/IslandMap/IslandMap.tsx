@@ -9,6 +9,7 @@ export function IslandMap() {
     const navigate = useNavigate();
     const skills = useProgress((s) => s.skills);
     const isUnlocked = useProgress((s) => s.isUnlocked);
+    const activeSessions = useProgress((s) => s.activeSessions);
 
     const firstUnlockedNotMastered = SKILLS.find(
         (s) => isUnlocked(s.id) && !skills[s.id]?.mastered,
@@ -116,15 +117,23 @@ export function IslandMap() {
                 )}
 
                 {/* skill nodes */}
-                {SKILLS.map((skill) => (
-                    <SkillNode
-                        key={skill.id}
-                        skill={skill}
-                        state={stateFor(skill.id)}
-                        stars={skills[skill.id]?.starsEarned ?? 0}
-                        onTap={() => navigate(`/skill/${skill.id}`)}
-                    />
-                ))}
+                {SKILLS.map((skill) => {
+                    const saved = activeSessions[skill.id];
+                    const inProgress =
+                        !!saved &&
+                        saved.questions.length > 0 &&
+                        saved.currentIdx < saved.questions.length;
+                    return (
+                        <SkillNode
+                            key={skill.id}
+                            skill={skill}
+                            state={stateFor(skill.id)}
+                            stars={skills[skill.id]?.starsEarned ?? 0}
+                            inProgress={inProgress}
+                            onTap={() => navigate(`/skill/${skill.id}`)}
+                        />
+                    );
+                })}
             </svg>
         </div>
     );

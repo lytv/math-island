@@ -60,4 +60,38 @@ describe('progress store', () => {
         expect(state.skills).toEqual({});
         expect(state.streak).toBe(0);
     });
+
+    it('persists and clears active sessions including userAnswers', () => {
+        useProgress.getState().saveActiveSession({
+            skillId: 'count-to-10',
+            questions: [],
+            currentIdx: 2,
+            correctFlags: [true, false],
+            userAnswers: [5, 3],
+            startedAt: 1000,
+            elapsedMs: 5000,
+        });
+        const stored = useProgress.getState().activeSessions['count-to-10'];
+        expect(stored?.userAnswers).toEqual([5, 3]);
+        expect(stored?.correctFlags).toEqual([true, false]);
+
+        useProgress.getState().clearActiveSession('count-to-10');
+        expect(useProgress.getState().activeSessions['count-to-10']).toBeUndefined();
+    });
+
+    it('clears active session when the session is recorded', () => {
+        useProgress.getState().saveActiveSession({
+            skillId: 'count-to-10',
+            questions: [],
+            currentIdx: 9,
+            correctFlags: [true, true, true],
+            userAnswers: [1, 2, 3],
+            startedAt: 1000,
+            elapsedMs: 5000,
+        });
+        useProgress.getState().recordSession('count-to-10', 1.0, 3, 10);
+        expect(
+            useProgress.getState().activeSessions['count-to-10'],
+        ).toBeUndefined();
+    });
 });

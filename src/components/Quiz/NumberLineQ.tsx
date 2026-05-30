@@ -4,6 +4,7 @@ import { Button } from 'animal-island-ui';
 import type { NumberLineQuestion } from '@/types/skill';
 import { speak } from '@/lib/speech';
 import { useProgress } from '@/store/progress';
+import { PromptTitle } from './PromptTitle';
 import styles from './quiz.module.css';
 
 interface Props {
@@ -74,7 +75,7 @@ export function NumberLineQ({ question, locked, onAnswer }: Props) {
 
     return (
         <div className={styles.questionWrap}>
-            <h2 className={styles.prompt}>{question.prompt}</h2>
+            <PromptTitle text={question.prompt} />
 
             <div className={styles.numberLineWrap}>
                 <div
