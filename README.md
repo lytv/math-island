@@ -1,6 +1,6 @@
 # 🏝️ Math Island
 
-A 1st-grade math practice web app for a 5-6 year-old, built with [animal-island-ui](https://github.com/guokaigdg/animal-island-ui). English content following Common Core 1st Grade Math. Frontend-only, no backend, no auth — open the URL and play.
+A 1st-grade math practice web app for a 5-6 year-old, built with [animal-island-ui](https://github.com/guokaigdg/animal-island-ui). English content following Common Core 1st Grade Math. Frontend-only, no backend, no auth. Open the URL and play.
 
 ## Status: **Phase 1–4 complete** ✅
 
@@ -116,10 +116,10 @@ src/
 
 ## Notes & follow-up
 
-- **Audio files** in `public/audio/*.mp3` are functional ffmpeg-generated placeholders. Swap with CC0 sounds (Pixabay, freesound) for production polish. See `public/audio/README.md`.
-- **Bundle** ships ~3.8MB main JS + ~1MB CSS (most of which is the animal-island-ui font CSS with Japanese + Chinese fonts pre-embedded). Vendor chunks split (react / framer / dnd / audio). To shrink further, lazy-import `animal-island-ui/style` or trim fonts at the lib level.
+- **Audio files** in `public/audio/*.mp3` are ffmpeg-generated placeholders. Swap them with CC0 sounds (Pixabay, freesound) before shipping. See `public/audio/README.md`.
+- **Bundle** ships ~3.8MB main JS + ~1MB CSS (most is animal-island-ui font CSS with Japanese + Chinese fonts embedded). Vite splits vendor chunks (react / framer / dnd / audio). To shrink further, lazy-import `animal-island-ui/style` or trim fonts at the lib level.
 - **iPad QA**: drag-to-match uses `TouchSensor` with 80ms delay and 6px tolerance for reliable Safari iOS behavior. Test on a real device before shipping to the child.
-- **Phase 5** (parent dashboard, custom worksheets, multi-child, cloud sync) deferred until usage validates the need.
+- **Phase 5** (parent dashboard, custom worksheets, multi-child, cloud sync) on hold until usage shows demand.
 
 ## Plan
 

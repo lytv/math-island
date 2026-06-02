@@ -1,0 +1,60 @@
+{
+  "name": "make-ten-first-v2",
+  "output_dir": "/Users/mac/tools/math-island/dist/video",
+  "images_dir": "/Users/mac/tools/math-island/scripts/assets/make-ten-first-v2",
+  "width": 1280, "height": 720, "fps": 30, "transition": 18,
+  "voice": "en-US-AriaNeural", "rate": "-5%", "pitch": "+12Hz",
+  "lead_in": 0.5, "tail": 1.0, "min_dwell": 4.0,
+  "_note": "Math Island V2 'Make 10 First' (8+5). Images 1536x1024 (3:2) -> 16:9 fill. All fx coords in 1536x1024 SOURCE space; retune after generation. Ocean/island world, parchment/wooden sign cards, shell counters, island palette mint/teal #19c8b9, warm brown #794f27, cream #f8f8f0, coral-pink #f0607a.",
+  "scenes": [
+    {
+      "image": "scene1.png",
+      "narration": "Welcome to Math Island! Here is a new puzzle. What is eight plus five?",
+      "prompt": "Children's educational illustration, Math Island world, soft toy-like vector style, wide landscape 16:9. Radial ocean gradient cyan to turquoise with gentle wave lines, a rounded green island blob with a sandy beige clearing, palm trees, flowers, and a tiny lighthouse and hut landmarks framing the corners; sticker stars in upper corners. Hanging carved wooden title sign reading 'Math Island - Make 10 First'. Large parchment/wooden lesson card in the center reading '8 + 5 = ?' in warm brown rounded friendly font. On the sandy clearing: a group of eight blue shells on the left and a group of five coral-pink shells on the right, each shell glossy with a highlight. No answer shown. Palette mint/teal #19c8b9, warm brown #794f27, cream #f8f8f0, coral #f0607a. Crisp legible text, uncluttered center.",
+      "kenburns": [1.00, 0.92, 0.50, 0.45, 0.50, 0.38],
+      "fx": {"type": "sparkles", "color": "sun", "points": [[128, 115], [1416, 102], [160, 300], [1390, 360], [768, 900]]}
+    },
+    {
+      "image": "scene2.png",
+      "narration": "Look at the eight shells. Eight only needs two more to make ten.",
+      "prompt": "Same Math Island vector style, 16:9. Center stage shows a sandy ten-frame shaped like a rounded island path with TEN slots in two rows of five. Eight glossy blue shells fill the first eight slots; the last TWO slots are EMPTY golden glowing spots with soft sparkle hints. A small wooden sign above reads 'Eight needs 2 more'. Palms and flowers frame the edges, calm turquoise ocean behind. Palette mint/teal, warm brown, cream, gold. Crisp text, easy to count, uncluttered.",
+      "kenburns": [0.96, 0.86, 0.50, 0.50, 0.58, 0.52],
+      "fx": {"type": "glow_ring", "color": "gold", "box": [840, 560, 1260, 745], "rate": 4, "sparkles": [[922, 600], [1150, 700]]}
+    },
+    {
+      "image": "scene3.png",
+      "narration": "We can split the five into two and three.",
+      "prompt": "Same Math Island vector style, 16:9. The group of five coral-pink shells separates into a teal pair (2 shells) on the left and a coral trio (3 shells) on the right, with a small gap of sandy path between them. A carved wooden sign in the center reads '5 = 2 + 3' in warm brown. Gentle dotted lines connect the original five to the two new groups. Palms, flowers, ocean behind. Palette mint/teal, warm brown, cream, coral. Crisp legible text, easy to read.",
+      "kenburns": [0.92, 0.88, 0.50, 0.55, 0.45, 0.58],
+      "fx": {"type": "alt_highlight", "rate": 3, "boxes": [{"box": [140, 590, 560, 768], "color": "teal"}, {"box": [945, 590, 1440, 768], "color": "coral"}]}
+    },
+    {
+      "image": "scene4.png",
+      "narration": "Move the two shells over to make a friendly ten. Make ten first!",
+      "prompt": "Same Math Island vector style, 16:9. A teal pair of two shells travels along a curved dotted sandy path from the right toward the left ten-frame, with little footprint dots marking the path. The left ten-frame becomes a COMPLETE golden row of TEN shells in two rows of five, glowing with a sparkle burst and a mint-teal '10' badge. A bright caption ribbon banner reads 'Make 10 first!'. Three coral shells remain on the right. Palms and ocean behind. Palette mint/teal, warm brown, cream, gold, coral. Crisp text, uncluttered.",
+      "kenburns": [0.90, 0.84, 0.45, 0.55, 0.36, 0.58],
+      "fx": {"type": "star_burst", "color": "gold", "spark": "sun", "center": [310, 630], "rx": 260, "ry": 185, "rise": 0.45, "rays": 12, "reach": 210, "stars": [[768, 200, 24, "gold"], [1280, 600, 18, "coral"]]}
+    },
+    {
+      "image": "scene5.png",
+      "narration": "Now it is easy. Ten plus three is thirteen!",
+      "prompt": "Same Math Island vector style, 16:9. Joyful reveal on a big cozy parchment/wooden answer card: '10 + 3 = 13' with the '13' large and dominant in bright island coral pink-red. A golden ten-bundle with a '10' badge sits bottom-left and three coral shells bottom-right. A celebration star sticker and confetti accents around the card. Palms, flowers, sparkling ocean behind. Palette mint/teal, warm brown, cream, coral-pink #f0607a, gold. The 13 is the most dominant element. Crisp legible text.",
+      "kenburns": [0.86, 0.96, 0.55, 0.48, 0.55, 0.46],
+      "fx": {"type": "star_burst", "color": "answer", "spark": "sun", "center": [1235, 490], "rx": 270, "ry": 200, "rise": 0.4, "rays": 14, "reach": 230, "stars": [[1390, 170, 24, "gold"], [205, 180, 20, "gold"]]}
+    },
+    {
+      "image": "scene6.png",
+      "narration": "This trick works again and again. Nine plus six makes ten plus five, fifteen. Seven plus eight makes ten plus five, fifteen.",
+      "prompt": "Same Math Island vector style, 16:9. Two mini activity cards side by side like island map stops, connected by a dotted footpath, each with a small landmark icon (left: a palm tree, right: a lighthouse). Left card big text '9 + 6 -> 10 + 5 = 15'. Right card big text '7 + 8 -> 10 + 5 = 15'. Each card is a rounded parchment/wooden sign with shell accents. Turquoise ocean and island behind. Palette mint/teal, warm brown, cream, coral. Crisp legible text, both cards equally clear.",
+      "kenburns": [0.92, 0.88, 0.34, 0.52, 0.68, 0.52],
+      "fx": {"type": "alt_highlight", "rate": 3, "boxes": [{"box": [140, 384, 700, 730], "color": "mint"}, {"box": [845, 384, 1400, 730], "color": "berry"}]}
+    },
+    {
+      "image": "scene7.png",
+      "narration": "Now it is your turn. What is eight plus six?",
+      "prompt": "Same Math Island vector style, 16:9. A big carved wooden challenge signboard reads 'Your turn: 8 + 6 = ?' in warm brown. Below it an island ten-frame with eight blue shells and two EMPTY glowing golden spots still visible, and six coral shells to the side. A large rounded question bubble with a soft '?' and a gentle pulse glow sits in the center. Palms, flowers, sticker stars, sparkling ocean behind. Palette mint/teal, warm brown, cream, coral, gold. Inviting and warm. Crisp legible text.",
+      "kenburns": [0.98, 0.90, 0.50, 0.48, 0.50, 0.45],
+      "fx": {"type": "glow_ring", "color": "answer", "box": [630, 370, 920, 600], "rate": 5, "sparkles": [[640, 390], [910, 420], [775, 610]]}
+    }
+  ]
+}

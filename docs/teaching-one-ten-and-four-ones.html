@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teaching One Ten and Four Ones and Helping Children Make Ten First</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f6f5f4;
+      --panel: #ffffff;
+      --text: rgba(0,0,0,0.95);
+      --muted: #615d59;
+      --soft: #a39e98;
+      --line: rgba(0,0,0,0.1);
+      --blue: #0075de;
+      --blue-soft: #f2f9ff;
+      --green-soft: #eef8f0;
+      --amber-soft: #fff6ea;
+      --rose-soft: #fff2f6;
+      --shadow: rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.84688px, rgba(0,0,0,0.02) 0px 0.8px 2.925px, rgba(0,0,0,0.01) 0px 0.175px 1.04062px;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --max: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
+      line-height: 1.65;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 20px 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.3fr .9fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .hero-card, .summary-card, .toc, .section-card, .callout, .mini-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 34px 34px 28px;
+      background: radial-gradient(circle at top right, #f2f9ff 0%, #ffffff 32%), #ffffff;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue-soft);
+      color: #097fe8;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.055em;
+      margin: 0 0 16px;
+      font-weight: 800;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .summary-card {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #faf9f8 100%);
+    }
+
+    .summary-card h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      letter-spacing: -0.03em;
+    }
+
+    .key-points {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .key-points li + li { margin-top: 8px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 20px;
+      padding: 20px;
+      background: #fcfcfb;
+    }
+
+    .toc h3 {
+      margin: 0 0 12px;
+      font-size: .95rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--soft);
+    }
+
+    .toc ol {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 10px;
+      font-size: .95rem;
+    }
+
+    .toc li::marker { color: var(--soft); }
+
+    .content {
+      display: grid;
+      gap: 22px;
+    }
+
+    .section-card {
+      padding: 30px;
+    }
+
+    .section-card.alt {
+      background: var(--bg-alt);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.5rem, 2vw, 2.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+      font-weight: 800;
+    }
+
+    h3 {
+      margin: 26px 0 10px;
+      font-size: 1.2rem;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+    }
+
+    h4 {
+      margin: 20px 0 8px;
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+
+    p { margin: 0 0 14px; }
+    .lead { font-size: 1.06rem; color: var(--muted); }
+    .muted { color: var(--muted); }
+    .small { font-size: .92rem; color: var(--muted); }
+
+    .callout {
+      padding: 16px 18px;
+      margin: 18px 0;
+      background: var(--blue-soft);
+    }
+
+    .callout.success { background: var(--green-soft); }
+    .callout.warning { background: var(--amber-soft); }
+    .callout.pink { background: var(--rose-soft); }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: .96rem;
+    }
+
+    .two-col, .three-col {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .mini-card {
+      padding: 18px;
+      background: rgba(255,255,255,0.82);
+    }
+
+    .mini-card h4 { margin-top: 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    thead th {
+      background: #fbfaf9;
+      font-size: .92rem;
+      color: var(--muted);
+      text-align: left;
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    tbody td {
+      padding: 13px 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      vertical-align: top;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    ul, ol { margin: 0 0 14px; padding-left: 20px; }
+    li + li { margin-top: 7px; }
+
+    pre {
+      margin: 14px 0;
+      padding: 16px 18px;
+      background: #fbfaf9;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: .94rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    code.inline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      background: #f6f5f4;
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      font-size: .92em;
+    }
+
+    .quote {
+      border-left: 4px solid #d9ecff;
+      padding-left: 16px;
+      color: var(--muted);
+      margin: 14px 0;
+    }
+
+    .footer-note {
+      font-size: .92rem;
+      color: var(--soft);
+      margin-top: 8px;
+    }
+
+    @media (max-width: 1020px) {
+      .hero, .layout, .two-col, .three-col {
+        grid-template-columns: 1fr;
+      }
+      .toc {
+        position: static;
+      }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      .hero, .layout { display: block; }
+      .toc { display: none; }
+      .section-card, .hero-card, .summary-card, .callout, .mini-card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <section class="hero-card">
+        <div class="eyebrow">Educational report • HTML article conversion</div>
+        <h1>Teaching One Ten and Four Ones and Helping Children Make Ten First</h1>
+        <p>
+          A cleaned, readable HTML version of the original raw text, designed as a teacher-friendly
+          article with strong hierarchy, quick navigation, visual callouts, and print-friendly layout.
+        </p>
+      </section>
+      <aside class="summary-card">
+        <h2>At a glance</h2>
+        <ul class="key-points">
+          <li>Best sequence: compose within 10 → unitize ten → represent teen numbers → make 10 first.</li>
+          <li>Core representations: objects, fingers, ten-frames, number bonds, stories, equations, oral explanation.</li>
+          <li>Central questions: What is the whole? What are the parts? How many more to make ten? Did the total change?</li>
+          <li>Practical age span assumption: roughly 4–8 years old.</li>
+        </ul>
+        <p class="small">Style direction: Notion-like reading experience with warm neutrals, soft borders, and calm document spacing.</p>
+      </aside>
+    </header>
+
+    <div class="layout">
+      <nav class="toc" aria-label="Table of contents">
+        <h3>Contents</h3>
+        <ol>
+          <li><a href="#executive-summary">Executive Summary</a></li>
+          <li><a href="#assumptions">Assumptions and Learning Objectives</a></li>
+          <li><a href="#understand">What Children Need to Understand</a></li>
+          <li><a href="#misconceptions">Key Misconceptions</a></li>
+          <li><a href="#methods">Methods Compared</a></li>
+          <li><a href="#scripts">Teaching Scripts and Lesson Sequences</a></li>
+          <li><a href="#activities">Classroom Activities and Printable Assets</a></li>
+          <li><a href="#resources">Recommended Resources</a></li>
+          <li><a href="#assessment">Assessment and Rubrics</a></li>
+          <li><a href="#limitations">Open Questions and Limitations</a></li>
+        </ol>
+      </nav>
+
+      <main class="content">
+        <section id="executive-summary" class="section-card">
+          <h2>Executive Summary</h2>
+          <p class="lead">
+            The strongest way to teach “1 ten and 4 ones” is not as a vocabulary fact to memorize, but as part of a developmental progression.
+            Children first learn to see parts within small numbers, then to treat ten as a complete unit, then to use that unit to understand
+            teen numbers and restructure addition such as <code class="inline">8 + 6</code> into <code class="inline">8 + 2 + 4 = 10 + 4</code>.
+          </p>
+          <p>
+            Across official guidance from the Education Endowment Foundation, the What Works Clearinghouse, the National Centre for Excellence in the Teaching of Mathematics,
+            and the Learning Trajectories project, the shared pattern is developmental: build from composition and part–whole understanding, make the structure visible through
+            purposeful representations, and require children to explain what the numbers mean, not just produce answers.
+          </p>
+          <p>
+            The most dependable instructional moves are consistent across sources. Children benefit when adults dedicate time to mathematics every day, integrate maths into routines
+            and play, use manipulatives and representations with explicit links to mathematical ideas, create extended mathematical discussion, and provide brief, regular, targeted support
+            for learners who need it.
+          </p>
+          <div class="callout">
+            <strong>Central recommendation</strong>
+            Teach the concept in multiple linked forms—objects, fingers, ten-frames, number bonds, stories, equations, and oral explanation—while returning to the same core questions:
+            What is the whole? What are the parts? How many more to make ten? Did the total change, or only the arrangement?
+          </div>
+          <p>
+            For the specific concepts in this report, the most rigorous sequence is: subitize and compose within 10, develop part–part–whole language, unitize 10 as one complete group,
+            represent 11–19 as one ten and some ones, then solve addition by making ten first and explain why the total does not change when one addend is repartitioned.
+          </p>
+        </section>
+
+        <section id="assumptions" class="section-card alt">
+          <h2>Assumptions and Learning Objectives</h2>
+          <p>
+            Because the original brief did not specify an age range, this report assumes a developmental span from roughly 4 to 8 years old. That assumption is grounded in the overlap among official resources:
+            NCETM early-years materials focus on children around 4–5, EEF addresses ages 3–7, NCETM teen-number and bridge-10 materials sit in Year 1 and Year 2, and Learning Trajectories runs through age 8.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Approximate developmental phase</th>
+                <th>Main objective</th>
+                <th>Observable success indicators</th>
+                <th>Priority representations</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ages 4–5</td>
+                <td>See and compose small quantities; treat 5 and 10 as structured wholes</td>
+                <td>Recognizes small sets quickly, can make 5 or 10 in more than one way, can talk about whole and parts</td>
+                <td>Fingers, small collections, dot patterns, simple ten-frames, songs, stories</td>
+              </tr>
+              <tr>
+                <td>Ages 5–6</td>
+                <td>Know pairs that make 10 and begin using part–part–whole language</td>
+                <td>Answers “How many more to make 10?” and can show a number in two parts</td>
+                <td>Ten-frames, fingers, counters, number bonds, cherry diagrams</td>
+              </tr>
+              <tr>
+                <td>Ages 6–7</td>
+                <td>Represent 11–19 as one ten and some ones</td>
+                <td>Can show 14 as a full ten and 4 more; match numeral, words, objects, and equation</td>
+                <td>Full ten-frame plus extras, bundled cubes, base-ten rods, number bonds</td>
+              </tr>
+              <tr>
+                <td>Ages 7–8</td>
+                <td>Use the make-10 strategy to add across 10 and justify it</td>
+                <td>Can solve 8 + 6 by splitting 6 into 2 and 4, and explain why 10 + 4 = 14</td>
+                <td>Ten-frames, number bonds, equations, story problems, animation stops</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="small">
+            Table note: this developmental sequence synthesizes EEF early-maths guidance, WWC developmental progression recommendations, NCETM Early Years composition materials,
+            NCETM Year 1 teen-number materials, NCETM Year 2 bridge-10 materials, and the Learning Trajectories framework.
+          </p>
+
+          <div class="two-col">
+            <div class="mini-card">
+              <h4>Core learning goals</h4>
+              <ul>
+                <li>Represent 14 in at least three ways.</li>
+                <li>Say and write that 14 is <code class="inline">10 + 4</code> and also <code class="inline">1 ten and 4 ones</code>.</li>
+                <li>Identify missing parts to make 10.</li>
+                <li>Solve suitable addition problems by making 10 first.</li>
+                <li>Justify the strategy in words, not only symbols.</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h4>Practical working assumption</h4>
+              <p>
+                A 4–8 span is reasonable for an age-unspecified brief, but the same lesson should be adjusted for a child composing within 5, a child consolidating teen numbers,
+                or an older child expected to use bridge-10 reasoning more fluently.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="understand" class="section-card">
+          <h2>What Children Need to Understand</h2>
+          <p>
+            The mathematical core has three layers. First, children need part–whole understanding: a quantity can be broken into parts and recombined without changing the total.
+            Second, children need unitizing: ten ones can be treated as a new unit, a ten. Third, children need to use associative and commutative structure to solve calculations more efficiently.
+          </p>
+
+          <div class="three-col">
+            <div class="mini-card">
+              <h4>1. Part–whole understanding</h4>
+              <p>A quantity can be broken into parts and recombined without changing the total.</p>
+            </div>
+            <div class="mini-card">
+              <h4>2. Unitizing ten</h4>
+              <p>Ten ones can be treated as one complete unit: a ten.</p>
+            </div>
+            <div class="mini-card">
+              <h4>3. Efficient structure</h4>
+              <p>Children should identify addends that make ten and choose an efficient order when adding.</p>
+            </div>
+          </div>
+
+          <h3>Concise mathematical model</h3>
+          <pre>14 = 10 + 4 = 1 ten + 4 ones
+
+8 + 6
+= 8 + (2 + 4)
+= (8 + 2) + 4
+= 10 + 4
+= 14</pre>
+
+          <p>
+            EEF guidance emphasizes that manipulatives and representations are only powerful when children are helped to understand the link between the model and the mathematical idea it represents.
+            NCETM similarly organizes instruction around the transition from concrete part–whole representations to explicit language and notation.
+          </p>
+
+          <h3>Sample diagrams</h3>
+          <div class="two-col">
+            <div>
+              <h4>Ten-frame view of 14</h4>
+              <pre>Full ten-frame
+● ● ● ● ●
+● ● ● ● ●
+
+Four more ones
+● ● ● ●</pre>
+            </div>
+            <div>
+              <h4>Base-ten style diagram</h4>
+              <pre>[ ten rod ]   ● ● ● ●
+   1 ten        4 ones</pre>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div>
+              <h4>Number bond for 14</h4>
+              <pre>     14
+   /    \
+ 10      4</pre>
+            </div>
+            <div>
+              <h4>Number bond for making 10 with 8 + 6</h4>
+              <pre>      6
+    /   \
+   2     4
+
+8 needs 2 to make 10
+so 8 + 6 = 8 + 2 + 4 = 10 + 4</pre>
+            </div>
+          </div>
+        </section>
+
+        <section id="misconceptions" class="section-card alt">
+          <h2>Key Misconceptions and How to Address Them</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Misconception</th>
+                <th>What it sounds like in class</th>
+                <th>Likely underlying issue</th>
+                <th>Strong corrective move</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>“14 is just 1 and 4.”</td>
+                <td>Child points to digits separately and cannot build 14</td>
+                <td>Weak place-value meaning; digits treated as labels only</td>
+                <td>Build 14 with loose ones, then trade 10 ones for one ten and keep 4 ones visible</td>
+              </tr>
+              <tr>
+                <td>“I have to count every dot.”</td>
+                <td>Child counts all instead of seeing a full ten</td>
+                <td>Ten not yet recognized as a composed unit</td>
+                <td>Use repeated ten-frame flashes and ask, “What did you notice first?”</td>
+              </tr>
+              <tr>
+                <td>“If I move 2 from 6 to 8, the answer changes.”</td>
+                <td>Child thinks repartitioning changes the total</td>
+                <td>Part–whole conservation not secure</td>
+                <td>Physically slide 2 counters to complete the ten and ask, “What stayed the same?”</td>
+              </tr>
+              <tr>
+                <td>“Make 10 is a trick.”</td>
+                <td>Child can sometimes do it but cannot explain why</td>
+                <td>Procedure with no structure</td>
+                <td>Always pair the move with a number bond and a spoken explanation</td>
+              </tr>
+              <tr>
+                <td>Teen numbers are read in reverse.</td>
+                <td>Child hears “fourteen” and focuses on 4 before 10</td>
+                <td>Language–symbol mismatch</td>
+                <td>Consistently say and write: “fourteen is one ten and four ones”</td>
+              </tr>
+              <tr>
+                <td>Number bonds are empty circles.</td>
+                <td>Child fills parts without linking to quantity</td>
+                <td>Diagram detached from objects</td>
+                <td>Build with objects first, then map the parts onto the bond</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="small">
+            Table note: these misconceptions and responses are synthesized from NCETM themes of part–whole structure, composition, precise mathematical language, Year 1 teen-number teaching points,
+            Year 2 bridge-10 structure, and EEF’s insistence on explicit links between representations and ideas.
+          </p>
+        </section>
+
+        <section id="methods" class="section-card">
+          <h2>Methods Compared</h2>
+          <p>
+            No single method is sufficient on its own. Official guidance consistently supports multiple linked representations, frequent mathematical talk, and repeated work across everyday contexts.
+            The best method at any moment is the one that makes the hidden structure most visible for that child at that point in the progression.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Primary conceptual contribution</th>
+                <th>Engagement</th>
+                <th>Estimated cognitive load</th>
+                <th>Materials needed</th>
+                <th>Typical use time</th>
+                <th>Suitability across ages 4–8</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ten-frames</td>
+                <td>Makes a complete ten visually obvious</td>
+                <td>High</td>
+                <td>Low</td>
+                <td>Printed frame or whiteboard frame, counters</td>
+                <td>3–8 minutes</td>
+                <td>Excellent for 4–7; still useful at 8</td>
+              </tr>
+              <tr>
+                <td>Base-ten blocks or bundled sticks of ten</td>
+                <td>Enacts unitizing: ten ones become one ten</td>
+                <td>Medium–High</td>
+                <td>Low–Moderate</td>
+                <td>Base-ten blocks or linking cubes with rubber bands</td>
+                <td>5–10 minutes</td>
+                <td>Best for 5–8</td>
+              </tr>
+              <tr>
+                <td>Number bonds or cherry diagrams</td>
+                <td>Makes part–whole relationships explicit</td>
+                <td>Medium</td>
+                <td>Moderate</td>
+                <td>Paper, cards, mini-whiteboard</td>
+                <td>3–8 minutes</td>
+                <td>Best for 5–8</td>
+              </tr>
+              <tr>
+                <td>Fingers</td>
+                <td>Immediate, always available, supports make-10 and part–whole</td>
+                <td>Very High</td>
+                <td>Low</td>
+                <td>None</td>
+                <td>1–5 minutes</td>
+                <td>Best for 4–6; useful scaffolding later</td>
+              </tr>
+              <tr>
+                <td>Story contexts and picture books</td>
+                <td>Gives quantities meaning and prompts talk</td>
+                <td>Very High</td>
+                <td>Moderate</td>
+                <td>Book, pictures, simple props</td>
+                <td>5–15 minutes</td>
+                <td>Best for 4–7</td>
+              </tr>
+              <tr>
+                <td>Songs and chants</td>
+                <td>Stabilizes language patterns and facts</td>
+                <td>Very High</td>
+                <td>Low</td>
+                <td>Voice, optional rhythm instruments</td>
+                <td>2–5 minutes</td>
+                <td>Best for 4–6</td>
+              </tr>
+              <tr>
+                <td>Games and board/card tasks</td>
+                <td>High repetition with motivation and variability</td>
+                <td>Very High</td>
+                <td>Moderate</td>
+                <td>Dice, cards, boards, tokens</td>
+                <td>5–15 minutes</td>
+                <td>Strong for 4–8</td>
+              </tr>
+              <tr>
+                <td>Loose-part manipulatives</td>
+                <td>Flexible composition/decomposition practice</td>
+                <td>High</td>
+                <td>Low–Moderate</td>
+                <td>Beans, counters, toys, cups</td>
+                <td>5–10 minutes</td>
+                <td>Strong for 4–7</td>
+              </tr>
+              <tr>
+                <td>Animation and interactive slides</td>
+                <td>Shows transformation over time, useful for stop-and-discuss</td>
+                <td>High</td>
+                <td>Low if brief and guided</td>
+                <td>Screen/projector/tablet</td>
+                <td>3–8 minutes</td>
+                <td>Strong for 4–7</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="small">
+            Table note: the engagement and cognitive-load ratings are instructional synthesis judgments rather than standardized effect sizes.
+            They reflect how directly each method externalizes developmental progression, part–whole structure, ten-making, mathematical discussion,
+            and the explicit representational links recommended in the cited guidance.
+          </p>
+
+          <div class="callout success">
+            <strong>Best instructional order</strong>
+            A high-quality classroom typically rotates methods, but not randomly. A sound teaching order is: objects or fingers first, then ten-frame or grouped visual,
+            then number bond, then equation and spoken generalization.
+          </div>
+        </section>
+
+        <section id="scripts" class="section-card alt">
+          <h2>Teaching Scripts and Lesson Sequences</h2>
+          <p>
+            The scripts below operationalize the same instructional logic found in official sources: start from what the child can already see, make a structure visible, require language,
+            and only then record the symbolic form. EEF calls for explicit mathematical discussion, NCETM emphasizes precise sentence structures, and WWC recommends developmental progression and everyday mathematical talk.
+          </p>
+
+          <h3>Lesson flow</h3>
+          <pre>Quick image warm-up
+Build with objects
+Name the whole and parts
+Match to drawing or number bond
+Repartition to make 10
+Independent practice
+Exit ticket and explanation</pre>
+
+          <h3>A compact mini-sequence for teaching the concept</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Lesson focus</th>
+                <th>Warm-up</th>
+                <th>Guided practice</th>
+                <th>Independent practice</th>
+                <th>Quick assessment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Composition within 10</td>
+                <td>Dot or finger flash</td>
+                <td>Show numbers in two parts</td>
+                <td>Spill-beans or bunny-ears task</td>
+                <td>“Show me 7 in two ways.”</td>
+              </tr>
+              <tr>
+                <td>One ten and some ones</td>
+                <td>Fill a ten-frame</td>
+                <td>Build 11–19 and trade 10 ones for 1 ten</td>
+                <td>Match numeral, model, and sentence</td>
+                <td>“Build 14. What do you notice?”</td>
+              </tr>
+              <tr>
+                <td>Make 10 first</td>
+                <td>Pairs-to-10 chant</td>
+                <td>Solve 8 + 6 with a ten-frame and number bond</td>
+                <td>Complete equation strips</td>
+                <td>“How many from 6 move to 8?”</td>
+              </tr>
+              <tr>
+                <td>Transfer and explanation</td>
+                <td>Quick compare: 9+5 or 8+6?</td>
+                <td>Story problems with teen totals</td>
+                <td>Mixed worksheet and oral proof</td>
+                <td>“Explain how you know without counting all.”</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Teaching script for representing 14</h3>
+          <ol>
+            <li>Give the child 14 counters or cubes and ask them to count and build the number.</li>
+            <li>Place the objects on a ten-frame, filling one frame completely before starting a second.</li>
+            <li>Ask: “What do you notice?”</li>
+            <li>When the child notices the full frame, say: “A full ten-frame is one ten. We have one ten and four ones.”</li>
+            <li>Replace the full group of ten with a ten-rod or a bundled stick of ten.</li>
+            <li>Record the equation: <code class="inline">14 = 10 + 4</code>.</li>
+            <li>Ask for a second proof: “Can you show the same 14 with a number bond?”</li>
+          </ol>
+
+          <div class="quote">
+            <strong>Model teacher dialogue</strong><br>
+            Teacher: Let’s build 14.<br>
+            Child: I put ten here and four here.<br>
+            Teacher: What do you notice about the first frame?<br>
+            Child: It is full.<br>
+            Teacher: Yes. A full frame is one ten. So how many tens?<br>
+            Child: One ten.<br>
+            Teacher: And how many ones are left?<br>
+            Child: Four ones.<br>
+            Teacher: Say the whole sentence with me: Fourteen is one ten and four ones.<br>
+            Teacher: Can you write it another way?<br>
+            Child: 14 = 10 + 4.
+          </div>
+
+          <div class="mini-card">
+            <h4>Helpful phrasing for adults</h4>
+            <ul>
+              <li>Tell me about the whole first.</li>
+              <li>Where is the full ten?</li>
+              <li>What is left over?</li>
+              <li>Show it another way.</li>
+              <li>Say the number as tens and ones.</li>
+            </ul>
+          </div>
+
+          <h3>Teaching script for making 10 first with 8 + 6</h3>
+          <ol>
+            <li>Place 8 counters on a ten-frame.</li>
+            <li>Put 6 counters beside it.</li>
+            <li>Ask: “How many more does 8 need to make a full ten?”</li>
+            <li>Help the child split 6 into 2 and 4 using a number bond.</li>
+            <li>Move 2 from the group of 6 onto the ten-frame to complete the ten.</li>
+            <li>Ask: “Did the total change, or did we just move some counters?”</li>
+            <li>Record the sequence: <code class="inline">8 + 6 = 8 + 2 + 4 = 10 + 4 = 14</code>.</li>
+            <li>Ask the child to explain the move in their own words.</li>
+          </ol>
+
+          <div class="quote">
+            <strong>Model teacher dialogue</strong><br>
+            Teacher: Here are 8. Is the frame full?<br>
+            Child: No.<br>
+            Teacher: How many more does 8 need to make 10?<br>
+            Child: Two.<br>
+            Teacher: Good. Can 6 give 2 and still keep some?<br>
+            Child: Yes, 6 can be 2 and 4.<br>
+            Teacher: Let’s move the 2. What do we have now?<br>
+            Child: Ten and four more.<br>
+            Teacher: So 8 + 6 is?<br>
+            Child: Fourteen.<br>
+            Teacher: Why?<br>
+            Child: Because 8 and 2 make 10, and 4 more makes 14.
+          </div>
+
+          <div class="mini-card">
+            <h4>Helpful phrasing for adults</h4>
+            <ul>
+              <li>How many more to make ten?</li>
+              <li>Split the second number.</li>
+              <li>Move only what you need.</li>
+              <li>What stayed the same?</li>
+              <li>Now say it as 10 and some more.</li>
+            </ul>
+          </div>
+
+          <h3>Parent script for everyday use</h3>
+          <p>
+            At home, the cleanest language is short, repetitive, and tied to real objects. A parent can use snack items, toy cars, steps, or fingers:
+          </p>
+          <div class="quote">
+            Parent: You have 8 grapes. How many more to make 10?<br>
+            Child: Two.<br>
+            Parent: Good. Here are 6 more grapes. Can you take 2 from the 6 to make 10 first?<br>
+            Child: Yes.<br>
+            Parent: So now you have 10 and how many left?<br>
+            Child: Four.<br>
+            Parent: Then 8 and 6 is 14. Ten and four more.
+          </div>
+        </section>
+
+        <section id="activities" class="section-card">
+          <h2>Classroom Activities and Printable Assets</h2>
+          <p>
+            The activities below are designed as practical instantiations of official recommendations rather than copies of any single program.
+            Several draw directly on named NCETM ideas such as Spill the Beans, Bunny Ears, and hiding games, alongside EEF’s use of storybooks, songs, and games, and WWC’s game-based examples and maths-talk prompts.
+          </p>
+
+          <div class="two-col">
+            <div class="mini-card">
+              <h4>Ten-Frame Flash and Tell</h4>
+              <p><strong>How it works:</strong> Flash a ten-frame for two seconds. Ask what children saw, then how they knew.</p>
+              <p><strong>Variation:</strong> Use dot cards, dominoes, or a projected image.</p>
+              <p><strong>If learners struggle:</strong> Stay within 5, then within 10, and allow a second look.</p>
+              <p><strong>If learners move faster:</strong> Ask for two descriptions, such as “I saw 8 as 5 and 3” and “I saw 8 as 10 take away 2.”</p>
+            </div>
+            <div class="mini-card">
+              <h4>Trade Ten Ones for One Ten</h4>
+              <p><strong>How it works:</strong> Children build 11–19 with loose cubes and trade 10 ones for one bundled ten or a base-ten rod.</p>
+              <p><strong>Variation:</strong> Use straws and elastic bands, bead strings, or linking cubes.</p>
+              <p><strong>If learners struggle:</strong> Work only with 10–14.</p>
+              <p><strong>If learners move faster:</strong> Compare 14 and 41 using the same materials.</p>
+            </div>
+            <div class="mini-card">
+              <h4>Spill the Beans Number Bonds</h4>
+              <p><strong>How it works:</strong> Spill two-colour counters or marked beans and describe the parts and whole.</p>
+              <p><strong>Variation:</strong> Spill 8 first, then 10, then later 14 with a visible ten and four more.</p>
+              <p><strong>If learners move faster:</strong> Record the spill on a number bond and turn it into an equation.</p>
+            </div>
+            <div class="mini-card">
+              <h4>Bunny Ears Make Ten</h4>
+              <p><strong>How it works:</strong> Children use fingers to show 10 in different ways and discuss which hand changed and whether the whole changed.</p>
+              <p><strong>If learners struggle:</strong> Use totals up to 5 first and allow imitation.</p>
+              <p><strong>If learners move faster:</strong> Prompt with “Show me 8. How many more to make 10?”</p>
+            </div>
+            <div class="mini-card">
+              <h4>Story Tent Hide-and-Seek</h4>
+              <p><strong>How it works:</strong> Hide part of a group of 10 or 14 toy animals and ask children to infer the hidden part.</p>
+              <p><strong>Variation:</strong> Use a storybook or puppet context.</p>
+              <p><strong>If learners move faster:</strong> Use story problems that require make-10 thinking, such as “8 are in the field and 6 more arrive.”</p>
+            </div>
+            <div class="mini-card">
+              <h4>Make-Ten Board Race</h4>
+              <p><strong>How it works:</strong> Players move only if they can say the pair needed to make 10 first.</p>
+              <p><strong>Variation:</strong> Use addition cards such as 8 + 6, 9 + 5, 7 + 4.</p>
+              <p><strong>If learners move faster:</strong> Require a full explanation: “8 + 6 = 10 + 4 because I split 6 into 2 and 4.”</p>
+            </div>
+          </div>
+
+          <div class="callout warning">
+            <strong>Animation note</strong>
+            NCETM Numberblocks support materials explicitly describe slides that prompt discussion after episodes and note that some slides use animation to illustrate mathematical concepts.
+          </div>
+
+          <h3>Printable worksheet examples</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Worksheet</th>
+                <th>Layout</th>
+                <th>Sample items</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Show 14 three ways</td>
+                <td>Three-column page: numeral, drawing/model, words/equation</td>
+                <td>14 → draw one full ten-frame and 4 more → write 1 ten and 4 ones and 14 = 10 + 4</td>
+              </tr>
+              <tr>
+                <td>Circle the full ten</td>
+                <td>Rows showing teen quantities in dots or cubes; child circles the complete group of ten and labels extras</td>
+                <td>Rows with 11, 13, 14, 17, 19</td>
+              </tr>
+              <tr>
+                <td>Make 10 first</td>
+                <td>Equation strips with a split box for the second addend</td>
+                <td>8 + 6 = 8 + __ + __ = 10 + __ = __; 9 + 5; 7 + 6</td>
+              </tr>
+              <tr>
+                <td>Tell the story</td>
+                <td>Picture, ten-frame, number bond, sentence stem</td>
+                <td>“There were 8 birds. 6 more came. I made 10 by moving __. Now there are __.”</td>
+              </tr>
+              <tr>
+                <td>Hidden part check</td>
+                <td>Whole shown, one part shown, child fills hidden part</td>
+                <td>10 = 7 + __; 14 = 10 + __; “I see 9. How many more to make 10?”</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="resources" class="section-card alt">
+          <h2>Recommended Digital and Printable Visual Assets</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Resource</th>
+                <th>Why it is high value</th>
+                <th>Best use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>EEF Improving Mathematics in the Early Years and Key Stage 1</td>
+                <td>Short, official, evidence-based synthesis for ages 3–7</td>
+                <td>Teacher planning and professional development</td>
+              </tr>
+              <tr>
+                <td>EEF summary poster</td>
+                <td>One-page visual of the five recommendations</td>
+                <td>Staff rooms, lesson planning, coaching</td>
+              </tr>
+              <tr>
+                <td>EEF developmental progressions poster</td>
+                <td>Makes non-linear development explicit and names key precursor skills</td>
+                <td>Assessment and differentiation</td>
+              </tr>
+              <tr>
+                <td>EEF storybook maths talk resource</td>
+                <td>Clear rationale for using stories to prompt mathematical talk</td>
+                <td>Story-based lessons and home-school links</td>
+              </tr>
+              <tr>
+                <td>NCETM Composition Early Years page</td>
+                <td>Practical progression for part–whole understanding with named activities</td>
+                <td>Warm-ups and small-group work</td>
+              </tr>
+              <tr>
+                <td>NCETM Year 1 part–part–whole resource</td>
+                <td>Teaching points and cherry diagram structure</td>
+                <td>Number bonds and decomposition lessons</td>
+              </tr>
+              <tr>
+                <td>NCETM Year 1 11–19 resource</td>
+                <td>Explicitly teaches the “ten-and-a-bit” structure of teen numbers</td>
+                <td>“1 ten and 4 ones” lessons</td>
+              </tr>
+              <tr>
+                <td>NCETM Year 2 bridging 10 resource</td>
+                <td>Explicitly teaches make-10 as an efficient strategy</td>
+                <td>“Make 10 first” and bridging-10 lessons</td>
+              </tr>
+              <tr>
+                <td>NCETM Numberblocks support materials</td>
+                <td>Official practitioner notes, language prompts, and animations</td>
+                <td>Guided discussion after viewing</td>
+              </tr>
+              <tr>
+                <td>NCETM Numberblocks at home</td>
+                <td>Parent-friendly slides adaptable for families</td>
+                <td>Home practice and family communication</td>
+              </tr>
+              <tr>
+                <td>WWC Teaching Math to Young Children</td>
+                <td>U.S. evidence-based practice guide with examples, action steps, and caregiver support</td>
+                <td>Whole-school pedagogy and intervention design</td>
+              </tr>
+              <tr>
+                <td>Learning Trajectories site</td>
+                <td>Developmental progressions plus activities from birth to age 8</td>
+                <td>Long-range planning and differentiation</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="small">
+            Table note: all resources listed above come from official or primary organizations identified during research and were selected because they directly support developmental progression,
+            representation, mathematical talk, or teacher/family implementation.
+          </p>
+        </section>
+
+        <section id="assessment" class="section-card">
+          <h2>Assessment and Rubrics</h2>
+          <p>
+            Both EEF and WWC stress that strong early mathematics assessment should build on what children already know, use a variety of contexts, and rely on careful listening to children’s responses rather than answer-checking alone.
+            For these concepts, the best assessments are brief oral and performance tasks combined with short written transfer items.
+          </p>
+
+          <h3>Sample assessment items</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Item type</th>
+                <th>Prompt</th>
+                <th>What a secure response looks like</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Quick image</td>
+                <td>Show a full ten-frame and 4 extra dots</td>
+                <td>Child says 14 and explains “I saw 10 and 4 more.”</td>
+              </tr>
+              <tr>
+                <td>Build task</td>
+                <td>“Use cubes to show 14. Now trade the cubes if you can.”</td>
+                <td>Child exchanges 10 ones for 1 ten and leaves 4 ones</td>
+              </tr>
+              <tr>
+                <td>Representation match</td>
+                <td>“Match 14 with the correct number bond.”</td>
+                <td>Child chooses 10 and 4</td>
+              </tr>
+              <tr>
+                <td>Missing part</td>
+                <td>“10 = 8 + __”</td>
+                <td>Child says 2 without counting all if possible</td>
+              </tr>
+              <tr>
+                <td>Strategy task</td>
+                <td>“Solve 8 + 6 by making 10 first.”</td>
+                <td>Child splits 6 into 2 and 4 and explains the move</td>
+              </tr>
+              <tr>
+                <td>Transfer story</td>
+                <td>“There are 8 shells on the beach and 6 more wash in. How many now?”</td>
+                <td>Child applies make-10 or equivalent structured reasoning</td>
+              </tr>
+              <tr>
+                <td>Comparison task</td>
+                <td>“Which is easier for make 10: 9 + 5 or 8 + 6? Why?”</td>
+                <td>Child explains that 9 needs 1 and 8 needs 2</td>
+              </tr>
+              <tr>
+                <td>Reverse task</td>
+                <td>“If 14 is 1 ten and 4 ones, what is 10 + 4?”</td>
+                <td>Child connects place value and addition both ways</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Analytic rubric</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Level</th>
+                <th>Representation of teen numbers</th>
+                <th>Part–whole understanding</th>
+                <th>Use of make-10 strategy</th>
+                <th>Mathematical explanation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Emerging</td>
+                <td>Needs full support to model 14</td>
+                <td>Does not yet keep the whole constant when parts change</td>
+                <td>Counts all; does not use make-10</td>
+                <td>Gives answers only or uses non-mathematical language</td>
+              </tr>
+              <tr>
+                <td>Developing</td>
+                <td>Can show 14 with objects but not consistently with words or equations</td>
+                <td>Can identify parts with prompting</td>
+                <td>Uses make-10 with support or imitation</td>
+                <td>Gives partial explanation such as “I moved some”</td>
+              </tr>
+              <tr>
+                <td>Secure</td>
+                <td>Independently shows 14 = 10 + 4 = 1 ten and 4 ones in multiple forms</td>
+                <td>Understands that the whole stays the same when repartitioned</td>
+                <td>Uses make-10 correctly on suitable tasks</td>
+                <td>Explains clearly: “8 needed 2, so I split 6 into 2 and 4.”</td>
+              </tr>
+              <tr>
+                <td>Extending</td>
+                <td>Moves fluently among objects, diagrams, and symbols</td>
+                <td>Chooses efficient partitions and compares methods</td>
+                <td>Uses make-10 flexibly and notices when it is efficient</td>
+                <td>Justifies strategy choice and explains why another method also works</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout success">
+            <strong>Practical judgment rule</strong>
+            A child is secure when they can independently represent teen numbers in multiple forms, identify missing parts to 10, and explain at least one bridge-10 calculation without depending on count-all.
+          </div>
+        </section>
+
+        <section id="limitations" class="section-card alt">
+          <h2>Open Questions and Limitations</h2>
+          <p>
+            This report assumes a broad 4–8 developmental span because the original request did not specify age. In practice, the same lesson should be adjusted substantially for a 4-year-old who is still composing within 5,
+            a 6-year-old who is consolidating teen numbers, and an 8-year-old who should be using bridge-10 reasoning more fluently.
+          </p>
+          <p>
+            Official sources themselves caution that early mathematical development is not strictly linear and that specific skills may emerge in different orders.
+            Likewise, the comparison ratings for engagement and cognitive load are analytic judgments rather than universal published scores; they are meant to support instructional decision-making, not imply that one method is always best.
+          </p>
+          <div class="callout pink">
+            <strong>High-confidence conclusion</strong>
+            Use clear developmental progressions, daily mathematics, precise language, explicit links between models and ideas, and targeted support where needed.
+          </div>
+          <p class="footer-note">
+            End of HTML conversion. The layout is optimized both for on-screen reading and for clean printing.
+          </p>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

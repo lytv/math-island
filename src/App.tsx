@@ -6,6 +6,7 @@ import { IslandHome } from '@/routes/IslandHome';
 import { SkillSession } from '@/routes/SkillSession';
 import { SessionResult } from '@/routes/SessionResult';
 import { Settings } from '@/routes/Settings';
+import { FishHelper } from '@/components/shared/FishHelper';
 import { primeAudio, preloadAllSfx } from '@/lib/audio';
 
 export function App() {
@@ -39,6 +40,7 @@ export function App() {
                         <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                 </main>
+                <FishHelper />
             </div>
         </Cursor>
     );
