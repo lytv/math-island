@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1900 1280" width="1900" height="1280">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .frameLabel{font-size:22px;fill:#a3a3a3}.title{font-size:30px;font-weight:760;fill:#111827}.sub{font-size:15px;fill:#667085}.laneTitle{font-size:13px;font-weight:750;letter-spacing:.03em;fill:#374151}.laneSub{font-size:12px;fill:#667085}.nodeTitle{font-size:17px;font-weight:750;fill:#111827}.nodeText{font-size:14px;fill:#374151}.nodeSub{font-size:12px;fill:#667085}.label{font-size:12px;font-weight:700;fill:#374151}.legend{font-size:13px;fill:#667085}.step{font-size:18px;font-weight:750;fill:#111827}
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#2563eb"/></marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#7c3aed"/></marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f05a1a"/></marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#6b7280"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#16a34a"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.10"/></filter>
+  </defs>
+  <rect width="1900" height="1280" fill="#f3f4f6"/>
+  <text x="84" y="52" class="frameLabel">Frame</text>
+  <rect x="84" y="72" width="1732" height="1168" fill="#ffffff"/>
+  <text x="140" y="126" class="title">SCSK PayNow Counter Sales Flowchart</text>
+  <text x="140" y="158" class="sub">Phase 1 flow: SAP invoice data, PayNow QR creation, customer payment, webhook, and SAP paid confirmation.</text>
+  <rect x="132" y="202" width="276" height="944" rx="12" fill="#f8fafc" stroke="#cfd8e3" stroke-width="1.5" stroke-dasharray="7,6"/>
+  <text x="150" y="236" class="laneTitle">ACTORS</text>
+  <text x="150" y="260" class="laneSub">Seller / Buyer</text>
+  <rect x="444" y="202" width="288" height="944" rx="12" fill="#f8fafc" stroke="#cfd8e3" stroke-width="1.5" stroke-dasharray="7,6"/>
+  <text x="462" y="236" class="laneTitle">COUNTER SALES</text>
+  <text x="462" y="260" class="laneSub">Present QR and status</text>
+  <rect x="768" y="202" width="276" height="944" rx="12" fill="#f8fafc" stroke="#cfd8e3" stroke-width="1.5" stroke-dasharray="7,6"/>
+  <text x="786" y="236" class="laneTitle">SAP S/4HANA</text>
+  <text x="786" y="260" class="laneSub">Invoice truth</text>
+  <rect x="1076" y="202" width="300" height="944" rx="12" fill="#f8fafc" stroke="#cfd8e3" stroke-width="1.5" stroke-dasharray="7,6"/>
+  <text x="1094" y="236" class="laneTitle">PAYMENT MIDDLEWARE</text>
+  <text x="1094" y="260" class="laneSub">Rikkeisoft proposed scope</text>
+  <rect x="1410" y="202" width="406" height="944" rx="12" fill="#f8fafc" stroke="#f05a1a" stroke-width="1.5" stroke-dasharray="10,7"/>
+  <text x="1428" y="236" class="laneTitle">PAYMENT PROVIDER</text>
+  <text x="1428" y="260" class="laneSub">UOB SG Bank API or HitPay</text>
+  <rect x="168" y="274" width="204" height="126" rx="10" fill="#fff7ed" stroke="#fb923c" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="270.0" y="305" text-anchor="middle" class="nodeTitle">Seller</text>
+  <text x="270.0" y="333" text-anchor="middle" class="nodeText">Counter staff</text>
+  <text x="270.0" y="358" text-anchor="middle" class="nodeSub">creates sale/invoice</text>
+  <rect x="168" y="710" width="204" height="126" rx="10" fill="#fff7ed" stroke="#fb923c" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="270.0" y="741" text-anchor="middle" class="nodeTitle">Buyer</text>
+  <text x="270.0" y="769" text-anchor="middle" class="nodeText">Customer</text>
+  <text x="270.0" y="794" text-anchor="middle" class="nodeSub">scans and pays</text>
+  <rect x="170" y="872" width="200" height="126" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="270.0" y="903" text-anchor="middle" class="nodeTitle">Banking App</text>
+  <text x="270.0" y="931" text-anchor="middle" class="nodeText">Customer device</text>
+  <text x="270.0" y="956" text-anchor="middle" class="nodeSub">PayNow scan/pay</text>
+  <rect x="478" y="364" width="216" height="126" rx="10" fill="#f5f3ff" stroke="#a78bfa" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="586.0" y="395" text-anchor="middle" class="nodeTitle">Counter Sales</text>
+  <text x="586.0" y="423" text-anchor="middle" class="nodeText">QR display</text>
+  <text x="586.0" y="448" text-anchor="middle" class="nodeSub">operator status view</text>
+  <rect x="478" y="894" width="216" height="116" rx="10" fill="#f5f3ff" stroke="#a78bfa" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="586.0" y="925" text-anchor="middle" class="nodeTitle">Status View</text>
+  <text x="586.0" y="953" text-anchor="middle" class="nodeText">Paid / pending</text>
+  <text x="586.0" y="978" text-anchor="middle" class="nodeSub">visible to seller</text>
+  <rect x="802" y="274" width="204" height="126" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="904.0" y="305" text-anchor="middle" class="nodeTitle">SAP Invoice</text>
+  <text x="904.0" y="333" text-anchor="middle" class="nodeText">System of record</text>
+  <text x="904.0" y="358" text-anchor="middle" class="nodeSub">amount + reference</text>
+  <rect x="802" y="894" width="204" height="116" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="904.0" y="925" text-anchor="middle" class="nodeTitle">SAP Paid Update</text>
+  <text x="904.0" y="953" text-anchor="middle" class="nodeText">Receives confirm</text>
+  <text x="904.0" y="978" text-anchor="middle" class="nodeSub">invoice lifecycle done</text>
+  <rect x="1110" y="274" width="232" height="126" rx="10" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="1226.0" y="305" text-anchor="middle" class="nodeTitle">Middleware</text>
+  <text x="1226.0" y="333" text-anchor="middle" class="nodeText">Orchestration</text>
+  <text x="1226.0" y="358" text-anchor="middle" class="nodeSub">create + validate + post</text>
+  <rect x="1110" y="536" width="232" height="126" rx="10" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="1226.0" y="567" text-anchor="middle" class="nodeTitle">Payment Store</text>
+  <text x="1226.0" y="595" text-anchor="middle" class="nodeText">Transaction ref</text>
+  <text x="1226.0" y="620" text-anchor="middle" class="nodeSub">QR + audit log</text>
+  <rect x="1110" y="894" width="232" height="126" rx="10" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="1226.0" y="925" text-anchor="middle" class="nodeTitle">Payment Matcher</text>
+  <text x="1226.0" y="953" text-anchor="middle" class="nodeText">Validate webhook</text>
+  <text x="1226.0" y="978" text-anchor="middle" class="nodeSub">match invoice ref</text>
+  <rect x="1452" y="274" width="310" height="126" rx="10" fill="#ecfdf5" stroke="#22c55e" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="1607.0" y="305" text-anchor="middle" class="nodeTitle">Payment Provider</text>
+  <text x="1607.0" y="333" text-anchor="middle" class="nodeText">UOB / HitPay</text>
+  <text x="1607.0" y="358" text-anchor="middle" class="nodeSub">QR data + sandbox</text>
+  <rect x="1452" y="536" width="310" height="126" rx="10" fill="#ecfdf5" stroke="#22c55e" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="1607.0" y="567" text-anchor="middle" class="nodeTitle">PayNow QR Data</text>
+  <text x="1607.0" y="595" text-anchor="middle" class="nodeText">QR / transaction ID</text>
+  <text x="1607.0" y="620" text-anchor="middle" class="nodeSub">amount + reference</text>
+  <rect x="1452" y="894" width="310" height="126" rx="10" fill="#ecfdf5" stroke="#22c55e" stroke-width="1.6" filter="url(#shadow)"/>
+  <text x="1607.0" y="925" text-anchor="middle" class="nodeTitle">Webhook Event</text>
+  <text x="1607.0" y="953" text-anchor="middle" class="nodeText">Payment notification</text>
+  <text x="1607.0" y="978" text-anchor="middle" class="nodeSub">paid / failed / match fail</text>
+  <path d="M 372 337 L 478 415" fill="none" stroke="#2563eb" stroke-width="2.3" marker-end="url(#arrow-blue)"/>
+  <rect x="377.5" y="316" width="93" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="424" y="332" text-anchor="middle" class="label">create sale</text>
+  <circle cx="426" cy="391" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="426" y="398" text-anchor="middle" class="step">1</text>
+  <path d="M 694 415 C 738 350 760 337 802 337" fill="none" stroke="#2563eb" stroke-width="2.3" marker-end="url(#arrow-blue)"/>
+  <rect x="693.0" y="306" width="114" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="750" y="322" text-anchor="middle" class="label">create invoice</text>
+  <circle cx="744" cy="364" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="744" y="371" text-anchor="middle" class="step">2</text>
+  <path d="M 1006 337 L 1110 337" fill="none" stroke="#2563eb" stroke-width="2.3" marker-end="url(#arrow-blue)"/>
+  <rect x="1008.0" y="290" width="100" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="1058" y="306" text-anchor="middle" class="label">invoice data</text>
+  <circle cx="1058" cy="337" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="1058" y="344" text-anchor="middle" class="step">3</text>
+  <path d="M 1342 337 L 1452 337" fill="none" stroke="#2563eb" stroke-width="2.3" marker-end="url(#arrow-blue)"/>
+  <rect x="1335.0" y="280" width="114" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="1392" y="296" text-anchor="middle" class="label">create payment</text>
+  <circle cx="1392" cy="337" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="1392" y="344" text-anchor="middle" class="step">4</text>
+  <path d="M 1452 600 L 1342 600" fill="none" stroke="#7c3aed" stroke-width="2.3" marker-end="url(#arrow-purple)"/>
+  <rect x="1357.0" y="540" width="70" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="1392" y="556" text-anchor="middle" class="label">QR data</text>
+  <circle cx="1392" cy="600" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="1392" y="607" text-anchor="middle" class="step">5</text>
+  <path d="M 1110 600 C 1010 600 940 500 694 427" fill="none" stroke="#7c3aed" stroke-width="2.3" marker-end="url(#arrow-purple)"/>
+  <rect x="870.5" y="468" width="79" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="910" y="484" text-anchor="middle" class="label">return QR</text>
+  <circle cx="986" cy="482" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="986" y="489" text-anchor="middle" class="step">6</text>
+  <path d="M 478 426 C 418 438 410 600 270 710" fill="none" stroke="#7c3aed" stroke-width="2.3" marker-end="url(#arrow-purple)"/>
+  <rect x="347.0" y="500" width="86" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="390" y="516" text-anchor="middle" class="label">present QR</text>
+  <circle cx="376" cy="585" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="376" y="592" text-anchor="middle" class="step">7</text>
+  <path d="M 270 836 L 270 872" fill="none" stroke="#f05a1a" stroke-width="2.3" marker-end="url(#arrow-orange)"/>
+  <rect x="276.0" y="838" width="72" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="312" y="854" text-anchor="middle" class="label">open app</text>
+  <path d="M 270 998 L 270 1086 L 1720 1086 L 1720 600 L 1762 600" fill="none" stroke="#f05a1a" stroke-width="2.3" marker-end="url(#arrow-orange)"/>
+  <rect x="520.5" y="1048" width="359" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="700" y="1064" text-anchor="middle" class="label">Banking App reads QR, then submits PayNow payment</text>
+  <circle cx="1058" cy="1110" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="1058" y="1117" text-anchor="middle" class="step">8</text>
+  <path d="M 1607 662 L 1607 894" fill="none" stroke="#f05a1a" stroke-width="2.3" marker-end="url(#arrow-orange)"/>
+  <rect x="1540.5" y="718" width="135" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="1608" y="734" text-anchor="middle" class="label">payment completed</text>
+  <circle cx="1608" cy="780" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="1608" y="787" text-anchor="middle" class="step">9</text>
+  <path d="M 1452 956 L 1342 956" fill="none" stroke="#6b7280" stroke-width="2.3" marker-end="url(#arrow-gray)" stroke-dasharray="7,5"/>
+  <rect x="1357.0" y="896" width="70" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="1392" y="912" text-anchor="middle" class="label">webhook</text>
+  <circle cx="1392" cy="956" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="1392" y="963" text-anchor="middle" class="step">10</text>
+  <path d="M 1110 956 L 1006 956" fill="none" stroke="#16a34a" stroke-width="2.3" marker-end="url(#arrow-green)"/>
+  <rect x="1008.0" y="880" width="100" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="1058" y="896" text-anchor="middle" class="label">paid confirm</text>
+  <circle cx="1058" cy="956" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="1058" y="963" text-anchor="middle" class="step">11</text>
+  <path d="M 802 956 L 694 956" fill="none" stroke="#16a34a" stroke-width="2.3" marker-end="url(#arrow-green)"/>
+  <rect x="691.0" y="880" width="114" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="748" y="896" text-anchor="middle" class="label">status visible</text>
+  <circle cx="744" cy="956" r="22" fill="#ffffff" stroke="#737373" stroke-width="2.4"/>
+  <text x="744" y="963" text-anchor="middle" class="step">12</text>
+  <path d="M 478 956 L 372 956 C 330 910 300 850 270 836" fill="none" stroke="#16a34a" stroke-width="2.3" marker-end="url(#arrow-green)" stroke-dasharray="7,5"/>
+  <rect x="364.0" y="806" width="128" height="21" rx="5" fill="#ffffff" opacity="0.96"/>
+  <text x="428" y="822" text-anchor="middle" class="label">seller sees paid</text>
+  <rect x="130" y="1168" width="1686" height="52" rx="9" fill="#f8fafc" stroke="#e5e7eb"/>
+  <line x1="164" y1="1194" x2="202" y2="1194" stroke="#2563eb" stroke-width="2.3" marker-end="url(#arrow-blue)"/>
+  <text x="218" y="1199" class="legend">invoice</text>
+  <line x1="329" y1="1194" x2="367" y2="1194" stroke="#7c3aed" stroke-width="2.3" marker-end="url(#arrow-purple)"/>
+  <text x="383" y="1199" class="legend">QR</text>
+  <line x1="494" y1="1194" x2="532" y2="1194" stroke="#f05a1a" stroke-width="2.3" marker-end="url(#arrow-orange)"/>
+  <text x="548" y="1199" class="legend">payment</text>
+  <line x1="659" y1="1194" x2="697" y2="1194" stroke="#6b7280" stroke-width="2.3" marker-end="url(#arrow-gray)"/>
+  <text x="713" y="1199" class="legend">webhook</text>
+  <line x1="824" y1="1194" x2="862" y2="1194" stroke="#16a34a" stroke-width="2.3" marker-end="url(#arrow-green)"/>
+  <text x="878" y="1199" class="legend">status update</text>
+</svg>

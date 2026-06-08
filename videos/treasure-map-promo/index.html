@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="vi"
+  data-composition-variables='[
+    {"id":"lang","type":"enum","label":"Language","default":"vi","options":[
+      {"value":"vi","label":"Tiếng Việt"},
+      {"value":"en","label":"English"}
+    ]}
+  ]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="fonts/fonts.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #041c2e; }
+
+      :root {
+        --gold-1: #fff3c4; --gold-2: #ffd76a; --gold-3: #e8a62e; --gold-4: #b97d18; --gold-ink: #6b3f00;
+        --sea-1: #0d4a63; --sea-2: #072c42; --sea-3: #041c2e;
+        --parch: #ffe9b0; --sky: #9fd6ea;
+      }
+      #root { position: relative; width: 1920px; height: 1080px; font-family: "Baloo 2", sans-serif; }
+
+      .scene { position: absolute; inset: 0; overflow: hidden; }
+      .sea-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(1100px 650px at 65% 8%, var(--sea-1), transparent 70%),
+          radial-gradient(900px 600px at 18% 95%, #0a3850, transparent 65%),
+          var(--sea-3);
+      }
+      .mote { position: absolute; border-radius: 50%; background: radial-gradient(circle, var(--gold-1), transparent 70%); }
+
+      .display { font-family: "Bungee", "Baloo 2", sans-serif; color: var(--gold-2); }
+
+      /* ---------- Scene 1: hook ---------- */
+      #s1 { z-index: 1; }
+      .s1-content {
+        position: relative; width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 34px; padding: 80px;
+      }
+      .s1-coin {
+        width: 190px; height: 190px; border-radius: 50%;
+        display: grid; place-items: center;
+        font-family: "Bungee", sans-serif; font-size: 84px; color: var(--gold-ink);
+        background: radial-gradient(circle at 32% 28%, var(--gold-1) 0%, var(--gold-2) 38%, var(--gold-3) 72%, var(--gold-4) 100%);
+        box-shadow: inset 0 0 0 8px rgba(107,63,0,.3), inset 0 -14px 22px rgba(107,63,0,.35),
+                    inset 0 8px 12px rgba(255,248,220,.7), 0 22px 50px rgba(0,0,0,.6), 0 0 80px rgba(255,215,106,.35);
+      }
+      .s1-title {
+        font-size: 148px; letter-spacing: .015em; text-align: center; line-height: 1.04;
+        text-shadow: 0 4px 0 var(--gold-4), 0 10px 0 #6b4708, 0 26px 60px rgba(0,0,0,.7);
+      }
+      .s1-sub { font-size: 52px; font-weight: 800; color: var(--sky); text-shadow: 0 4px 18px rgba(0,0,0,.6); }
+
+      /* ---------- Scene 2: mystery map ---------- */
+      #s2 { z-index: 2; background: var(--sea-3); }
+      .s2-map {
+        position: absolute; inset: -40px;
+        background: url("map.jpg") center / cover no-repeat;
+        filter: blur(10px) brightness(.45) saturate(.5);
+      }
+      .s2-shade {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 50% 45%, rgba(7,44,66,.05) 30%, rgba(4,28,46,.72) 100%);
+      }
+      .s2-coin {
+        position: absolute; width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%;
+        display: grid; place-items: center;
+        font-family: "Bungee", sans-serif; font-size: 44px; color: var(--gold-ink);
+        background: radial-gradient(circle at 32% 28%, var(--gold-1) 0%, var(--gold-2) 38%, var(--gold-3) 72%, var(--gold-4) 100%);
+        box-shadow: inset 0 0 0 5px rgba(107,63,0,.3), inset 0 -8px 12px rgba(107,63,0,.35), 0 12px 28px rgba(0,0,0,.55);
+      }
+      .s2-card {
+        position: absolute; top: 36px; left: 50%; transform: translateX(-50%);
+        background: rgba(4, 24, 38, .88); border: 4px solid var(--gold-2); border-radius: 999px;
+        padding: 18px 56px; font-size: 50px; font-weight: 800; color: var(--parch);
+        box-shadow: 0 18px 50px rgba(0,0,0,.55);
+        white-space: nowrap;
+      }
+
+      /* ---------- Scene 3: unlock moment ---------- */
+      #s3 { z-index: 3; background: var(--sea-3); }
+      .s3-piece-blur, .s3-piece-sharp {
+        position: absolute; inset: 0;
+        background-image: url("kraken.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+      .s3-piece-blur { filter: blur(14px) brightness(.5) saturate(.55); transform: scale(1.05); }
+      .s3-coin {
+        position: absolute; left: 50%; top: 47%; width: 230px; height: 230px; margin: -115px 0 0 -115px;
+        border-radius: 50%; display: grid; place-items: center;
+        font-family: "Bungee", sans-serif; font-size: 100px; color: var(--gold-ink);
+        background: radial-gradient(circle at 32% 28%, var(--gold-1) 0%, var(--gold-2) 38%, var(--gold-3) 72%, var(--gold-4) 100%);
+        box-shadow: inset 0 0 0 9px rgba(107,63,0,.3), inset 0 -16px 24px rgba(107,63,0,.35), 0 26px 60px rgba(0,0,0,.6), 0 0 90px rgba(255,215,106,.45);
+      }
+      .s3-spark { position: absolute; left: 50%; top: 47%; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%;
+        background: radial-gradient(circle, #fff, var(--gold-2) 55%, transparent 72%); }
+      .s3-banner {
+        position: absolute; bottom: 84px; left: 50%; transform: translateX(-50%);
+        background: rgba(4, 24, 38, .9); border: 4px solid var(--gold-2); border-radius: 999px;
+        padding: 24px 64px; font-size: 50px; font-weight: 800; color: var(--parch);
+        box-shadow: 0 18px 50px rgba(0,0,0,.55); white-space: nowrap;
+      }
+      .s3-tag {
+        position: absolute; top: 84px; left: 50%; transform: translateX(-50%);
+        background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+        border-radius: 999px; padding: 20px 56px; font-size: 46px; font-weight: 800; color: var(--gold-ink);
+        box-shadow: 0 0 0 5px var(--gold-4), 0 16px 44px rgba(0,0,0,.55); white-space: nowrap;
+      }
+
+      /* ---------- Scene 4: journey reveal ---------- */
+      #s4 { z-index: 4; background: var(--sea-3); }
+      .s4-map { position: absolute; inset: -30px; background: url("map.jpg") center / cover no-repeat; }
+      .s4-cover {
+        position: absolute; background: rgba(5, 27, 43, .94);
+        box-shadow: inset 0 0 0 2px rgba(159, 214, 234, .12);
+      }
+      .s4-card {
+        position: absolute; bottom: 70px; left: 50%; transform: translateX(-50%);
+        background: rgba(4, 24, 38, .9); border: 4px solid var(--gold-2); border-radius: 999px;
+        padding: 24px 64px; font-size: 52px; font-weight: 800; color: var(--parch);
+        box-shadow: 0 18px 50px rgba(0,0,0,.55); white-space: nowrap;
+      }
+
+      /* ---------- Scene 5: finale ---------- */
+      #s5 { z-index: 5; background: var(--sea-3); }
+      .s5-island {
+        position: absolute; inset: 0;
+        background-image: url("treasure.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+      .s5-glow {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 50% 40%, rgba(255,215,106,.22), transparent 55%);
+      }
+      .s5-shade {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 50% 42%, rgba(4,28,46,0) 35%, rgba(4,28,46,.82) 100%);
+      }
+      .s5-content {
+        position: relative; width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+        gap: 26px; padding: 0 120px 110px;
+      }
+      .s5-title {
+        font-size: 110px; text-align: center; line-height: 1.06;
+        text-shadow: 0 4px 0 var(--gold-4), 0 9px 0 #6b4708, 0 24px 56px rgba(0,0,0,.75);
+      }
+      .s5-sub { font-size: 54px; font-weight: 800; color: var(--parch); text-shadow: 0 4px 18px rgba(0,0,0,.7); }
+      .s5-cta {
+        background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+        border-radius: 999px; padding: 22px 72px; font-size: 50px; font-weight: 800; color: var(--gold-ink);
+        box-shadow: 0 0 0 5px var(--gold-4), 0 18px 48px rgba(0,0,0,.6);
+      }
+      #fade-out { position: absolute; inset: 0; background: #000; opacity: 0; z-index: 9; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1920" data-height="1080">
+
+      <!-- music -->
+      <audio id="music" class="clip" data-start="0" data-duration="30" data-track-index="5" src="music.mp3" data-volume="0.9"></audio>
+
+      <!-- Scene 1: hook (0 - 6.0) -->
+      <div id="s1" class="clip scene" data-start="0" data-duration="6" data-track-index="1">
+        <div class="sea-bg"></div>
+        <div class="mote" id="m1" style="left: 280px;  top: 260px; width: 14px; height: 14px;"></div>
+        <div class="mote" id="m2" style="left: 1620px; top: 180px; width: 10px; height: 10px;"></div>
+        <div class="mote" id="m3" style="left: 1500px; top: 820px; width: 16px; height: 16px;"></div>
+        <div class="mote" id="m4" style="left: 420px;  top: 880px; width: 10px; height: 10px;"></div>
+        <div class="mote" id="m5" style="left: 980px;  top: 150px; width: 12px; height: 12px;"></div>
+        <div class="s1-content">
+          <div class="s1-coin" id="s1-coin">X</div>
+          <div class="s1-title display" id="s1-title">BẢN ĐỒ KHO BÁU</div>
+          <div class="s1-sub" id="s1-sub">Hành trình Toán Lớp 2 trên biển cả</div>
+        </div>
+      </div>
+
+      <!-- Scene 2: mystery map (5.4 - 12.4) -->
+      <div id="s2" class="clip scene" data-start="5.4" data-duration="7" data-track-index="2">
+        <div class="s2-map" id="s2-map" data-layout-allow-overflow></div>
+        <div class="s2-shade"></div>
+        <!-- 12 coins at piece centers (4 x 3) -->
+        <div class="s2-coin" id="c1"  style="left: 12.5%; top: 83.33%;">1</div>
+        <div class="s2-coin" id="c2"  style="left: 37.5%; top: 83.33%;">2</div>
+        <div class="s2-coin" id="c3"  style="left: 62.5%; top: 83.33%;">3</div>
+        <div class="s2-coin" id="c4"  style="left: 87.5%; top: 83.33%;">4</div>
+        <div class="s2-coin" id="c5"  style="left: 87.5%; top: 50%;">5</div>
+        <div class="s2-coin" id="c6"  style="left: 62.5%; top: 50%;">6</div>
+        <div class="s2-coin" id="c7"  style="left: 37.5%; top: 50%;">7</div>
+        <div class="s2-coin" id="c8"  style="left: 12.5%; top: 50%;">8</div>
+        <div class="s2-coin" id="c9"  style="left: 12.5%; top: 20.5%;">9</div>
+        <div class="s2-coin" id="c10" style="left: 37.5%; top: 20.5%;">10</div>
+        <div class="s2-coin" id="c11" style="left: 62.5%; top: 20.5%;">11</div>
+        <div class="s2-coin" id="c12" style="left: 87.5%; top: 20.5%;">12</div>
+        <div class="s2-card" id="s2-card">12 vùng đất bí ẩn đang chờ khám phá...</div>
+      </div>
+
+      <!-- Scene 3: unlock moment (11.8 - 18.6) -->
+      <div id="s3" class="clip scene" data-start="11.8" data-duration="6.8" data-track-index="1">
+        <div class="s3-piece-blur" data-layout-allow-overflow></div>
+        <div class="s3-piece-sharp" id="s3-sharp" data-layout-allow-overflow></div>
+        <div class="s3-spark" id="sp1"></div>
+        <div class="s3-spark" id="sp2"></div>
+        <div class="s3-spark" id="sp3"></div>
+        <div class="s3-spark" id="sp4"></div>
+        <div class="s3-spark" id="sp5"></div>
+        <div class="s3-spark" id="sp6"></div>
+        <div class="s3-spark" id="sp7"></div>
+        <div class="s3-spark" id="sp8"></div>
+        <div class="s3-coin" id="s3-coin">6</div>
+        <div class="s3-tag" id="s3-tag">Vực Kraken — Nhân, chia 2 và 5</div>
+        <div class="s3-banner" id="s3-banner">Hoàn thành khoá học = Mở một mảnh bản đồ!</div>
+      </div>
+
+      <!-- Scene 4: journey reveal (18.0 - 24.6) -->
+      <div id="s4" class="clip scene" data-start="18" data-duration="6.6" data-track-index="2">
+        <div class="s4-map" id="s4-map" data-layout-allow-overflow></div>
+        <!-- covers in journey order: bottom L->R, middle R->L, top L->R -->
+        <div class="s4-cover" id="k1"  style="left: 0%;  top: 66.66%; width: 25.2%; height: 33.4%;"></div>
+        <div class="s4-cover" id="k2"  style="left: 25%; top: 66.66%; width: 25.2%; height: 33.4%;"></div>
+        <div class="s4-cover" id="k3"  style="left: 50%; top: 66.66%; width: 25.2%; height: 33.4%;"></div>
+        <div class="s4-cover" id="k4"  style="left: 75%; top: 66.66%; width: 25%;   height: 33.4%;"></div>
+        <div class="s4-cover" id="k5"  style="left: 75%; top: 33.33%; width: 25%;   height: 33.43%;"></div>
+        <div class="s4-cover" id="k6"  style="left: 50%; top: 33.33%; width: 25.2%; height: 33.43%;"></div>
+        <div class="s4-cover" id="k7"  style="left: 25%; top: 33.33%; width: 25.2%; height: 33.43%;"></div>
+        <div class="s4-cover" id="k8"  style="left: 0%;  top: 33.33%; width: 25.2%; height: 33.43%;"></div>
+        <div class="s4-cover" id="k9"  style="left: 0%;  top: 0%;     width: 25.2%; height: 33.43%;"></div>
+        <div class="s4-cover" id="k10" style="left: 25%; top: 0%;     width: 25.2%; height: 33.43%;"></div>
+        <div class="s4-cover" id="k11" style="left: 50%; top: 0%;     width: 25.2%; height: 33.43%;"></div>
+        <div class="s4-cover" id="k12" style="left: 75%; top: 0%;     width: 25%;   height: 33.43%;"></div>
+        <div class="s4-card" id="s4-card">Mỗi khoá học là một hòn đảo mới</div>
+      </div>
+
+      <!-- Scene 5: finale (24.0 - 30) -->
+      <div id="s5" class="clip scene" data-start="24" data-duration="6" data-track-index="1">
+        <div class="s5-island" id="s5-island" data-layout-allow-overflow></div>
+        <div class="s5-glow" id="s5-glow"></div>
+        <div class="s5-shade"></div>
+        <div class="s5-content">
+          <div class="s5-title display" id="s5-title">MATH ISLAND — TOÁN LỚP 2</div>
+          <div class="s5-sub" id="s5-sub">Ghép đủ 12 mảnh để tìm thấy kho báu</div>
+          <div class="s5-cta" id="s5-cta">Sắp ra mắt!</div>
+        </div>
+      </div>
+
+      <div id="fade-out"></div>
+    </div>
+
+    <script>
+      // ----- localized copy -----
+      const STRINGS = {
+        vi: {
+          "s1-title": "BẢN ĐỒ KHO BÁU",
+          "s1-sub": "Hành trình Toán Lớp 2 trên biển cả",
+          "s2-card": "12 vùng đất bí ẩn đang chờ khám phá...",
+          "s3-tag": "Vực Kraken — Nhân, chia 2 và 5",
+          "s3-banner": "Hoàn thành khoá học = Mở một mảnh bản đồ!",
+          "s4-card": "Mỗi khoá học là một hòn đảo mới",
+          "s5-title": "MATH ISLAND — TOÁN LỚP 2",
+          "s5-sub": "Ghép đủ 12 mảnh để tìm thấy kho báu",
+          "s5-cta": "Sắp ra mắt!"
+        },
+        en: {
+          "s1-title": "THE TREASURE MAP",
+          "s1-sub": "A Grade 2 math adventure on the high seas",
+          "s2-card": "12 mysterious lands are waiting for you...",
+          "s3-tag": "Kraken Lagoon — Multiply and divide by 2 and 5",
+          "s3-banner": "Finish a course = Unlock a map piece!",
+          "s4-card": "Every course is a brand-new island",
+          "s5-title": "MATH ISLAND — GRADE 2",
+          "s5-sub": "Collect all 12 pieces to find the treasure",
+          "s5-cta": "Coming soon!"
+        }
+      };
+      const { lang } = window.__hyperframes.getVariables();
+      const copy = STRINGS[lang] || STRINGS.vi;
+      for (const [id, text] of Object.entries(copy)) {
+        document.getElementById(id).textContent = text;
+      }
+
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ===== Scene 1 (0 - 6) ===== */
+      tl.from("#s1-coin",  { y: -420, rotation: -160, opacity: 0, duration: 0.9, ease: "bounce.out" }, 0.2);
+      tl.from("#s1-title", { y: 90, opacity: 0, duration: 0.8, ease: "power3.out" }, 0.7);
+      tl.from("#s1-sub",   { y: 50, opacity: 0, duration: 0.6, ease: "power2.out" }, 1.15);
+      tl.from(["#m1", "#m2", "#m3", "#m4", "#m5"], { opacity: 0, scale: 0, duration: 0.5, ease: "back.out(2)", stagger: 0.12 }, 1.0);
+      // gentle float on motes for the rest of the scene (finite repeats)
+      tl.to(["#m1", "#m3", "#m5"], { y: -26, duration: 1.4, ease: "sine.inOut", repeat: 2, yoyo: true }, 1.6);
+      tl.to(["#m2", "#m4"],        { y: 20,  duration: 1.6, ease: "sine.inOut", repeat: 2, yoyo: true }, 1.6);
+      // subtle hero coin breathing
+      tl.to("#s1-coin", { scale: 1.06, duration: 1.1, ease: "sine.inOut", repeat: 3, yoyo: true }, 1.3);
+
+      /* ===== Scene 2 (5.4 - 12.4): crossfade in, coins pop ===== */
+      tl.from("#s2", { opacity: 0, duration: 0.7, ease: "power2.inOut" }, 5.4);
+      tl.from("#s2-map", { scale: 1.1, duration: 6.8, ease: "none" }, 5.5);
+      tl.from("#s2-card", { y: -130, opacity: 0, duration: 0.7, ease: "back.out(1.6)" }, 6.2);
+      tl.from(["#c1","#c2","#c3","#c4","#c5","#c6","#c7","#c8","#c9","#c10","#c11","#c12"],
+        { scale: 0, opacity: 0, duration: 0.45, ease: "back.out(2.2)", stagger: 0.14 }, 6.7);
+
+      /* ===== Scene 3 (11.8 - 18.6): the unlock ===== */
+      tl.from("#s3", { opacity: 0, duration: 0.7, ease: "power2.inOut" }, 11.8);
+      tl.set("#s3-sharp", { opacity: 0 }, 11.8);
+      tl.from("#s3-coin", { scale: 0.4, opacity: 0, duration: 0.6, ease: "elastic.out(1, 0.6)" }, 12.4);
+      tl.from("#s3-tag",  { y: -110, opacity: 0, duration: 0.6, ease: "power3.out" }, 12.7);
+      // THE moment: coin spins away, sharp map fades in, sparks fly
+      tl.to("#s3-coin", { scale: 2.6, rotation: 200, opacity: 0, duration: 0.8, ease: "power2.in" }, 14.4);
+      tl.to("#s3-sharp", { opacity: 1, duration: 1.1, ease: "power2.inOut" }, 14.7);
+      tl.to("#sp1", { x: 330,  y: -210, scale: 0, opacity: 0, duration: 0.9, ease: "power2.out" }, 14.9);
+      tl.to("#sp2", { x: -300, y: -260, scale: 0, opacity: 0, duration: 0.9, ease: "power2.out" }, 14.9);
+      tl.to("#sp3", { x: 380,  y: 150,  scale: 0, opacity: 0, duration: 0.9, ease: "power2.out" }, 14.95);
+      tl.to("#sp4", { x: -360, y: 190,  scale: 0, opacity: 0, duration: 0.9, ease: "power2.out" }, 14.95);
+      tl.to("#sp5", { x: 150,  y: -330, scale: 0, opacity: 0, duration: 0.9, ease: "power2.out" }, 15.0);
+      tl.to("#sp6", { x: -140, y: 320,  scale: 0, opacity: 0, duration: 0.9, ease: "power2.out" }, 15.0);
+      tl.to("#sp7", { x: 430,  y: -40,  scale: 0, opacity: 0, duration: 0.9, ease: "power2.out" }, 15.05);
+      tl.to("#sp8", { x: -420, y: 60,   scale: 0, opacity: 0, duration: 0.9, ease: "power2.out" }, 15.05);
+      tl.from("#s3-banner", { y: 130, opacity: 0, duration: 0.7, ease: "back.out(1.5)" }, 15.6);
+
+      /* ===== Scene 4 (18 - 24.6): journey reveal ===== */
+      tl.from("#s4", { opacity: 0, duration: 0.7, ease: "power2.inOut" }, 18);
+      tl.from("#s4-map", { scale: 1.08, duration: 6.4, ease: "none" }, 18.1);
+      tl.to(["#k1","#k2","#k3","#k4","#k5","#k6","#k7","#k8","#k9","#k10","#k11","#k12"],
+        { opacity: 0, duration: 0.5, ease: "power2.inOut", stagger: 0.26 }, 18.9);
+      tl.from("#s4-card", { y: 130, opacity: 0, duration: 0.7, ease: "power3.out" }, 19.2);
+
+      /* ===== Scene 5 (24 - 30): finale ===== */
+      tl.from("#s5", { opacity: 0, duration: 0.8, ease: "power2.inOut" }, 24);
+      tl.from("#s5-island", { scale: 1.14, duration: 5.4, ease: "none" }, 24.1);
+      tl.from("#s5-title", { y: 100, opacity: 0, duration: 0.8, ease: "power3.out" }, 24.7);
+      tl.from("#s5-sub",   { y: 70, opacity: 0, duration: 0.6, ease: "power2.out" }, 25.2);
+      tl.from("#s5-cta",   { scale: 0, opacity: 0, duration: 0.7, ease: "back.out(2)" }, 25.7);
+      tl.to("#s5-glow", { opacity: 0.4, duration: 0.9, ease: "sine.inOut", repeat: 3, yoyo: true }, 25.5);
+      // final fade to black (allowed: last scene only)
+      tl.to("#fade-out", { opacity: 1, duration: 1.1, ease: "power2.in" }, 28.7);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

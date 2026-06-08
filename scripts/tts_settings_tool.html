@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Math Island TTS Voice Tuner</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, #f4fbff 0%, #eaf7f7 100%);
+      color: #17324d;
+      line-height: 1.45;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .hero {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 14px 40px rgba(23, 50, 77, 0.12);
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+    }
+    .sub {
+      color: #4b647c;
+      font-size: 17px;
+    }
+    .statusbar {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #eef9fc;
+      color: #0f6171;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 700;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #f0ad00;
+      box-shadow: 0 0 0 4px rgba(240,173,0,0.12);
+    }
+    .dot.ok { background: #21a366; box-shadow: 0 0 0 4px rgba(33,163,102,0.12); }
+    .dot.bad { background: #dc3545; box-shadow: 0 0 0 4px rgba(220,53,69,0.12); }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 14px 40px rgba(23, 50, 77, 0.10);
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 16px;
+    }
+    .field { margin-bottom: 18px; }
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    select, input[type="text"], textarea {
+      width: 100%;
+      border: 1px solid #cfe0eb;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 16px;
+      color: #17324d;
+      background: #fbfeff;
+    }
+    textarea { min-height: 112px; resize: vertical; }
+    input[type="range"] { width: 100%; accent-color: #16a6b6; }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 130px;
+      gap: 12px;
+      align-items: center;
+    }
+    .mini { color: #5f7890; font-size: 13px; margin-top: 6px; }
+    .pill-row, .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill-row { margin-top: 12px; }
+    .pill, button.action {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .pill {
+      border-radius: 999px;
+      background: #eaf7fb;
+      color: #0f6171;
+    }
+    button.action {
+      background: #16a6b6;
+      color: white;
+      box-shadow: 0 10px 22px rgba(22, 166, 182, 0.25);
+    }
+    button.action.secondary {
+      background: #eaf2f8;
+      color: #23445e;
+      box-shadow: none;
+    }
+    button.action.warn {
+      background: #ff9a3c;
+      color: white;
+      box-shadow: 0 10px 22px rgba(255,154,60,0.25);
+    }
+    button.action:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .stat {
+      background: #f6fbfd;
+      border: 1px solid #d8eaf2;
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .stat .k { color: #5f7890; font-size: 13px; margin-bottom: 4px; }
+    .stat .v { font-weight: 800; font-size: 18px; }
+    .output {
+      background: #0f2335;
+      color: #d8ecff;
+      border-radius: 18px;
+      padding: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 90px;
+    }
+    .result {
+      background: #10283d;
+      color: #d8ecff;
+      border-radius: 18px;
+      padding: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      min-height: 220px;
+      max-height: 520px;
+      overflow: auto;
+    }
+    .hint {
+      background: #fff8dd;
+      color: #654f00;
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 14px;
+      font-size: 14px;
+    }
+    ol { margin: 8px 0 0 20px; padding: 0; }
+    li + li { margin-top: 8px; }
+    @media (max-width: 860px) {
+      .grid, .summary, .row { grid-template-columns: 1fr; }
+      h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Math Island Voice Tuner</h1>
+      <div class="sub">Now with real buttons you can click to preview speech, save settings, and rebuild all audio.</div>
+      <div class="statusbar"><span class="dot" id="serverDot"></span><span id="serverStatus">Checking local server…</span></div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="section-title">1) Tune your sound</div>
+
+        <div class="field">
+          <label for="voice">Voice</label>
+          <select id="voice">
+            <option value="en-US-AriaNeural">en-US-AriaNeural</option>
+            <option value="en-US-JennyNeural">en-US-JennyNeural</option>
+            <option value="en-US-AnaNeural">en-US-AnaNeural</option>
+            <option value="en-US-EmmaNeural">en-US-EmmaNeural</option>
+            <option value="en-US-DavisNeural">en-US-DavisNeural</option>
+            <option value="en-US-GuyNeural">en-US-GuyNeural</option>
+            <option value="en-GB-SoniaNeural">en-GB-SoniaNeural</option>
+            <option value="en-AU-NatashaNeural">en-AU-NatashaNeural</option>
+          </select>
+          <div class="mini">Start with Aria. Try Jenny for a softer classroom voice.</div>
+        </div>
+
+        <div class="field">
+          <label for="rateSlider">Rate</label>
+          <div class="row">
+            <input id="rateSlider" type="range" min="-50" max="50" step="1" value="-5" />
+            <input id="rateText" type="text" value="-5%" />
+          </div>
+          <div class="mini">Negative is slower. Positive is faster.</div>
+        </div>
+
+        <div class="field">
+          <label for="pitchSlider">Pitch</label>
+          <div class="row">
+            <input id="pitchSlider" type="range" min="-50" max="50" step="1" value="10" />
+            <input id="pitchText" type="text" value="+10Hz" />
+          </div>
+          <div class="mini">Higher pitch can feel brighter and more kid-friendly.</div>
+        </div>
+
+        <div class="field">
+          <label for="previewText">Preview sentence</label>
+          <textarea id="previewText">Let’s count together. What is eight plus five?</textarea>
+        </div>
+
+        <div class="pill-row">
+          <button class="pill" data-preset="default">Default</button>
+          <button class="pill" data-preset="gentle">Gentle</button>
+          <button class="pill" data-preset="bright">Bright</button>
+          <button class="pill" data-preset="slow-kids">Slow kids</button>
+        </div>
+
+        <div class="actions" style="margin-top:14px;">
+          <button class="action" id="runPreview">Run preview</button>
+          <button class="action" id="runSave">Save settings</button>
+          <button class="action warn" id="runRebuild">Rebuild all audio</button>
+        </div>
+
+        <div class="actions" style="margin-top:10px;">
+          <button class="action secondary" id="copyPreview">Copy preview command</button>
+          <button class="action secondary" id="copySave">Copy save command</button>
+          <button class="action secondary" id="downloadJson">Download speech_settings.json</button>
+          <button class="action secondary" id="resetDefaults">Reset to defaults</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">2) Easy output</div>
+
+        <div class="summary">
+          <div class="stat"><div class="k">Voice</div><div class="v" id="voiceSummary">en-US-AriaNeural</div></div>
+          <div class="stat"><div class="k">Rate</div><div class="v" id="rateSummary">-5%</div></div>
+          <div class="stat"><div class="k">Pitch</div><div class="v" id="pitchSummary">+10Hz</div></div>
+        </div>
+
+        <label>Preview command</label>
+        <div class="output" id="previewCommand"></div>
+
+        <label style="margin-top: 14px;">Save command</label>
+        <div class="output" id="saveCommand"></div>
+
+        <label style="margin-top: 14px;">Rebuild all audio</label>
+        <div class="output" id="fullCommand"></div>
+
+        <label style="margin-top: 14px;">Live result</label>
+        <div class="result" id="resultBox">Click a button to run something.</div>
+
+        <div class="hint">
+          If the page says the server is offline, start it with:
+          <br><br>
+          /Users/mac/tools/math-island/.venv/bin/python /Users/mac/tools/math-island/scripts/tts_tuner_server.py
+          <br><br>
+          If preview fails because edge-tts is missing, install it with:
+          <br><br>
+          edge-tts is already installed in the project .venv.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = window.location.origin;
+    const PYTHON_PATH = '/Users/mac/tools/math-island/.venv/bin/python';
+    const SCRIPT_PATH = '/Users/mac/tools/math-island/scripts/generate_speech.py';
+    const SETTINGS_PATH = '/Users/mac/tools/math-island/scripts/speech_settings.json';
+
+    const voice = document.getElementById('voice');
+    const rateSlider = document.getElementById('rateSlider');
+    const rateText = document.getElementById('rateText');
+    const pitchSlider = document.getElementById('pitchSlider');
+    const pitchText = document.getElementById('pitchText');
+    const previewText = document.getElementById('previewText');
+    const resultBox = document.getElementById('resultBox');
+    const serverDot = document.getElementById('serverDot');
+    const serverStatus = document.getElementById('serverStatus');
+
+    const presets = {
+      default: { voice: 'en-US-AriaNeural', rate: '-5%', pitch: '+10Hz' },
+      gentle: { voice: 'en-US-JennyNeural', rate: '-8%', pitch: '+6Hz' },
+      bright: { voice: 'en-US-AriaNeural', rate: '-2%', pitch: '+14Hz' },
+      'slow-kids': { voice: 'en-US-AriaNeural', rate: '-12%', pitch: '+8Hz' }
+    };
+
+    function shellQuote(value) {
+      return `'${String(value).replace(/'/g, `'\\''`)}'`;
+    }
+
+    function normalizeRateText(value) {
+      const n = Number(String(value).replace(/[^-+0-9.]/g, ''));
+      if (Number.isNaN(n)) return '-5%';
+      return `${n > 0 ? '+' : ''}${n}%`;
+    }
+
+    function normalizePitchText(value) {
+      const n = Number(String(value).replace(/[^-+0-9.]/g, ''));
+      if (Number.isNaN(n)) return '+10Hz';
+      return `${n > 0 ? '+' : ''}${n}Hz`;
+    }
+
+    function currentPayload() {
+      return {
+        voice: voice.value,
+        rate: rateText.value,
+        pitch: pitchText.value,
+        preview_text: previewText.value.trim()
+      };
+    }
+
+    function buildCommands() {
+      const v = voice.value;
+      const r = rateText.value;
+      const p = pitchText.value;
+      const text = previewText.value.trim() || 'Let’s count together.';
+      return {
+        preview: `${shellQuote(PYTHON_PATH)} ${shellQuote(SCRIPT_PATH)} --voice ${shellQuote(v)} --rate=${shellQuote(r)} --pitch=${shellQuote(p)} --preview-text ${shellQuote(text)} --force`,
+        save: `${shellQuote(PYTHON_PATH)} ${shellQuote(SCRIPT_PATH)} --voice ${shellQuote(v)} --rate=${shellQuote(r)} --pitch=${shellQuote(p)} --save-settings --show-settings`,
+        full: `${shellQuote(PYTHON_PATH)} ${shellQuote(SCRIPT_PATH)} --force`
+      };
+    }
+
+    function updateSummary() {
+      const cmds = buildCommands();
+      document.getElementById('voiceSummary').textContent = voice.value;
+      document.getElementById('rateSummary').textContent = rateText.value;
+      document.getElementById('pitchSummary').textContent = pitchText.value;
+      document.getElementById('previewCommand').textContent = cmds.preview;
+      document.getElementById('saveCommand').textContent = cmds.save;
+      document.getElementById('fullCommand').textContent = cmds.full;
+    }
+
+    function syncFromSlider() {
+      rateText.value = `${Number(rateSlider.value) > 0 ? '+' : ''}${rateSlider.value}%`;
+      pitchText.value = `${Number(pitchSlider.value) > 0 ? '+' : ''}${pitchSlider.value}Hz`;
+      updateSummary();
+    }
+
+    function syncFromText() {
+      rateText.value = normalizeRateText(rateText.value);
+      pitchText.value = normalizePitchText(pitchText.value);
+      rateSlider.value = Number(rateText.value.replace('%', ''));
+      pitchSlider.value = Number(pitchText.value.replace('Hz', ''));
+      updateSummary();
+    }
+
+    function applyPreset(name) {
+      const preset = presets[name];
+      if (!preset) return;
+      voice.value = preset.voice;
+      rateText.value = preset.rate;
+      pitchText.value = preset.pitch;
+      syncFromText();
+    }
+
+    async function copyText(text, label) {
+      try {
+        await navigator.clipboard.writeText(text);
+        alert(`${label} copied!`);
+      } catch {
+        alert('Could not copy automatically. Please copy it manually.');
+      }
+    }
+
+    function downloadSettings() {
+      const data = JSON.stringify({
+        voice: voice.value,
+        rate: rateText.value,
+        pitch: pitchText.value
+      }, null, 2) + '\n';
+      const blob = new Blob([data], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'speech_settings.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      setTimeout(() => alert(`Downloaded speech_settings.json. Replace this file:\n${SETTINGS_PATH}`), 100);
+    }
+
+    function setBusy(isBusy, message) {
+      document.querySelectorAll('button.action').forEach(btn => btn.disabled = isBusy);
+      if (message) resultBox.textContent = message;
+    }
+
+    async function runAction(action) {
+      setBusy(true, `Running ${action}...`);
+      try {
+        const res = await fetch(`${API_BASE}/api/${action}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentPayload())
+        });
+        const data = await res.json();
+        resultBox.textContent = [
+          `OK: ${data.ok}`,
+          `Exit code: ${data.exit_code}`,
+          `Command: ${data.command || '(none)'}`,
+          '',
+          'STDOUT:',
+          data.stdout || '(empty)',
+          '',
+          'STDERR:',
+          data.stderr || '(empty)'
+        ].join('\n');
+      } catch (err) {
+        resultBox.textContent = `Could not reach the local server.\n\nStart it with:\n/Users/mac/tools/math-island/.venv/bin/python /Users/mac/tools/math-island/scripts/tts_tuner_server.py\n\nError:\n${err}`;
+      } finally {
+        setBusy(false);
+        updateServerStatus();
+      }
+    }
+
+    async function updateServerStatus() {
+      try {
+        const res = await fetch(`${API_BASE}/api/settings`);
+        const data = await res.json();
+        serverDot.className = 'dot ok';
+        serverStatus.textContent = `Local server online at http://${data.host}:${data.port}`;
+      } catch {
+        serverDot.className = 'dot bad';
+        serverStatus.textContent = 'Local server offline — start /Users/mac/tools/math-island/.venv/bin/python /Users/mac/tools/math-island/scripts/tts_tuner_server.py';
+      }
+    }
+
+    async function loadInitialSettings() {
+      try {
+        const res = await fetch(`${API_BASE}/api/settings`);
+        const data = await res.json();
+        const s = data.settings || {};
+        if (s.voice) voice.value = s.voice;
+        if (s.rate) rateText.value = s.rate;
+        if (s.pitch) pitchText.value = s.pitch;
+        syncFromText();
+      } catch {
+        updateSummary();
+      }
+    }
+
+    rateSlider.addEventListener('input', syncFromSlider);
+    pitchSlider.addEventListener('input', syncFromSlider);
+    rateText.addEventListener('change', syncFromText);
+    pitchText.addEventListener('change', syncFromText);
+    voice.addEventListener('change', updateSummary);
+    previewText.addEventListener('input', updateSummary);
+
+    document.getElementById('runPreview').addEventListener('click', () => runAction('preview'));
+    document.getElementById('runSave').addEventListener('click', () => runAction('save'));
+    document.getElementById('runRebuild').addEventListener('click', () => runAction('rebuild'));
+    document.getElementById('copyPreview').addEventListener('click', () => copyText(buildCommands().preview, 'Preview command'));
+    document.getElementById('copySave').addEventListener('click', () => copyText(buildCommands().save, 'Save command'));
+    document.getElementById('downloadJson').addEventListener('click', downloadSettings);
+    document.getElementById('resetDefaults').addEventListener('click', () => applyPreset('default'));
+    document.querySelectorAll('[data-preset]').forEach(btn => btn.addEventListener('click', () => applyPreset(btn.dataset.preset)));
+
+    updateSummary();
+    loadInitialSettings();
+    updateServerStatus();
+  </script>
+</body>
+</html>

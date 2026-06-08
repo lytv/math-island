@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 980" width="1400" height="980">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .title{font-size:25px;font-weight:750;fill:#111827}.sub{font-size:14px;fill:#6b7280}.lane{font-size:11px;font-weight:750;letter-spacing:.06em;fill:#374151}.nt{font-size:14px;font-weight:750;fill:#111827}.ns{font-size:12px;fill:#4b5563}.sm{font-size:11px;fill:#6b7280}.lbl{font-size:11px;font-weight:650;fill:#374151}.section{font-size:16px;font-weight:750;fill:#111827}.tiny{font-size:10px;fill:#6b7280}
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#ea580c"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#9333ea"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#6b7280"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#dc2626"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.12"/></filter>
+  </defs>
+  <rect width="1400" height="980" fill="#ffffff"/>
+  <text x="44" y="45" class="title">Dynamics PayNow Integration - SAP Sales Invoice, PayNow QR, UOB/SG Bank API</text>
+  <text x="44" y="72" class="sub">Detailed project view: QR generation at cash counter, PayNow payment, realtime bank notification, and SAP transaction confirmation.</text>
+  <rect x="44" y="92" width="1308" height="54" rx="8" fill="#f9fafb" stroke="#e5e7eb"/>
+  <text x="62" y="116" class="section">Scope from SCSKAP</text>
+  <text x="62" y="136" class="sm">Embed PayNow QR into SAP Sales Invoice, auto-populate amount/reference, route UOB/SG bank payment notification back to SAP, estimate project design and effort.</text>
+  <rect x="44" y="170" width="420" height="650" rx="10" fill="#ffffff" stroke="#d1d5db" stroke-width="1.4"/>
+  <text x="62" y="200" class="section">1. QR code generation - Cash Counter</text>
+  <rect x="492" y="170" width="420" height="650" rx="10" fill="#ffffff" stroke="#d1d5db" stroke-width="1.4"/>
+  <text x="510" y="200" class="section">2. PayNow API / QR Data</text>
+  <rect x="940" y="170" width="412" height="650" rx="10" fill="#ffffff" stroke="#d1d5db" stroke-width="1.4"/>
+  <text x="958" y="200" class="section">3. Payment confirmation / Webhook</text>
+  <rect x="78" y="235" width="168" height="88" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="162.0" y="262" text-anchor="middle" class="nt">Counter Sales</text>
+  <text x="162.0" y="284" text-anchor="middle" class="ns">User creates invoice</text>
+  <text x="162.0" y="303" text-anchor="middle" class="sm">cash counter</text>
+  <rect x="276" y="235" width="156" height="88" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="354.0" y="262" text-anchor="middle" class="nt">SAP Invoice</text>
+  <text x="354.0" y="284" text-anchor="middle" class="ns">Sales invoice PDF</text>
+  <text x="354.0" y="303" text-anchor="middle" class="sm">amount + invoice no</text>
+  <rect x="78" y="390" width="168" height="88" rx="8" fill="#faf5ff" stroke="#d8b4fe" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="162.0" y="417" text-anchor="middle" class="nt">Invoice QR</text>
+  <text x="162.0" y="439" text-anchor="middle" class="ns">Contains invoice data</text>
+  <text x="162.0" y="458" text-anchor="middle" class="sm">not final PayNow QR</text>
+  <rect x="276" y="390" width="156" height="88" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="354.0" y="417" text-anchor="middle" class="nt">ABAP Output</text>
+  <text x="354.0" y="439" text-anchor="middle" class="ns">Form enhancement</text>
+  <text x="354.0" y="458" text-anchor="middle" class="sm">SmartForm/Adobe</text>
+  <rect x="78" y="555" width="168" height="88" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="162.0" y="582" text-anchor="middle" class="nt">Printed Invoice</text>
+  <text x="162.0" y="604" text-anchor="middle" class="ns">QR embedded</text>
+  <text x="162.0" y="623" text-anchor="middle" class="sm">customer receives</text>
+  <rect x="276" y="535" width="156" height="115" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+  <text x="290" y="559" class="nt">SAP effort</text>
+  <circle cx="294" cy="577" r="3" fill="#6b7280"/>
+  <text x="304" y="581" class="sm">Invoice output change</text>
+  <circle cx="294" cy="597" r="3" fill="#6b7280"/>
+  <text x="304" y="601" class="sm">QR payload fields</text>
+  <circle cx="294" cy="617" r="3" fill="#6b7280"/>
+  <text x="304" y="621" class="sm">ABAP if needed</text>
+  <circle cx="294" cy="637" r="3" fill="#6b7280"/>
+  <text x="304" y="641" class="sm">Test print/PDF</text>
+  <rect x="528" y="235" width="178" height="88" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="617.0" y="262" text-anchor="middle" class="nt">Integration Service</text>
+  <text x="617.0" y="284" text-anchor="middle" class="ns">Orchestrates SAP + Bank</text>
+  <text x="617.0" y="303" text-anchor="middle" class="sm">middleware/API layer</text>
+  <rect x="740" y="235" width="156" height="88" rx="8" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="818.0" y="262" text-anchor="middle" class="nt">UOB API</text>
+  <text x="818.0" y="284" text-anchor="middle" class="ns">Local SG Bank API</text>
+  <text x="818.0" y="303" text-anchor="middle" class="sm">PayNow service</text>
+  <rect x="528" y="390" width="178" height="88" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="617.0" y="417" text-anchor="middle" class="nt">OAuth2</text>
+  <text x="617.0" y="439" text-anchor="middle" class="ns">Access token</text>
+  <text x="617.0" y="458" text-anchor="middle" class="sm">bank authentication</text>
+  <rect x="740" y="390" width="156" height="88" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="818.0" y="417" text-anchor="middle" class="nt">QR Data</text>
+  <text x="818.0" y="439" text-anchor="middle" class="ns">PayNow/SGQR payload</text>
+  <text x="818.0" y="458" text-anchor="middle" class="sm">amount + reference</text>
+  <rect x="528" y="555" width="178" height="88" rx="8" fill="#faf5ff" stroke="#d8b4fe" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="617.0" y="582" text-anchor="middle" class="nt">PayNow QR</text>
+  <text x="617.0" y="604" text-anchor="middle" class="ns">Generated QR code</text>
+  <text x="617.0" y="623" text-anchor="middle" class="sm">scan-ready</text>
+  <rect x="740" y="535" width="156" height="130" rx="8" fill="#fff7ed" stroke="#fed7aa"/>
+  <text x="754" y="559" class="nt">Need confirm</text>
+  <circle cx="758" cy="577" r="3" fill="#6b7280"/>
+  <text x="768" y="581" class="sm">UOB API spec</text>
+  <circle cx="758" cy="597" r="3" fill="#6b7280"/>
+  <text x="768" y="601" class="sm">Token flow</text>
+  <circle cx="758" cy="617" r="3" fill="#6b7280"/>
+  <text x="768" y="621" class="sm">QR format</text>
+  <circle cx="758" cy="637" r="3" fill="#6b7280"/>
+  <text x="768" y="641" class="sm">Sandbox access</text>
+  <circle cx="758" cy="657" r="3" fill="#6b7280"/>
+  <text x="768" y="661" class="sm">Webhook rules</text>
+  <rect x="970" y="235" width="162" height="88" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="1051.0" y="262" text-anchor="middle" class="nt">Customer App</text>
+  <text x="1051.0" y="284" text-anchor="middle" class="ns">Scans PayNow QR</text>
+  <text x="1051.0" y="303" text-anchor="middle" class="sm">auto amount/ref</text>
+  <rect x="1168" y="235" width="156" height="88" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="1246.0" y="262" text-anchor="middle" class="nt">PayNow / FAST</text>
+  <text x="1246.0" y="284" text-anchor="middle" class="ns">Realtime transfer</text>
+  <text x="1246.0" y="303" text-anchor="middle" class="sm">SGD payment rail</text>
+  <rect x="970" y="390" width="162" height="88" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="1051.0" y="417" text-anchor="middle" class="nt">Payment Done</text>
+  <text x="1051.0" y="439" text-anchor="middle" class="ns">Customer confirms</text>
+  <text x="1051.0" y="458" text-anchor="middle" class="sm">paid at counter</text>
+  <rect x="1168" y="390" width="156" height="88" rx="8" fill="#faf5ff" stroke="#d8b4fe" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="1246.0" y="417" text-anchor="middle" class="nt">Webhook Server</text>
+  <text x="1246.0" y="439" text-anchor="middle" class="ns">Receives notification</text>
+  <text x="1246.0" y="458" text-anchor="middle" class="sm">from UOB/SG bank</text>
+  <rect x="970" y="555" width="162" height="88" rx="8" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="1051.0" y="582" text-anchor="middle" class="nt">Payment Matcher</text>
+  <text x="1051.0" y="604" text-anchor="middle" class="ns">Match invoice ref</text>
+  <text x="1051.0" y="623" text-anchor="middle" class="sm">validate amount/status</text>
+  <rect x="1168" y="555" width="156" height="88" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="1246.0" y="582" text-anchor="middle" class="nt">SAP Update</text>
+  <text x="1246.0" y="604" text-anchor="middle" class="ns">Confirm transaction</text>
+  <text x="1246.0" y="623" text-anchor="middle" class="sm">clear/open item</text>
+  <rect x="970" y="680" width="324" height="92" rx="8" fill="#f9fafb" stroke="#e5e7eb"/>
+  <text x="984" y="704" class="nt">Exception handling</text>
+  <circle cx="988" cy="722" r="3" fill="#6b7280"/>
+  <text x="998" y="726" class="sm">Duplicate / late notification</text>
+  <circle cx="988" cy="742" r="3" fill="#6b7280"/>
+  <text x="998" y="746" class="sm">Partial or wrong amount</text>
+  <circle cx="988" cy="762" r="3" fill="#6b7280"/>
+  <text x="998" y="766" class="sm">Unknown invoice reference</text>
+  <circle cx="988" cy="782" r="3" fill="#6b7280"/>
+  <text x="998" y="786" class="sm">Manual Finance AR review</text>
+  <path d="M 246 279 L 276 279" fill="none" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-blue)"/>
+  <rect x="244" y="253" width="54" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="250" y="268" class="lbl">create</text>
+  <path d="M 354 323 L 354 390" fill="none" stroke="#9333ea" stroke-width="2.2" marker-end="url(#arrow-purple)"/>
+  <rect x="360" y="345" width="83.5" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="366" y="360" class="lbl">output form</text>
+  <path d="M 276 434 L 246 434" fill="none" stroke="#9333ea" stroke-width="2.2" marker-end="url(#arrow-purple)"/>
+  <rect x="244" y="407" width="64.0" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="250" y="422" class="lbl">embed QR</text>
+  <path d="M 162 478 L 162 555" fill="none" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-blue)"/>
+  <rect x="168" y="507" width="77.0" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="174" y="522" class="lbl">print/send</text>
+  <path d="M 432 279 L 528 279" fill="none" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-blue)"/>
+  <rect x="442" y="253" width="116.0" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="448" y="268" class="lbl">invoice data API</text>
+  <path d="M 706 279 L 740 279" fill="none" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-blue)"/>
+  <rect x="704" y="253" width="64.0" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="710" y="268" class="lbl">API call</text>
+  <path d="M 607 323 L 607 390" fill="none" stroke="#dc2626" stroke-width="2.2" marker-end="url(#arrow-red)"/>
+  <rect x="613" y="346" width="54" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="619" y="361" class="lbl">OAuth2</text>
+  <path d="M 740 434 L 706 434" fill="none" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-blue)"/>
+  <rect x="704" y="407" width="57.5" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="710" y="422" class="lbl">QR data</text>
+  <path d="M 607 478 L 607 555" fill="none" stroke="#9333ea" stroke-width="2.2" marker-end="url(#arrow-purple)"/>
+  <rect x="613" y="507" width="64.0" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="619" y="522" class="lbl">generate</text>
+  <path d="M 528 599 C 390 635 285 604 246 599" fill="none" stroke="#9333ea" stroke-width="2.2" marker-end="url(#arrow-purple)"/>
+  <rect x="342" y="610" width="70.5" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="348" y="625" class="lbl">return QR</text>
+  <path d="M 246 599 C 520 520 780 480 970 279" fill="none" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-blue)"/>
+  <rect x="634" y="491" width="57.5" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="640" y="506" class="lbl">scan QR</text>
+  <path d="M 1132 279 L 1168 279" fill="none" stroke="#ea580c" stroke-width="2.2" marker-end="url(#arrow-orange)"/>
+  <rect x="1132" y="253" width="54" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="1138" y="268" class="lbl">pay</text>
+  <path d="M 1246 323 L 1246 390" fill="none" stroke="#ea580c" stroke-width="2.2" marker-end="url(#arrow-orange)"/>
+  <rect x="1252" y="345" width="54" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="1258" y="360" class="lbl">settle</text>
+  <path d="M 1051 478 L 1051 555" fill="none" stroke="#6b7280" stroke-width="2.2" marker-end="url(#arrow-gray)" stroke-dasharray="5,4"/>
+  <rect x="1057" y="507" width="64.0" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="1063" y="522" class="lbl">callback</text>
+  <path d="M 1246 478 C 1246 520 1210 568 1132 599" fill="none" stroke="#6b7280" stroke-width="2.2" marker-end="url(#arrow-gray)" stroke-dasharray="5,4"/>
+  <rect x="1168" y="535" width="123" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="1174" y="550" class="lbl">bank callback</text>
+  <path d="M 1132 599 L 1168 599" fill="none" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arrow-green)"/>
+  <rect x="1132" y="573" width="83.5" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="1138" y="588" class="lbl">confirm SAP</text>
+  <path d="M 970 599 C 735 710 520 710 432 599" fill="none" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arrow-green)"/>
+  <rect x="614" y="688" width="116.0" height="19" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="620" y="703" class="lbl">reconcile result</text>
+  <rect x="44" y="842" width="1308" height="96" rx="10" fill="#f9fafb" stroke="#e5e7eb"/>
+  <text x="62" y="868" class="section">Project criteria and estimation notes</text>
+  <text x="62" y="894" class="lbl">English PM / Engineers</text>
+  <text x="62" y="914" class="tiny">Required for customer communication and</text>
+  <text x="62" y="930" class="tiny">bank/API coordination.</text>
+  <text x="317" y="894" class="lbl">Low customer budget</text>
+  <text x="317" y="914" class="tiny">Keep Phase 1 narrow; avoid overbuilding</text>
+  <text x="317" y="930" class="tiny">Field Power until Phase 2.</text>
+  <text x="572" y="894" class="lbl">Phase 1: Counter Sales</text>
+  <text x="572" y="914" class="tiny">Invoice QR generation, payment</text>
+  <text x="572" y="930" class="tiny">callback, matching, SAP update.</text>
+  <text x="827" y="894" class="lbl">Phase 2: Field Power Integration</text>
+  <text x="827" y="914" class="tiny">Extend payment flow to field/mobile</text>
+  <text x="827" y="930" class="tiny">sales after Phase 1 is stable.</text>
+  <text x="1082" y="894" class="lbl">SAP ABAP effort</text>
+  <text x="1082" y="914" class="tiny">Likely needed for invoice output, QR</text>
+  <text x="1082" y="930" class="tiny">embedding, SAP posting/clearing interface.</text>
+  <g transform="translate(44,952)">
+    <line x1="0" y1="8" x2="30" y2="8" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-blue)"/>
+    <text x="40" y="12" class="tiny">invoice / API data</text>
+    <line x1="210" y1="8" x2="240" y2="8" stroke="#9333ea" stroke-width="2.2" marker-end="url(#arrow-purple)"/>
+    <text x="250" y="12" class="tiny">QR transform/embed</text>
+    <line x1="420" y1="8" x2="450" y2="8" stroke="#dc2626" stroke-width="2.2" marker-end="url(#arrow-red)"/>
+    <text x="460" y="12" class="tiny">OAuth2 auth</text>
+    <line x1="630" y1="8" x2="660" y2="8" stroke="#ea580c" stroke-width="2.2" marker-end="url(#arrow-orange)"/>
+    <text x="670" y="12" class="tiny">payment</text>
+    <line x1="840" y1="8" x2="870" y2="8" stroke="#6b7280" stroke-width="2.2" marker-end="url(#arrow-gray)"/>
+    <text x="880" y="12" class="tiny">async notification</text>
+    <line x1="1050" y1="8" x2="1080" y2="8" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arrow-green)"/>
+    <text x="1090" y="12" class="tiny">SAP confirmation/reconcile</text>
+  </g>
+</svg>

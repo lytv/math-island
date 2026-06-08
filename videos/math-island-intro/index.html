@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Math Island Intro</title>
+  <style>
+    @font-face {
+      font-family: "Atkinson Hyperlegible";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("https://fonts.gstatic.com/s/atkinsonhyperlegible/v12/9Bt73C1KxNDXMspQ1lPyU89-1h6ONRlW45G8WbcNcw.ttf") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Baloo 2";
+      font-style: normal;
+      font-weight: 800 900;
+      font-display: swap;
+      src: url("https://fonts.gstatic.com/s/baloo2/v23/wXK0E3kTposypRydzVT08TS3JnAmtdiayqpv.ttf") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Fraunces";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("https://fonts.gstatic.com/s/fraunces/v38/6NUh8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7hzFUPJH58nib1603gg7S2nfgRYIcUByjDg.ttf") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Fraunces";
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url("https://fonts.gstatic.com/s/fraunces/v38/6NUh8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7hzFUPJH58nib1603gg7S2nfgRYIcNxyjDg.ttf") format("truetype");
+    }
+
+    :root {
+      --sky: #7fd4ec;
+      --sea: #48bfde;
+      --deep: #184e5a;
+      --grass: #7ccb66;
+      --sand: #ffe8a8;
+      --coral: #ff7a6b;
+      --star: #ffd84d;
+      --white: #fffaf0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--sky);
+      color: var(--deep);
+      font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+      overflow: hidden;
+    }
+
+    #math-island-intro {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255, 232, 168, 0.78), rgba(255, 232, 168, 0) 18%),
+        linear-gradient(180deg, #9fe4f4 0%, #7fd4ec 42%, #48bfde 100%);
+    }
+
+    .scene {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 84% 18%, rgba(255, 250, 240, 0.44), rgba(255, 250, 240, 0) 16%),
+        linear-gradient(180deg, #9fe4f4 0%, #7fd4ec 46%, #48bfde 100%);
+    }
+
+    .scene-content {
+      width: 100%;
+      height: 100%;
+      padding: 76px 104px 82px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 34px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .map-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .island-map {
+      position: absolute;
+      width: 720px;
+      height: 960px;
+      object-fit: cover;
+      border-radius: 48px;
+      box-shadow: 0 38px 84px rgba(24, 78, 90, 0.24);
+      transform: rotate(-3deg);
+      filter: saturate(1.08);
+    }
+
+    .scene-1 .island-map {
+      right: 132px;
+      top: 64px;
+    }
+
+    .scene-2 .island-map {
+      left: 96px;
+      top: 54px;
+      width: 660px;
+      height: 990px;
+      transform: rotate(2deg);
+    }
+
+    .scene-3 .island-map,
+    .scene-4 .island-map {
+      right: 116px;
+      top: 80px;
+      width: 600px;
+      height: 900px;
+      opacity: 0.36;
+      transform: rotate(-2deg);
+    }
+
+    .eyebrow {
+      width: fit-content;
+      padding: 14px 26px;
+      border-radius: 999px;
+      background: var(--sand);
+      color: var(--deep);
+      font-family: "Fraunces", serif;
+      font-size: 31px;
+      font-weight: 800;
+      box-shadow: 0 12px 0 rgba(24, 78, 90, 0.13);
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      max-width: 930px;
+      color: var(--deep);
+      font-family: "Baloo 2", "Atkinson Hyperlegible", sans-serif;
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 0.9;
+      text-wrap: balance;
+    }
+
+    h1 {
+      font-size: 142px;
+    }
+
+    h2 {
+      font-size: 104px;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 720px;
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.12;
+      color: #23616d;
+    }
+
+    .hero-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 28px;
+      max-width: 920px;
+    }
+
+    .start-button {
+      width: fit-content;
+      padding: 26px 42px;
+      border-radius: 28px;
+      background: var(--coral);
+      color: var(--white);
+      font-family: "Baloo 2", sans-serif;
+      font-size: 46px;
+      font-weight: 900;
+      box-shadow: 0 14px 0 #cf5147, 0 28px 44px rgba(24, 78, 90, 0.19);
+    }
+
+    .skill-path {
+      position: absolute;
+      left: 130px;
+      top: 116px;
+      width: 660px;
+      height: 870px;
+      z-index: 4;
+    }
+
+    .scene-2 .map-stage,
+    .scene-2 .skill-path {
+      display: none;
+    }
+
+    .app-showcase {
+      position: absolute;
+      z-index: 4;
+      border: 9px solid #fff7d8;
+      border-radius: 38px;
+      background: rgba(255, 250, 240, 0.96);
+      box-shadow: 0 24px 0 rgba(24, 78, 90, 0.13), 0 34px 72px rgba(24, 78, 90, 0.22);
+      overflow: hidden;
+    }
+
+    .app-showcase img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .app-caption {
+      position: absolute;
+      left: 24px;
+      bottom: 22px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: var(--sand);
+      color: var(--deep);
+      font-family: "Fraunces", serif;
+      font-size: 27px;
+      font-weight: 800;
+      box-shadow: 0 8px 0 rgba(24, 78, 90, 0.12);
+    }
+
+    .scene2-shot {
+      left: 90px;
+      top: 116px;
+      width: 760px;
+      height: 630px;
+      transform: rotate(-2deg);
+    }
+
+    .scene3-shot {
+      right: 108px;
+      top: 154px;
+      width: 770px;
+      height: 638px;
+      transform: rotate(1.5deg);
+    }
+
+    .path-line {
+      position: absolute;
+      left: 230px;
+      top: 140px;
+      width: 360px;
+      height: 520px;
+      border: 18px dotted rgba(255, 250, 240, 0.9);
+      border-left: 0;
+      border-bottom: 0;
+      border-radius: 40px 360px 0 0;
+      transform: rotate(10deg);
+    }
+
+    .skill-badge {
+      position: absolute;
+      min-width: 250px;
+      padding: 18px 24px 20px;
+      border: 7px solid #fff7d8;
+      border-radius: 30px;
+      background: var(--sand);
+      box-shadow: 0 14px 0 rgba(24, 78, 90, 0.12), 0 18px 32px rgba(24, 78, 90, 0.16);
+      font-family: "Baloo 2", sans-serif;
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 0.95;
+      text-align: center;
+    }
+
+    .badge-icon {
+      display: block;
+      font-size: 60px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .badge-count {
+      left: 42px;
+      top: 48px;
+    }
+
+    .badge-add {
+      right: 0;
+      top: 214px;
+      background: #d9f6a7;
+    }
+
+    .badge-compare {
+      left: 34px;
+      top: 420px;
+      background: #b9efff;
+    }
+
+    .badge-tens {
+      right: 22px;
+      bottom: 40px;
+      background: #ffd2cc;
+    }
+
+    .side-copy {
+      margin-left: auto;
+      width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .question-board {
+      width: 790px;
+      min-height: 610px;
+      padding: 48px;
+      border: 9px solid #fff7d8;
+      border-radius: 44px;
+      background: rgba(255, 250, 240, 0.94);
+      box-shadow: 0 26px 0 rgba(24, 78, 90, 0.12), 0 36px 70px rgba(24, 78, 90, 0.19);
+      display: flex;
+      align-items: center;
+    }
+
+    .prompt {
+      font-family: "Baloo 2", sans-serif;
+      font-size: 76px;
+      font-weight: 900;
+      line-height: 0.96;
+      color: var(--deep);
+    }
+
+    .answer-row {
+      display: flex;
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .answer-pill {
+      min-width: 110px;
+      padding: 16px 24px;
+      border-radius: 28px;
+      background: #d9f6a7;
+      font-family: "Baloo 2", sans-serif;
+      font-size: 50px;
+      font-weight: 900;
+      text-align: center;
+      box-shadow: 0 8px 0 rgba(24, 78, 90, 0.13);
+    }
+
+    .answer-pill.hot {
+      background: var(--coral);
+      color: var(--white);
+    }
+
+    .fish-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 112px);
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .fish {
+      width: 106px;
+      height: 66px;
+      border-radius: 54% 44% 48% 52%;
+      background: var(--coral);
+      position: relative;
+      box-shadow: inset -10px -8px 0 rgba(154, 59, 51, 0.18), 0 10px 18px rgba(24, 78, 90, 0.13);
+    }
+
+    .fish::before {
+      content: "";
+      position: absolute;
+      left: -26px;
+      top: 15px;
+      width: 38px;
+      height: 36px;
+      background: #ffb34f;
+      clip-path: polygon(100% 50%, 0 0, 0 100%);
+    }
+
+    .fish::after {
+      content: "";
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--deep);
+    }
+
+    .reward-wrap {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 54px;
+      align-items: center;
+    }
+
+    .stars {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .star {
+      width: 176px;
+      height: 176px;
+      background: var(--star);
+      clip-path: polygon(50% 0%, 62% 34%, 98% 35%, 69% 56%, 80% 91%, 50% 70%, 20% 91%, 31% 56%, 2% 35%, 38% 34%);
+      filter: drop-shadow(0 18px 0 rgba(24, 78, 90, 0.12));
+    }
+
+    .progress-card {
+      width: 620px;
+      padding: 44px;
+      border-radius: 38px;
+      background: rgba(255, 250, 240, 0.94);
+      box-shadow: 0 24px 0 rgba(24, 78, 90, 0.12), 0 34px 64px rgba(24, 78, 90, 0.18);
+    }
+
+    .xp-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      font-family: "Fraunces", serif;
+      font-size: 35px;
+      font-weight: 800;
+    }
+
+    .xp-bar {
+      height: 54px;
+      padding: 8px;
+      border-radius: 999px;
+      background: #c4ecf6;
+      overflow: hidden;
+    }
+
+    .xp-fill {
+      width: 78%;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--grass);
+      box-shadow: inset 0 -8px 0 rgba(24, 78, 90, 0.12);
+    }
+
+    .unlock {
+      margin-top: 34px;
+      padding: 22px 28px;
+      border-radius: 30px;
+      background: var(--sand);
+      font-family: "Baloo 2", sans-serif;
+      font-size: 42px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .final-layout {
+      width: 100%;
+      height: 100%;
+      padding: 64px 102px 78px;
+      display: grid;
+      grid-template-columns: 0.98fr 1.02fr;
+      gap: 54px;
+      align-items: center;
+      position: relative;
+      z-index: 3;
+    }
+
+    .final-map {
+      width: 650px;
+      height: 960px;
+      object-fit: cover;
+      border-radius: 48px;
+      box-shadow: 0 34px 76px rgba(24, 78, 90, 0.24);
+      transform: rotate(-2deg);
+    }
+
+    .final-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .cta {
+      padding: 28px 44px;
+      border-radius: 34px;
+      background: var(--coral);
+      color: var(--white);
+      font-family: "Baloo 2", sans-serif;
+      font-size: 54px;
+      font-weight: 900;
+      box-shadow: 0 14px 0 #cf5147, 0 28px 44px rgba(24, 78, 90, 0.19);
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 250, 240, 0.42);
+      z-index: 0;
+    }
+
+    .bubble-a {
+      width: 240px;
+      height: 240px;
+      left: 90px;
+      bottom: 92px;
+    }
+
+    .bubble-b {
+      width: 150px;
+      height: 150px;
+      right: 108px;
+      top: 96px;
+    }
+
+    .bubble-c {
+      width: 94px;
+      height: 94px;
+      left: 820px;
+      top: 70px;
+    }
+
+    .transition {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+      overflow: hidden;
+    }
+
+    .wipe-band {
+      position: absolute;
+      inset: -12% auto -12% -24%;
+      width: 36%;
+      background: rgba(255, 232, 168, 0.95);
+      transform: skewX(-12deg);
+      box-shadow: 0 0 80px rgba(255, 250, 240, 0.74);
+    }
+
+    .wipe-band.two {
+      left: -36%;
+      width: 22%;
+      background: rgba(255, 122, 107, 0.72);
+    }
+
+    .circle-reveal {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      left: calc(50% - 130px);
+      top: calc(50% - 130px);
+      border-radius: 50%;
+      background: rgba(255, 216, 77, 0.88);
+      box-shadow: 0 0 0 40px rgba(255, 250, 240, 0.44);
+    }
+
+    .confetti {
+      position: absolute;
+      width: 22px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--coral);
+      z-index: 6;
+    }
+
+    .c1 { left: 230px; top: 160px; background: var(--star); }
+    .c2 { left: 420px; top: 116px; background: var(--grass); }
+    .c3 { right: 320px; top: 184px; background: var(--coral); }
+    .c4 { right: 218px; bottom: 210px; background: #b9efff; }
+    .c5 { left: 760px; bottom: 150px; background: var(--star); }
+  </style>
+</head>
+<body>
+  <div id="math-island-intro" data-composition-id="math-island-intro" data-start="0" data-duration="35" data-width="1920" data-height="1080">
+    <div id="scene-1" class="clip scene scene-1" data-start="0" data-duration="7" data-track-index="0">
+      <div class="bubble bubble-a" data-layout-ignore></div>
+      <div class="bubble bubble-b" data-layout-ignore></div>
+      <div class="bubble bubble-c" data-layout-ignore></div>
+      <div class="map-stage">
+        <img class="island-map s1-map" src="assets/island-map-1.png" alt="" />
+      </div>
+      <div class="scene-content">
+        <div class="hero-stack">
+          <div class="eyebrow s1-eyebrow">A math adventure for kids</div>
+          <h1 class="s1-title">Welcome to Math Island</h1>
+          <p class="lead s1-lead">Practice Grade 1 math by exploring, tapping, and unlocking new places.</p>
+          <div class="start-button s1-button">Start exploring</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="trans-1" class="clip transition transition-wipe" data-start="6.45" data-duration="1.1" data-track-index="2" data-layout-allow-overflow>
+      <div class="wipe-band"></div>
+      <div class="wipe-band two"></div>
+    </div>
+
+    <div id="scene-2" class="clip scene scene-2" data-start="7" data-duration="7" data-track-index="0">
+      <div class="map-stage">
+        <img class="island-map s2-map" src="assets/island-map-2.png" alt="" />
+      </div>
+      <div class="skill-path">
+        <div class="path-line" data-layout-ignore></div>
+        <div class="skill-badge badge-count"><span class="badge-icon">1 2 3</span>Count</div>
+        <div class="skill-badge badge-add"><span class="badge-icon">+</span>Add</div>
+        <div class="skill-badge badge-compare"><span class="badge-icon">&gt; &lt;</span>Compare</div>
+        <div class="skill-badge badge-tens"><span class="badge-icon">10</span>Tens</div>
+      </div>
+      <div class="app-showcase scene2-shot">
+        <img class="app-shot s2-shot" src="assets/screens/app-home.png" alt="" />
+        <div class="app-caption s2-caption">Real island map</div>
+      </div>
+      <div class="scene-content">
+        <div class="side-copy">
+          <div class="eyebrow s2-eyebrow">Follow the path</div>
+          <h2 class="s2-title">Each stop builds a new math power</h2>
+          <p class="lead s2-lead">Count to 20, add, subtract, compare numbers, and build tens and ones.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="trans-2" class="clip transition transition-circle" data-start="13.45" data-duration="1.1" data-track-index="2">
+      <div class="circle-reveal"></div>
+    </div>
+
+    <div id="scene-3" class="clip scene scene-3" data-start="14" data-duration="7" data-track-index="0">
+      <div class="map-stage">
+        <img class="island-map s3-map" src="assets/island-map-3.png" alt="" />
+      </div>
+      <div class="scene-content">
+        <div class="question-board">
+          <div>
+            <div class="eyebrow s3-eyebrow">Tap, choose, solve</div>
+            <div class="prompt s3-prompt">Real practice screens, made for quick answers</div>
+            <div class="answer-row">
+              <div class="answer-pill s3-choice">tap</div>
+              <div class="answer-pill hot s3-choice">count</div>
+              <div class="answer-pill s3-choice">pick</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="app-showcase scene3-shot">
+        <img class="app-shot s3-shot" src="assets/screens/app-count.png" alt="" />
+        <div class="app-caption s3-caption">Real quiz screen</div>
+      </div>
+    </div>
+
+    <div id="trans-3" class="clip transition transition-wipe" data-start="20.45" data-duration="1.1" data-track-index="2" data-layout-allow-overflow>
+      <div class="wipe-band"></div>
+      <div class="wipe-band two"></div>
+    </div>
+
+    <div id="scene-4" class="clip scene scene-4" data-start="21" data-duration="7" data-track-index="0">
+      <div class="map-stage">
+        <img class="island-map s4-map" src="assets/island-map-4.png" alt="" />
+      </div>
+      <div class="scene-content">
+        <div class="reward-wrap">
+          <div>
+            <div class="eyebrow s4-eyebrow">Practice feels rewarding</div>
+            <h2 class="s4-title">Earn stars and unlock the island</h2>
+          </div>
+          <div class="progress-card">
+            <div class="stars">
+              <div class="star star-1"></div>
+              <div class="star star-2"></div>
+              <div class="star star-3"></div>
+            </div>
+            <div class="xp-label"><span>Math Power</span><span>78%</span></div>
+            <div class="xp-bar"><div class="xp-fill"></div></div>
+            <div class="unlock s4-unlock">New place unlocked!</div>
+          </div>
+        </div>
+      </div>
+      <div class="confetti c1" data-layout-ignore></div>
+      <div class="confetti c2" data-layout-ignore></div>
+      <div class="confetti c3" data-layout-ignore></div>
+      <div class="confetti c4" data-layout-ignore></div>
+      <div class="confetti c5" data-layout-ignore></div>
+    </div>
+
+    <div id="trans-4" class="clip transition transition-circle" data-start="27.45" data-duration="1.1" data-track-index="2">
+      <div class="circle-reveal"></div>
+    </div>
+
+    <div id="scene-5" class="clip scene scene-5" data-start="28" data-duration="7" data-track-index="0">
+      <div class="final-layout">
+        <img class="final-map s5-map" src="assets/island-map-5.png" alt="" />
+        <div class="final-copy">
+          <div class="eyebrow s5-eyebrow">Math Island</div>
+          <h2 class="s5-title">Practice math. Unlock the island.</h2>
+          <p class="lead s5-lead">Short sessions, spoken prompts, playful questions, and progress kids can see.</p>
+          <div class="cta s5-cta">Start your adventure</div>
+        </div>
+      </div>
+    </div>
+
+    <audio id="narration" data-start="0.5" data-track-index="3" src="assets/narration.mp3" data-volume="0.95"></audio>
+    <audio id="click-sfx" data-start="7.5" data-duration="1" data-track-index="4" src="assets/click.mp3" data-volume="0.28"></audio>
+    <audio id="correct-sfx" data-start="16.4" data-duration="1" data-track-index="5" src="assets/correct.mp3" data-volume="0.34"></audio>
+    <audio id="unlock-sfx" data-start="23.7" data-duration="2" data-track-index="6" src="assets/unlock.mp3" data-volume="0.32"></audio>
+    <audio id="celebrate-sfx" data-start="30.9" data-duration="3" data-track-index="7" src="assets/celebrate.mp3" data-volume="0.28"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.from(".bubble-a", { scale: 0.72, opacity: 0.3, duration: 4.8, repeat: 7, yoyo: true, ease: "sine.inOut" }, 0.2);
+      tl.from(".bubble-b", { y: 24, opacity: 0.25, duration: 4.2, repeat: 8, yoyo: true, ease: "power1.inOut" }, 0.4);
+      tl.from(".bubble-c", { scale: 0.62, y: -18, opacity: 0.2, duration: 3.6, repeat: 9, yoyo: true, ease: "sine.inOut" }, 0.5);
+
+      tl.from(".s1-map", { x: 130, y: 22, rotation: 2, scale: 0.9, opacity: 0, duration: 0.8, ease: "back.out(1.4)" }, 0.25);
+      tl.from(".s1-eyebrow", { y: 36, scale: 0.94, opacity: 0, duration: 0.46, ease: "power3.out" }, 0.48);
+      tl.from(".s1-title", { x: -86, opacity: 0, duration: 0.62, ease: "expo.out" }, 0.66);
+      tl.from(".s1-lead", { y: 48, opacity: 0, duration: 0.48, ease: "power2.out" }, 0.94);
+      tl.from(".s1-button", { scale: 0.72, rotation: -3, opacity: 0, duration: 0.52, ease: "elastic.out(1, 0.55)" }, 1.3);
+
+      tl.from("#trans-1 .wipe-band", { x: -820, duration: 0.4, ease: "power3.inOut", stagger: 0.08 }, 6.45);
+      tl.to("#trans-1 .wipe-band", { x: 2380, duration: 0.48, ease: "power3.inOut", stagger: 0.08 }, 6.94);
+
+      tl.from(".s2-map", { x: -90, y: 24, rotation: -2, opacity: 0, duration: 0.68, ease: "power2.out" }, 7.22);
+      tl.from(".scene2-shot", { x: -86, y: 38, rotation: -5, scale: 0.9, opacity: 0, duration: 0.68, ease: "back.out(1.3)" }, 7.22);
+      tl.from(".s2-caption", { y: 26, scale: 0.92, opacity: 0, duration: 0.38, ease: "power3.out" }, 7.78);
+      tl.from(".path-line", { scale: 0.78, opacity: 0, duration: 0.5, ease: "sine.out" }, 7.46);
+      tl.from(".badge-count", { y: 60, rotation: -7, opacity: 0, duration: 0.48, ease: "back.out(1.7)" }, 7.62);
+      tl.from(".badge-add", { x: 70, scale: 0.82, opacity: 0, duration: 0.5, ease: "elastic.out(1, 0.7)" }, 7.9);
+      tl.from(".badge-compare", { x: -70, rotation: 5, opacity: 0, duration: 0.48, ease: "power3.out" }, 8.18);
+      tl.from(".badge-tens", { y: 76, scale: 0.84, opacity: 0, duration: 0.52, ease: "back.out(1.6)" }, 8.44);
+      tl.from(".s2-eyebrow", { y: 34, opacity: 0, duration: 0.42, ease: "power2.out" }, 7.42);
+      tl.from(".s2-title", { x: 86, opacity: 0, duration: 0.6, ease: "expo.out" }, 7.72);
+      tl.from(".s2-lead", { y: 42, opacity: 0, duration: 0.5, ease: "power3.out" }, 8.1);
+
+      tl.from("#trans-2 .circle-reveal", { scale: 0, opacity: 0.2, duration: 0.42, ease: "back.inOut(1.3)" }, 13.45);
+      tl.to("#trans-2 .circle-reveal", { scale: 10, opacity: 0, duration: 0.5, ease: "power3.out" }, 13.96);
+
+      tl.from(".s3-map", { scale: 0.9, rotation: 2, opacity: 0, duration: 0.6, ease: "sine.out" }, 14.2);
+      tl.from(".question-board", { y: 74, scale: 0.94, opacity: 0, duration: 0.62, ease: "back.out(1.25)" }, 14.34);
+      tl.from(".scene3-shot", { x: 86, y: 36, rotation: 5, scale: 0.9, opacity: 0, duration: 0.66, ease: "back.out(1.3)" }, 14.46);
+      tl.from(".s3-caption", { y: 26, scale: 0.92, opacity: 0, duration: 0.38, ease: "power3.out" }, 15.02);
+      tl.from(".s3-eyebrow", { x: -50, opacity: 0, duration: 0.42, ease: "power3.out" }, 14.58);
+      tl.from(".s3-prompt", { y: 42, opacity: 0, duration: 0.48, ease: "expo.out" }, 14.78);
+      tl.from(".s3-choice", { y: 44, scale: 0.86, opacity: 0, duration: 0.36, stagger: 0.12, ease: "power2.out" }, 15.58);
+      tl.to(".s3-choice.hot", { scale: 1.12, duration: 0.22, repeat: 1, yoyo: true, ease: "power1.inOut" }, 16.38);
+
+      tl.from("#trans-3 .wipe-band", { x: -820, duration: 0.4, ease: "power3.inOut", stagger: 0.08 }, 20.45);
+      tl.to("#trans-3 .wipe-band", { x: 2380, duration: 0.48, ease: "power3.inOut", stagger: 0.08 }, 20.94);
+
+      tl.from(".s4-map", { x: 90, y: 18, rotation: 2, opacity: 0, duration: 0.62, ease: "sine.out" }, 21.2);
+      tl.from(".s4-eyebrow", { y: 34, opacity: 0, duration: 0.42, ease: "power2.out" }, 21.34);
+      tl.from(".s4-title", { x: -86, opacity: 0, duration: 0.6, ease: "expo.out" }, 21.64);
+      tl.from(".progress-card", { x: 90, scale: 0.94, opacity: 0, duration: 0.58, ease: "back.out(1.25)" }, 21.86);
+      tl.from(".star", { scale: 0, rotation: -22, opacity: 0, duration: 0.42, stagger: 0.18, ease: "elastic.out(1, 0.5)" }, 22.28);
+      tl.from(".xp-fill", { scaleX: 0, transformOrigin: "left center", duration: 0.78, ease: "power3.out" }, 22.94);
+      tl.from(".s4-unlock", { y: 46, scale: 0.9, opacity: 0, duration: 0.5, ease: "back.out(1.7)" }, 23.56);
+      tl.from(".confetti", { y: -220, rotation: -120, opacity: 0, duration: 0.74, stagger: 0.08, ease: "bounce.out" }, 23.76);
+
+      tl.from("#trans-4 .circle-reveal", { scale: 0, opacity: 0.25, duration: 0.42, ease: "back.inOut(1.3)" }, 27.45);
+      tl.to("#trans-4 .circle-reveal", { scale: 10, opacity: 0, duration: 0.5, ease: "power3.out" }, 27.96);
+
+      tl.from(".s5-map", { x: -90, y: 26, rotation: 2, scale: 0.94, opacity: 0, duration: 0.72, ease: "back.out(1.2)" }, 28.24);
+      tl.from(".s5-eyebrow", { y: 36, opacity: 0, duration: 0.42, ease: "power2.out" }, 28.48);
+      tl.from(".s5-title", { x: 86, opacity: 0, duration: 0.62, ease: "expo.out" }, 28.78);
+      tl.from(".s5-lead", { y: 42, opacity: 0, duration: 0.5, ease: "power3.out" }, 29.12);
+      tl.from(".s5-cta", { scale: 0.78, rotation: 3, opacity: 0, duration: 0.56, ease: "elastic.out(1, 0.55)" }, 29.58);
+      tl.to(".scene-5", { opacity: 0, duration: 0.8, ease: "sine.inOut" }, 34.1);
+
+      window.__timelines["math-island-intro"] = tl;
+    </script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏴‍☠️ Bản Đồ Kho Báu — Grade 2 Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Bungee&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold-1: #fff3c4; --gold-2: #ffd76a; --gold-3: #e8a62e; --gold-4: #b97d18; --gold-ink: #6b3f00;
+    --sea-1: #0d4a63; --sea-2: #072c42; --sea-3: #041c2e;
+    --wood-1: #7a4f28; --wood-2: #4a2c12;
+    --parch: #ffe9b0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    font-family: "Baloo 2", system-ui, sans-serif;
+    color: var(--parch);
+    display: flex; flex-direction: column; align-items: center;
+    padding: 26px 20px; gap: 16px;
+    background:
+      radial-gradient(1200px 600px at 70% -10%, rgba(45, 140, 180, .35), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgba(20, 110, 150, .28), transparent 60%),
+      linear-gradient(180deg, var(--sea-1) 0%, var(--sea-2) 55%, var(--sea-3) 100%);
+    overflow-x: hidden;
+  }
+  /* drifting light motes — ocean atmosphere */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(3px 3px at 12% 20%, rgba(255,255,255,.5), transparent 60%),
+      radial-gradient(2px 2px at 80% 12%, rgba(255,235,170,.6), transparent 60%),
+      radial-gradient(2px 2px at 30% 75%, rgba(255,255,255,.35), transparent 60%),
+      radial-gradient(3px 3px at 65% 60%, rgba(180,230,255,.4), transparent 60%),
+      radial-gradient(2px 2px at 92% 80%, rgba(255,235,170,.45), transparent 60%),
+      radial-gradient(2px 2px at 45% 35%, rgba(255,255,255,.3), transparent 60%);
+    animation: motes 14s ease-in-out infinite alternate;
+  }
+  @keyframes motes { from { transform: translateY(0); opacity: .8; } to { transform: translateY(-22px); opacity: 1; } }
+
+  h1 {
+    font-family: "Bungee", "Baloo 2", cursive;
+    font-size: clamp(20px, 3.4vw, 34px);
+    letter-spacing: .02em;
+    color: var(--gold-2);
+    text-shadow: 0 1px 0 var(--gold-4), 0 3px 0 #7a4f10, 0 8px 22px rgba(0,0,0,.6);
+    z-index: 1;
+  }
+  .sub { font-weight: 700; color: #9fd6ea; font-size: 14px; margin-top: -10px; z-index: 1; }
+
+  .hud { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center; z-index: 1; }
+  .hud button {
+    font-family: inherit; font-size: 15px; font-weight: 800;
+    border: 0; border-radius: 999px; padding: 11px 24px; cursor: pointer;
+    color: var(--gold-ink);
+    background: linear-gradient(180deg, var(--gold-1), var(--gold-2) 45%, var(--gold-3));
+    box-shadow: 0 4px 0 var(--gold-4), 0 9px 18px rgba(0,0,0,.45), inset 0 1px 0 #fff8;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .hud button:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--gold-4), 0 12px 22px rgba(0,0,0,.5), inset 0 1px 0 #fff8; }
+  .hud button:active { transform: translateY(1px); box-shadow: 0 2px 0 var(--gold-4), 0 5px 10px rgba(0,0,0,.4); }
+  .hud button.ghost { background: rgba(8, 50, 70, .5); color: #9fd6ea; box-shadow: inset 0 0 0 2px #2c6a82; }
+  .hud button.ghost:hover { box-shadow: inset 0 0 0 2px #58a8c8; }
+
+  .progress { display: flex; gap: 5px; }
+  .progress i {
+    width: 15px; height: 15px; border-radius: 50%;
+    background: #10384e; box-shadow: inset 0 0 0 2px #2c6a82;
+    transition: background .4s, box-shadow .4s, transform .4s;
+  }
+  .progress i.done {
+    background: radial-gradient(circle at 35% 30%, var(--gold-1), var(--gold-3));
+    box-shadow: 0 0 10px rgba(255,215,106,.8); transform: scale(1.1);
+  }
+
+  /* ===== Map frame: wood + rope ===== */
+  .frame {
+    position: relative; z-index: 1;
+    padding: 14px; border-radius: 22px;
+    background:
+      repeating-linear-gradient(45deg, #8a5a2e 0 7px, #6e4520 7px 14px),
+      linear-gradient(180deg, var(--wood-1), var(--wood-2));
+    background-blend-mode: overlay, normal;
+    box-shadow: 0 26px 70px rgba(0,0,0,.65), inset 0 2px 4px #ffffff30, inset 0 -3px 6px #00000060;
+  }
+  .map {
+    position: relative;
+    width: min(92vw, 1080px);
+    aspect-ratio: 16 / 9;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 3px #2a180a, inset 0 0 26px rgba(0,0,0,.55);
+  }
+
+  /* ===== Pieces ===== */
+  .piece { position: relative; overflow: hidden; opacity: 0; animation: arrive .6s ease forwards; }
+  @keyframes arrive { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+  .piece.next { cursor: pointer; }
+
+  /* map artwork — blurred dark teaser while locked */
+  .piece .art {
+    position: absolute; inset: 0;
+    background-image: url("img/treasure-map/master-map.png");
+    background-size: 400% 300%;
+    transform: scale(1.08);
+    filter: blur(7px) brightness(.62) saturate(.55);
+    transition: filter 1.2s ease, transform 1.2s ease;
+  }
+  .piece.unlocked .art { filter: none; transform: scale(1); }
+
+  /* deep-sea veil: tint + vignette + one slow light shaft (no tiled noise) */
+  .piece .veil {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 42%, rgba(30, 100, 135, .05) 30%, rgba(5, 26, 42, .45) 100%),
+      linear-gradient(165deg, rgba(50, 130, 170, .18), rgba(7, 32, 50, .35));
+    transition: opacity 1s ease;
+  }
+  .piece .veil::before {
+    content: ""; position: absolute; top: -20%; bottom: -20%; left: 30%; width: 26%;
+    background: linear-gradient(90deg, transparent, rgba(190, 235, 255, .12), transparent);
+    transform: skewX(-18deg);
+    animation: shaft 7s ease-in-out infinite alternate;
+  }
+  @keyframes shaft { from { transform: skewX(-18deg) translateX(-130%); } to { transform: skewX(-18deg) translateX(160%); } }
+  .piece.unlocked .veil { opacity: 0; pointer-events: none; }
+
+  /* stitched seams between locked pieces — like map sections sewn shut */
+  .piece .seam {
+    position: absolute; inset: 0; pointer-events: none;
+    box-shadow: inset 0 0 0 2px rgba(5, 22, 35, .8);
+    background:
+      repeating-linear-gradient(90deg, transparent 0 10px, rgba(160, 210, 235, .18) 10px 16px) top / 100% 2px no-repeat,
+      repeating-linear-gradient(90deg, transparent 0 10px, rgba(160, 210, 235, .18) 10px 16px) bottom / 100% 2px no-repeat,
+      repeating-linear-gradient(0deg, transparent 0 10px, rgba(160, 210, 235, .18) 10px 16px) left / 2px 100% no-repeat,
+      repeating-linear-gradient(0deg, transparent 0 10px, rgba(160, 210, 235, .18) 10px 16px) right / 2px 100% no-repeat;
+    transition: opacity .9s ease;
+  }
+  .piece.unlocked .seam { opacity: 0; }
+
+  /* ===== Doubloon coin ===== */
+  .piece .coin {
+    position: absolute; left: 50%; top: 50%;
+    width: 62px; height: 62px; margin: -31px 0 0 -31px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 25px; font-weight: 800; color: var(--gold-ink);
+    background: radial-gradient(circle at 32% 28%, var(--gold-1) 0%, var(--gold-2) 38%, var(--gold-3) 72%, var(--gold-4) 100%);
+    box-shadow:
+      inset 0 0 0 3px rgba(107, 63, 0, .35),
+      inset 0 -5px 8px rgba(107, 63, 0, .35),
+      inset 0 3px 4px rgba(255, 248, 220, .7),
+      0 8px 18px rgba(0, 0, 0, .6);
+    text-shadow: 0 1px 0 rgba(255, 243, 196, .9);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  /* embossed inner ring */
+  .piece .coin i {
+    position: absolute; inset: 6px; border-radius: 50%;
+    border: 2px dashed rgba(107, 63, 0, .3); pointer-events: none;
+  }
+  /* sheen sweep */
+  .piece .coin::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%; overflow: hidden;
+    background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,.6) 49%, transparent 60%);
+    background-size: 250% 100%;
+    animation: sheen 4.5s ease-in-out infinite;
+  }
+  @keyframes sheen { 0%, 72%, 100% { background-position: 130% 0; } 86% { background-position: -30% 0; } }
+  .piece.unlocked .coin { opacity: 0; transform: scale(2.4) rotate(20deg); pointer-events: none; }
+
+  /* NEXT piece: breathing coin + radiating ring + brighter teaser on hover */
+  .piece.next .coin { animation: breathe 1.6s ease-in-out infinite; }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); box-shadow: inset 0 0 0 3px rgba(107,63,0,.35), inset 0 -5px 8px rgba(107,63,0,.35), inset 0 3px 4px rgba(255,248,220,.7), 0 8px 18px rgba(0,0,0,.6); }
+    50% { transform: scale(1.13); box-shadow: inset 0 0 0 3px rgba(107,63,0,.35), inset 0 -5px 8px rgba(107,63,0,.35), inset 0 3px 4px rgba(255,248,220,.7), 0 8px 18px rgba(0,0,0,.6), 0 0 30px rgba(255,215,106,.85); }
+  }
+  .piece.next .coin::before {
+    content: ""; position: absolute; inset: -10px; border-radius: 50%;
+    border: 3px solid rgba(255, 215, 106, .85);
+    animation: ring 1.6s ease-out infinite;
+  }
+  @keyframes ring { 0% { transform: scale(.78); opacity: 1; } 100% { transform: scale(1.7); opacity: 0; } }
+  .piece.next:hover .art { filter: blur(4px) brightness(.75) saturate(.7); }
+
+  .piece .hint {
+    position: absolute; left: 50%; top: calc(50% + 46px); transform: translateX(-50%) translateY(6px);
+    background: rgba(7, 38, 56, .9); color: var(--parch);
+    padding: 6px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 800; white-space: nowrap;
+    box-shadow: 0 0 0 2px rgba(255, 215, 106, .55), 0 6px 14px rgba(0,0,0,.45);
+    opacity: 0; transition: opacity .5s, transform .5s;
+  }
+  .piece.next .hint { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* sparkles on unlock */
+  .spark {
+    position: absolute; width: 11px; height: 11px; border-radius: 50%;
+    background: radial-gradient(#fff, var(--gold-2) 60%, transparent 70%);
+    pointer-events: none; animation: fly .85s ease-out forwards; z-index: 5;
+  }
+  @keyframes fly {
+    from { transform: translate(0,0) scale(1); opacity: 1; }
+    to   { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+  }
+
+  /* island name banner after unlock */
+  .piece .tag {
+    position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%) scale(0);
+    background: linear-gradient(180deg, rgba(74, 44, 18, .94), rgba(50, 28, 9, .94));
+    color: var(--parch);
+    padding: 5px 14px; border-radius: 999px; font-size: 13px; font-weight: 800;
+    white-space: nowrap;
+    box-shadow: 0 0 0 2px rgba(255, 215, 106, .4), 0 5px 12px rgba(0,0,0,.5);
+    transition: transform .45s cubic-bezier(.34,1.56,.64,1) .75s;
+  }
+  .piece .tag small { display: block; font-weight: 700; color: var(--gold-2); font-size: 11px; text-align: center; }
+  .piece.unlocked .tag { transform: translateX(-50%) scale(1); }
+
+  /* finale */
+  .frame.complete { animation: glow 2s ease-in-out infinite; }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 26px 70px rgba(0,0,0,.65), 0 0 45px 8px rgba(255,215,106,.35); }
+    50%      { box-shadow: 0 26px 70px rgba(0,0,0,.65), 0 0 90px 22px rgba(255,215,106,.7); }
+  }
+  .banner {
+    position: fixed; inset: 0; display: none; place-items: center;
+    background: rgba(3, 18, 30, .8); z-index: 50; backdrop-filter: blur(3px);
+  }
+  .banner.show { display: grid; }
+  .banner > div {
+    background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+    color: var(--gold-ink); padding: 36px 54px; border-radius: 24px; text-align: center;
+    font-size: 28px; font-weight: 800;
+    box-shadow: 0 0 0 5px var(--gold-4), 0 24px 70px rgba(0,0,0,.7);
+    animation: pop .55s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes pop { from { transform: scale(.4) rotate(-4deg); } to { transform: scale(1) rotate(0); } }
+  .banner small { display: block; font-size: 16px; font-weight: 700; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>BẢN ĐỒ KHO BÁU</h1>
+<div class="sub">⚔️ Hành trình Toán Lớp 2 — mở từng vùng đất để tìm kho báu! ⚔️</div>
+
+<div class="hud">
+  <button id="unlockBtn">⭐ Hoàn thành khoá học</button>
+  <button id="resetBtn" class="ghost">↺ Chơi lại</button>
+  <span class="progress" id="progress"></span>
+</div>
+
+<div class="frame" id="frame">
+  <div class="map" id="map"></div>
+</div>
+
+<div class="banner" id="banner">
+  <div>🎉 Tìm thấy KHO BÁU! 🎉<small>Con đã chinh phục toàn bộ Toán Lớp 2!</small></div>
+</div>
+
+<script>
+// Journey order: bottom row L→R (1-4), middle row R→L (5-8), top row L→R (9-12)
+const courses = [
+  { name: "⚓ Vịnh Neo Đậu",    topic: "Số đến 100",          col: 0, row: 2 },
+  { name: "🦜 Đảo Vẹt",         topic: "Cộng không nhớ",      col: 1, row: 2 },
+  { name: "🐠 Rạn San Hô",      topic: "Trừ không nhớ",       col: 2, row: 2 },
+  { name: "💣 Vịnh Đại Bác",    topic: "Cộng có nhớ",         col: 3, row: 2 },
+  { name: "💀 Hang Đầu Lâu",    topic: "Trừ có nhớ",          col: 3, row: 1 },
+  { name: "🐙 Vực Kraken",      topic: "Nhân, chia 2 và 5",   col: 2, row: 1 },
+  { name: "💰 Cảng Giao Thương", topic: "Tiền tệ",            col: 1, row: 1 },
+  { name: "⏰ Tháp Hải Đăng",   topic: "Xem giờ",             col: 0, row: 1 },
+  { name: "⛵ Eo Dây Thừng",    topic: "Đo lường",            col: 0, row: 0 },
+  { name: "💎 Hang Pha Lê",     topic: "Hình học",            col: 1, row: 0 },
+  { name: "🌪️ Eo Biển Bão",    topic: "So sánh, ước lượng",  col: 2, row: 0 },
+  { name: "❌ Đảo Kho Báu",     topic: "Ôn tập tổng hợp",     col: 3, row: 0 },
+];
+
+const map = document.getElementById("map");
+const frame = document.getElementById("frame");
+const progressEl = document.getElementById("progress");
+const banner = document.getElementById("banner");
+let unlocked = +(localStorage.getItem("tm-unlocked") || 0);
+
+const pieces = courses.map((c, i) => {
+  const el = document.createElement("div");
+  el.className = "piece";
+  el.style.gridColumn = c.col + 1;
+  el.style.gridRow = c.row + 1;
+  el.style.animationDelay = (c.row * 0.12 + c.col * 0.07) + "s"; // staggered arrival
+  el.innerHTML = `
+    <div class="art" style="background-position:${(c.col / 3) * 100}% ${(c.row / 2) * 100}%"></div>
+    <div class="veil"></div>
+    <div class="seam"></div>
+    <div class="coin">${i + 1}<i></i></div>
+    <div class="hint">Chạm để khám phá!</div>
+    <div class="tag">${c.name}<small>${c.topic}</small></div>`;
+  el.addEventListener("click", () => { if (i === unlocked) unlock(); });
+  map.appendChild(el);
+  return el;
+});
+
+function sparkle(el) {
+  for (let k = 0; k < 16; k++) {
+    const s = document.createElement("span");
+    s.className = "spark";
+    s.style.left = "50%"; s.style.top = "50%";
+    const a = (k / 16) * Math.PI * 2, d = 42 + (k % 4) * 24;
+    s.style.setProperty("--dx", Math.cos(a) * d + "px");
+    s.style.setProperty("--dy", Math.sin(a) * d + "px");
+    el.appendChild(s);
+    setTimeout(() => s.remove(), 950);
+  }
+}
+
+function render() {
+  pieces.forEach((el, i) => {
+    el.classList.toggle("unlocked", i < unlocked);
+    el.classList.toggle("next", i === unlocked);
+  });
+  progressEl.innerHTML = courses.map((_, i) => `<i class="${i < unlocked ? "done" : ""}"></i>`).join("");
+  frame.classList.toggle("complete", unlocked >= courses.length);
+}
+
+function unlock() {
+  if (unlocked >= courses.length) return;
+  sparkle(pieces[unlocked]);
+  unlocked++;
+  localStorage.setItem("tm-unlocked", unlocked);
+  render();
+  if (unlocked === courses.length) setTimeout(() => banner.classList.add("show"), 1300);
+}
+
+document.getElementById("unlockBtn").addEventListener("click", unlock);
+document.getElementById("resetBtn").addEventListener("click", () => {
+  unlocked = 0; localStorage.setItem("tm-unlocked", 0);
+  banner.classList.remove("show"); render();
+});
+banner.addEventListener("click", () => banner.classList.remove("show"));
+
+render();
+</script>
+</body>
+</html>
